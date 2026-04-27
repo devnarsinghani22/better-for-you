@@ -1,4 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
+import { getLiveCountByCategory } from "@/lib/products/queries";
+import Link from "next/link";
 
 export const revalidate = 60;
 
@@ -39,6 +41,7 @@ export default async function HomePage() {
   const list = categories ?? [];
   const featured = list.find((c) => c.slug === "paneer") ?? list[0];
   const others = list.filter((c) => c.slug !== featured?.slug);
+  const counts = await getLiveCountByCategory();
 
   return (
     <div className="relative z-10">
@@ -155,13 +158,13 @@ export default async function HomePage() {
                     Verified by Eurofins lab assay.
                   </span>
                 </div>
-                <a
+                <Link
                   href={`/c/${featured.slug}`}
                   className="shrink-0 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink)] border-b border-[color:var(--ink)] pb-1 hover:text-[color:var(--accent-deep)] hover:border-[color:var(--accent-deep)] transition-colors"
                 >
-                  View approved
+                  {counts.get(featured.id) ?? 0} approved
                   <span aria-hidden>→</span>
-                </a>
+                </Link>
               </div>
             </article>
           )}
@@ -189,14 +192,14 @@ export default async function HomePage() {
                 </div>
                 <div className="mt-6 flex items-center justify-between">
                   <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-                    Label-tested
+                    {counts.get(c.id) ?? 0} approved · Label-tested
                   </span>
-                  <a
+                  <Link
                     href={`/c/${c.slug}`}
                     className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink)] hover:text-[color:var(--accent-deep)] transition-colors"
                   >
                     View →
-                  </a>
+                  </Link>
                 </div>
               </article>
             );
