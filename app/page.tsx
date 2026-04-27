@@ -17,8 +17,6 @@ const ruleStrip = [
   "source cited",
 ];
 
-const categoryNumber = (i: number) => String(i + 1).padStart(2, "0");
-
 export default async function HomePage() {
   const supabase = await createClient();
   const { data: categories, error } = await supabase
@@ -132,15 +130,15 @@ export default async function HomePage() {
           {featured && (
             <article className="lg:col-span-7 lg:row-span-2 group relative bg-[color:var(--bg-elev)] border rule rounded-sm p-8 sm:p-12 flex flex-col justify-between min-h-[420px] overflow-hidden rise rise-3">
               {/* Lab-tested stamp */}
-              <div className="absolute top-6 right-6 stamp">
-                <div className="border-2 border-[color:var(--lab)] text-[color:var(--lab)] font-mono text-[10px] uppercase tracking-[0.22em] px-3 py-1.5 leading-none">
+              <div className="absolute top-6 right-6 stamp z-10">
+                <div className="border-2 border-[color:var(--lab)] text-[color:var(--lab)] font-mono text-[10px] uppercase tracking-[0.22em] px-3 py-1.5 leading-none bg-[color:var(--bg-elev)]">
                   Lab-Tested ✓
                 </div>
               </div>
 
               <div>
-                <span className="font-display italic text-[color:var(--ink-mute)] text-xl mb-2 block">
-                  No. {categoryNumber(list.indexOf(featured))}
+                <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] block mb-3">
+                  Featured · {counts.get(featured.id) ?? 0} approved
                 </span>
                 <h3 className="font-display text-6xl sm:text-7xl lg:text-8xl tracking-[-0.025em] leading-[0.95] mb-6">
                   {featured.name}
@@ -171,17 +169,15 @@ export default async function HomePage() {
 
           {/* Other 4 cards */}
           {others.map((c, i) => {
-            const idx = list.indexOf(c);
+            const n = counts.get(c.id) ?? 0;
             return (
-              <article
+              <Link
                 key={c.id}
-                className={`lg:col-span-5 group relative bg-[color:var(--bg-elev)] border rule rounded-sm p-7 sm:p-8 flex flex-col justify-between min-h-[200px] hover:border-[color:var(--ink)] transition-colors rise rise-${Math.min(i + 4, 5)}`}
+                href={`/c/${c.slug}`}
+                className={`lg:col-span-5 group relative bg-[color:var(--bg-elev)] border rule rounded-sm p-7 sm:p-8 flex flex-col justify-between min-h-[200px] hover:border-[color:var(--ink)] transition-colors rise rise-${Math.min(i + 4, 5)} block`}
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
-                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] block mb-2">
-                      No. {categoryNumber(idx)}
-                    </span>
                     <h3 className="font-display text-3xl sm:text-4xl tracking-[-0.02em] leading-tight mb-2">
                       {c.name}
                     </h3>
@@ -192,16 +188,13 @@ export default async function HomePage() {
                 </div>
                 <div className="mt-6 flex items-center justify-between">
                   <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-                    {counts.get(c.id) ?? 0} approved · Label-tested
+                    {n} approved · Label-tested
                   </span>
-                  <Link
-                    href={`/c/${c.slug}`}
-                    className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink)] hover:text-[color:var(--accent-deep)] transition-colors"
-                  >
+                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors">
                     View →
-                  </Link>
+                  </span>
                 </div>
-              </article>
+              </Link>
             );
           })}
         </div>

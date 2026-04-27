@@ -25,41 +25,55 @@ export default async function ProductPage({
     : null;
 
   return (
-    <main className="max-w-[900px] mx-auto px-6 sm:px-10 py-16 relative z-10">
+    <main className="max-w-[1100px] mx-auto px-6 sm:px-10 py-16 relative z-10">
       <nav className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
         <Link href={`/c/${category}`} className="hover:text-[color:var(--accent-deep)] transition-colors">
           ← {cat.name}
         </Link>
       </nav>
 
-      <header className="mt-8 pb-8 border-b rule">
-        <p className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-          {brand?.name}
-        </p>
-        <h1 className="font-display text-5xl sm:text-6xl tracking-[-0.02em] leading-[0.95] mt-3">
-          {product.name}
-        </h1>
-        {product.variant_size && (
-          <p className="text-lg text-[color:var(--ink-soft)] mt-2">{product.variant_size}</p>
-        )}
-      </header>
-
-      <section className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div>
-          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-2">
-            Verdict
+      <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-x-12 gap-y-8 pb-10 border-b rule">
+        {product.product_photo_url ? (
+          <div className="lg:col-span-5 bg-white border rule rounded-sm overflow-hidden aspect-square flex items-center justify-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={product.product_photo_url}
+              alt={product.name}
+              className="max-h-full max-w-full object-contain p-6"
+            />
           </div>
-          <div className="font-display text-2xl tracking-tight">
-            Food Pharmer Approved
-          </div>
-          <div className="mt-1">
-            <span className="inline-block bg-[color:var(--accent)]/40 px-1.5">
-              <span className="font-mono text-[11px] uppercase tracking-[0.18em]">
-                Rating {product.rating ?? "—"}
-              </span>
+        ) : (
+          <div className="lg:col-span-5 bg-[color:var(--bg-elev)] border rule rounded-sm aspect-square flex items-center justify-center">
+            <span className="font-display italic text-4xl text-[color:var(--ink-mute)]/50 text-center px-8">
+              {brand?.name}
             </span>
           </div>
-        </div>
+        )}
+
+        <header className="lg:col-span-7 flex flex-col justify-center">
+          <p className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+            {brand?.name}
+          </p>
+          <h1 className="font-display text-5xl sm:text-6xl tracking-[-0.02em] leading-[0.95] mt-3">
+            {product.name}
+          </h1>
+          {product.variant_size && (
+            <p className="text-lg text-[color:var(--ink-soft)] mt-2">{product.variant_size}</p>
+          )}
+          <div className="mt-6 inline-flex items-center gap-3">
+            <span className="bg-[color:var(--accent)] text-[color:var(--ink)] px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em]">
+              Food Pharmer Approved
+            </span>
+            {product.rating && (
+              <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-[color:var(--ink-soft)]">
+                Rating {product.rating}
+              </span>
+            )}
+          </div>
+        </header>
+      </div>
+
+      <section className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
           <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-2">
             Certification
@@ -91,6 +105,23 @@ export default async function ProductPage({
           </div>
         </div>
       </section>
+
+      {product.label_image_url && (
+        <section className="mt-12 border-t rule pt-10">
+          <h2 className="font-display text-3xl tracking-tight">Nutrition / ingredients label</h2>
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mt-1">
+            Cropped from the source page · {brand?.name}
+          </p>
+          <div className="mt-5 bg-white border rule rounded-sm p-3 inline-block max-w-full">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={product.label_image_url}
+              alt={`${product.name} label`}
+              className="max-w-full h-auto"
+            />
+          </div>
+        </section>
+      )}
 
       {product.primary_buy_url && (
         <a

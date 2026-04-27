@@ -51,24 +51,40 @@ export default async function CategoryPage({
             <Link
               key={p.id}
               href={`/c/${slug}/${p.slug}`}
-              className="bg-[color:var(--bg-elev)] border rule rounded-sm p-6 hover:border-[color:var(--ink)] transition-colors block group"
+              className="bg-[color:var(--bg-elev)] border rule rounded-sm overflow-hidden hover:border-[color:var(--ink)] transition-colors block group"
             >
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-                {brand?.name}
-              </p>
-              <h3 className="font-display text-2xl tracking-[-0.02em] mt-2 leading-tight">
-                {p.name}
-              </h3>
-              {p.variant_size && (
-                <p className="text-sm text-[color:var(--ink-soft)] mt-1">{p.variant_size}</p>
-              )}
-              <div className="mt-5 pt-4 border-t rule flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.22em]">
-                <span className={isLab ? "text-[color:var(--lab)]" : "text-[color:var(--ink-mute)]"}>
-                  {isLab ? "Lab-verified ✓" : "Label-tested"}
-                </span>
-                <span className="text-[color:var(--ink-mute)] group-hover:text-[color:var(--accent-deep)] transition-colors">
-                  View →
-                </span>
+              <div className="aspect-[4/3] bg-white border-b rule flex items-center justify-center overflow-hidden">
+                {p.product_photo_url ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={p.product_photo_url}
+                    alt={p.name}
+                    className="max-h-full max-w-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+                  />
+                ) : (
+                  <span className="font-display italic text-3xl text-[color:var(--ink-mute)]/50">
+                    {brand?.name}
+                  </span>
+                )}
+              </div>
+              <div className="p-5">
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+                  {brand?.name}
+                </p>
+                <h3 className="font-display text-2xl tracking-[-0.02em] mt-1.5 leading-tight">
+                  {p.name}
+                </h3>
+                {p.variant_size && (
+                  <p className="text-sm text-[color:var(--ink-soft)] mt-1">{p.variant_size}</p>
+                )}
+                <div className="mt-4 pt-3 border-t rule flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.22em]">
+                  <span className={isLab ? "text-[color:var(--lab)]" : "text-[color:var(--ink-mute)]"}>
+                    {isLab ? "Lab-verified ✓" : "Label-tested"}
+                  </span>
+                  <span className="text-[color:var(--ink-mute)] group-hover:text-[color:var(--accent-deep)] transition-colors">
+                    View →
+                  </span>
+                </div>
               </div>
             </Link>
           );
