@@ -1,20 +1,38 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Fraunces, Newsreader, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const fraunces = Fraunces({
+  variable: "--font-display",
   subsets: ["latin"],
+  axes: ["SOFT", "WONK", "opsz"],
+  style: ["normal", "italic"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const newsreader = Newsreader({
+  variable: "--font-body",
   subsets: ["latin"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const mono = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "Food Pharmer Approved",
-  description: "Curated catalog of packaged-food products that meet Food Pharmer's clean-label criteria.",
+  description:
+    "A small, growing catalogue of packaged foods that meet our clean-label criteria. We read the labels so you don't have to.",
+  openGraph: {
+    title: "Food Pharmer Approved",
+    description:
+      "A small, growing catalogue of packaged foods that meet our clean-label criteria.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -25,9 +43,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${fraunces.variable} ${newsreader.variable} ${mono.variable}`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-screen flex flex-col">{children}</body>
     </html>
   );
 }
