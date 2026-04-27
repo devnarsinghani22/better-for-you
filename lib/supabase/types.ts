@@ -39,6 +39,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      brands: {
+        Row: {
+          created_at: string
+          exclusion_reason: string | null
+          id: number
+          is_excluded: boolean
+          name: string
+          notes: string | null
+          slug: string
+          website_url: string | null
+        }
+        Insert: {
+          created_at?: string
+          exclusion_reason?: string | null
+          id?: number
+          is_excluded?: boolean
+          name: string
+          notes?: string | null
+          slug: string
+          website_url?: string | null
+        }
+        Update: {
+          created_at?: string
+          exclusion_reason?: string | null
+          id?: number
+          is_excluded?: boolean
+          name?: string
+          notes?: string | null
+          slug?: string
+          website_url?: string | null
+        }
+        Relationships: []
+      }
       categories: {
         Row: {
           active: boolean
@@ -75,6 +108,123 @@ export type Database = {
         }
         Relationships: []
       }
+      products: {
+        Row: {
+          alt_buy_urls: Json | null
+          brand_id: number
+          category_id: number
+          certification_method: Database["public"]["Enums"]["certification_method"]
+          contains_flags: Json | null
+          created_at: string
+          description_md: string | null
+          id: number
+          ingredient_image_url: string | null
+          ingredients_parsed: Json | null
+          ingredients_raw: string | null
+          label_image_url: string | null
+          last_verified_at: string | null
+          name: string
+          nutrition: Json | null
+          prepared_at: string | null
+          prepared_by: string | null
+          primary_buy_url: string | null
+          product_photo_url: string | null
+          rating: Database["public"]["Enums"]["product_rating"] | null
+          retracted_at: string | null
+          retraction_reason: string | null
+          reverify_due_at: string | null
+          review_notes: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          slug: string
+          status: Database["public"]["Enums"]["product_status"]
+          updated_at: string
+          variant_size: string | null
+          verdict: string | null
+        }
+        Insert: {
+          alt_buy_urls?: Json | null
+          brand_id: number
+          category_id: number
+          certification_method?: Database["public"]["Enums"]["certification_method"]
+          contains_flags?: Json | null
+          created_at?: string
+          description_md?: string | null
+          id?: number
+          ingredient_image_url?: string | null
+          ingredients_parsed?: Json | null
+          ingredients_raw?: string | null
+          label_image_url?: string | null
+          last_verified_at?: string | null
+          name: string
+          nutrition?: Json | null
+          prepared_at?: string | null
+          prepared_by?: string | null
+          primary_buy_url?: string | null
+          product_photo_url?: string | null
+          rating?: Database["public"]["Enums"]["product_rating"] | null
+          retracted_at?: string | null
+          retraction_reason?: string | null
+          reverify_due_at?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          slug: string
+          status?: Database["public"]["Enums"]["product_status"]
+          updated_at?: string
+          variant_size?: string | null
+          verdict?: string | null
+        }
+        Update: {
+          alt_buy_urls?: Json | null
+          brand_id?: number
+          category_id?: number
+          certification_method?: Database["public"]["Enums"]["certification_method"]
+          contains_flags?: Json | null
+          created_at?: string
+          description_md?: string | null
+          id?: number
+          ingredient_image_url?: string | null
+          ingredients_parsed?: Json | null
+          ingredients_raw?: string | null
+          label_image_url?: string | null
+          last_verified_at?: string | null
+          name?: string
+          nutrition?: Json | null
+          prepared_at?: string | null
+          prepared_by?: string | null
+          primary_buy_url?: string | null
+          product_photo_url?: string | null
+          rating?: Database["public"]["Enums"]["product_rating"] | null
+          retracted_at?: string | null
+          retraction_reason?: string | null
+          reverify_due_at?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          slug?: string
+          status?: Database["public"]["Enums"]["product_status"]
+          updated_at?: string
+          variant_size?: string | null
+          verdict?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_brand_id_fkey"
+            columns: ["brand_id"]
+            isOneToOne: false
+            referencedRelation: "brands"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "products_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -83,7 +233,16 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      certification_method: "label_tested" | "lab_tested" | "both"
+      product_rating: "A+" | "A" | "B+" | "B" | "C" | "D"
+      product_status:
+        | "Draft"
+        | "PendingReview"
+        | "NeedsClarification"
+        | "Approved"
+        | "Rejected"
+        | "Live"
+        | "Retracted"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -213,6 +372,18 @@ export const Constants = {
     Enums: {},
   },
   public: {
-    Enums: {},
+    Enums: {
+      certification_method: ["label_tested", "lab_tested", "both"],
+      product_rating: ["A+", "A", "B+", "B", "C", "D"],
+      product_status: [
+        "Draft",
+        "PendingReview",
+        "NeedsClarification",
+        "Approved",
+        "Rejected",
+        "Live",
+        "Retracted",
+      ],
+    },
   },
 } as const
