@@ -75,9 +75,9 @@ export default async function HomePage() {
               <br />
               <em className="italic font-light">Food Pharmer</em>
               <br />
-              would actually
+              would actually{" "}
               <span className="relative inline-block">
-                {" "}buy.
+                buy.
                 <span
                   aria-hidden
                   className="absolute -bottom-1 left-0 right-0 h-[6px] bg-[color:var(--accent)]/70 -z-10 translate-y-[2px]"
