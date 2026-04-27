@@ -39,6 +39,74 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_users: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string | null
+          role: Database["public"]["Enums"]["admin_role"]
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name?: string | null
+          role?: Database["public"]["Enums"]["admin_role"]
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string | null
+          role?: Database["public"]["Enums"]["admin_role"]
+        }
+        Relationships: []
+      }
+      audit_log: {
+        Row: {
+          action: string
+          actor_email: string | null
+          actor_user_id: string | null
+          created_at: string
+          diff: Json | null
+          from_status: Database["public"]["Enums"]["product_status"] | null
+          id: number
+          note: string | null
+          product_id: number | null
+          to_status: Database["public"]["Enums"]["product_status"] | null
+        }
+        Insert: {
+          action: string
+          actor_email?: string | null
+          actor_user_id?: string | null
+          created_at?: string
+          diff?: Json | null
+          from_status?: Database["public"]["Enums"]["product_status"] | null
+          id?: number
+          note?: string | null
+          product_id?: number | null
+          to_status?: Database["public"]["Enums"]["product_status"] | null
+        }
+        Update: {
+          action?: string
+          actor_email?: string | null
+          actor_user_id?: string | null
+          created_at?: string
+          diff?: Json | null
+          from_status?: Database["public"]["Enums"]["product_status"] | null
+          id?: number
+          note?: string | null
+          product_id?: number | null
+          to_status?: Database["public"]["Enums"]["product_status"] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "audit_log_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       brands: {
         Row: {
           created_at: string
@@ -225,14 +293,65 @@ export type Database = {
           },
         ]
       }
+      source_snapshots: {
+        Row: {
+          extracted_text: string | null
+          hash_sha256: string | null
+          id: number
+          lab_report_url: string | null
+          product_id: number | null
+          raw_html_url: string | null
+          retrieved_at: string
+          screenshot_url: string | null
+          source_domain: string | null
+          source_url: string
+        }
+        Insert: {
+          extracted_text?: string | null
+          hash_sha256?: string | null
+          id?: number
+          lab_report_url?: string | null
+          product_id?: number | null
+          raw_html_url?: string | null
+          retrieved_at?: string
+          screenshot_url?: string | null
+          source_domain?: string | null
+          source_url: string
+        }
+        Update: {
+          extracted_text?: string | null
+          hash_sha256?: string | null
+          id?: number
+          lab_report_url?: string | null
+          product_id?: number | null
+          raw_html_url?: string | null
+          retrieved_at?: string
+          screenshot_url?: string | null
+          source_domain?: string | null
+          source_url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "source_snapshots_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      admin_role_for_email: {
+        Args: { p_email: string }
+        Returns: Database["public"]["Enums"]["admin_role"]
+      }
     }
     Enums: {
+      admin_role: "preparer" | "reviewer"
       certification_method: "label_tested" | "lab_tested" | "both"
       product_rating: "A+" | "A" | "B+" | "B" | "C" | "D"
       product_status:
@@ -373,6 +492,7 @@ export const Constants = {
   },
   public: {
     Enums: {
+      admin_role: ["preparer", "reviewer"],
       certification_method: ["label_tested", "lab_tested", "both"],
       product_rating: ["A+", "A", "B+", "B", "C", "D"],
       product_status: [
