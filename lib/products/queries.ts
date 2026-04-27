@@ -29,6 +29,7 @@ export async function getLiveProductsForCategory(categorySlug: string) {
     .select(`
       id, slug, name, variant_size, rating, certification_method,
       product_photo_url, label_image_url, primary_buy_url, last_verified_at,
+      ingredients_raw,
       brand:brands ( slug, name )
     `)
     .eq('status', 'Live')

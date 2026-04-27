@@ -112,9 +112,41 @@ export default async function ProductPage({
         </div>
       </section>
 
+      <section className="mt-12 border-t rule pt-10">
+        <h2 className="font-display text-3xl tracking-tight">Ingredients</h2>
+        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mt-1">
+          As printed on the pack · verbatim
+        </p>
+        {product.ingredients_raw ? (
+          <div className="mt-5 bg-[color:var(--bg-elev)] border rule rounded-sm p-6">
+            <p className="text-base sm:text-lg text-[color:var(--ink)] leading-relaxed">
+              {product.ingredients_raw}
+            </p>
+          </div>
+        ) : (
+          <div className="mt-5 bg-[color:var(--bg-elev)] border rule rounded-sm p-6">
+            <p className="text-[color:var(--ink-soft)] leading-relaxed">
+              We are still capturing the verbatim ingredient list for this
+              product. Until then, you can read the label on the brand&rsquo;s
+              own page.
+            </p>
+            {product.primary_buy_url && (
+              <a
+                href={product.primary_buy_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-block font-mono text-xs uppercase tracking-[0.22em] underline hover:text-[color:var(--accent-deep)]"
+              >
+                Open the source page →
+              </a>
+            )}
+          </div>
+        )}
+      </section>
+
       {product.label_image_url && (
         <section className="mt-12 border-t rule pt-10">
-          <h2 className="font-display text-3xl tracking-tight">Nutrition / ingredients label</h2>
+          <h2 className="font-display text-3xl tracking-tight">Nutrition label</h2>
           <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mt-1">
             Cropped from the source page · {brand?.name}
           </p>
@@ -140,14 +172,6 @@ export default async function ProductPage({
         </a>
       )}
 
-      {product.ingredients_raw && (
-        <section className="mt-16 border-t rule pt-10">
-          <h2 className="font-display text-3xl tracking-tight">Ingredients</h2>
-          <p className="text-[color:var(--ink-soft)] mt-4 leading-relaxed">
-            {product.ingredients_raw}
-          </p>
-        </section>
-      )}
 
       <CriteriaBlock categoryId={cat.id} />
 

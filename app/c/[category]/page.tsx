@@ -82,6 +82,16 @@ export default async function CategoryPage({
                 {p.variant_size && (
                   <p className="text-sm text-[color:var(--ink-soft)] mt-1">{p.variant_size}</p>
                 )}
+                {p.ingredients_raw && (
+                  <div className="mt-3">
+                    <div className="font-mono text-[9px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-1">
+                      Ingredients
+                    </div>
+                    <p className="text-xs text-[color:var(--ink-soft)] leading-snug line-clamp-3">
+                      {p.ingredients_raw}
+                    </p>
+                  </div>
+                )}
                 <div className="mt-4 pt-3 border-t rule flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.22em]">
                   <span className={isLab ? "text-[color:var(--lab)]" : "text-[color:var(--ink-mute)]"}>
                     {isLab ? "Lab tested ✓" : "Label reviewed"}
