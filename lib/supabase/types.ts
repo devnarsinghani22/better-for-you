@@ -176,6 +176,125 @@ export type Database = {
         }
         Relationships: []
       }
+      category_rules: {
+        Row: {
+          active: boolean
+          category_id: number | null
+          code: string
+          created_at: string
+          description: string
+          display_order: number
+          evaluator_kind: string
+          id: number
+          is_required: boolean
+          threshold_unit: string | null
+          threshold_value: number | null
+        }
+        Insert: {
+          active?: boolean
+          category_id?: number | null
+          code: string
+          created_at?: string
+          description: string
+          display_order?: number
+          evaluator_kind: string
+          id?: number
+          is_required?: boolean
+          threshold_unit?: string | null
+          threshold_value?: number | null
+        }
+        Update: {
+          active?: boolean
+          category_id?: number | null
+          code?: string
+          created_at?: string
+          description?: string
+          display_order?: number
+          evaluator_kind?: string
+          id?: number
+          is_required?: boolean
+          threshold_unit?: string | null
+          threshold_value?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "category_rules_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contact_submissions: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: number
+          message: string
+          name: string | null
+          reason: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: number
+          message: string
+          name?: string | null
+          reason?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: number
+          message?: string
+          name?: string | null
+          reason?: string | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
+      product_rule_results: {
+        Row: {
+          evaluated_at: string
+          observed: Json | null
+          passed: boolean
+          product_id: number
+          rule_id: number
+        }
+        Insert: {
+          evaluated_at?: string
+          observed?: Json | null
+          passed: boolean
+          product_id: number
+          rule_id: number
+        }
+        Update: {
+          evaluated_at?: string
+          observed?: Json | null
+          passed?: boolean
+          product_id?: number
+          rule_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_rule_results_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_rule_results_rule_id_fkey"
+            columns: ["rule_id"]
+            isOneToOne: false
+            referencedRelation: "category_rules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       products: {
         Row: {
           alt_buy_urls: Json | null

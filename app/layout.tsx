@@ -26,11 +26,11 @@ const mono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Food Pharmer Approved",
   description:
-    "A small, growing catalogue of packaged foods that meet our clean-label criteria. We read the labels so you don't have to.",
+    "A small list of packaged foods that meet Food Pharmer's criteria. We read the ingredients so you don't have to.",
   openGraph: {
     title: "Food Pharmer Approved",
     description:
-      "A small, growing catalogue of packaged foods that meet our clean-label criteria.",
+      "A small list of packaged foods that meet Food Pharmer's criteria.",
     type: "website",
   },
 };

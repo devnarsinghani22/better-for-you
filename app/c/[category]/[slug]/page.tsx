@@ -1,6 +1,9 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getLiveProductBySlug } from "@/lib/products/queries";
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
+import CriteriaBlock from "@/components/CriteriaBlock";
 
 export const revalidate = 60;
 
@@ -25,6 +28,8 @@ export default async function ProductPage({
     : null;
 
   return (
+    <>
+    <SiteHeader />
     <main className="max-w-[1100px] mx-auto px-6 sm:px-10 py-16 relative z-10">
       <nav className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
         <Link href={`/c/${category}`} className="hover:text-[color:var(--accent-deep)] transition-colors">
@@ -83,16 +88,17 @@ export default async function ProductPage({
               isLab ? "text-[color:var(--lab)]" : ""
             }`}
           >
-            {isLab ? "Lab-verified ✓" : "Label-tested"}
+            {isLab ? "Lab tested ✓" : "Label reviewed"}
           </div>
           {!isLab && (
             <p className="text-xs text-[color:var(--ink-mute)] mt-1 leading-snug">
-              Verified from product label, not chemical analysis.
+              We read the ingredients off the brand&rsquo;s pack. We did not
+              run a chemistry test on this one.
             </p>
           )}
           {isLab && (
             <p className="text-xs text-[color:var(--ink-mute)] mt-1 leading-snug">
-              Eurofins analytical report on file.
+              A certified lab tested this product.
             </p>
           )}
         </div>
@@ -101,7 +107,7 @@ export default async function ProductPage({
             Last verified
           </div>
           <div className="font-display text-2xl tracking-tight">
-            {verifiedDate ?? "—"}
+            {verifiedDate ?? "Pending"}
           </div>
         </div>
       </section>
@@ -143,12 +149,16 @@ export default async function ProductPage({
         </section>
       )}
 
-      <footer className="mt-20 pt-8 border-t rule font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-        Re-verified every 6 months · brands change formulations ·{" "}
+      <CriteriaBlock categoryId={cat.id} />
+
+      <footer className="mt-16 pt-8 border-t rule font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+        We re-check every 6 months · brands sometimes change recipes ·{" "}
         <Link href="/" className="underline hover:text-[color:var(--accent-deep)]">
           back to home
         </Link>
       </footer>
     </main>
+    <SiteFooter />
+    </>
   );
 }

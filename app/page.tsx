@@ -88,18 +88,18 @@ export default async function HomePage() {
 
           <div className="lg:col-span-4 lg:pb-3 rise rise-2">
             <p className="text-lg sm:text-xl leading-relaxed text-[color:var(--ink-soft)] max-w-md font-normal">
-              A small, growing catalogue of packaged foods that meet our
-              clean-label criteria. We read the labels so you don&rsquo;t have
-              to — and we link to the source every time.
+              A small list of packaged foods that meet Food Pharmer&rsquo;s
+              criteria. We read the ingredients so you don&rsquo;t have to.
+              Every product links back to where we read it.
             </p>
             <p className="mt-6 font-display italic text-2xl text-[color:var(--accent-deep)]">
-              Label padhega India.
+              Label Padhega India.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Rule strip — marquee */}
+      {/* Rule strip marquee */}
       <section className="border-y rule bg-[color:var(--bg-elev)]/50 overflow-hidden rise rise-3">
         <div className="flex whitespace-nowrap py-4 marquee-track">
           {[...ruleStrip, ...ruleStrip, ...ruleStrip].map((r, i) => (
@@ -188,7 +188,7 @@ export default async function HomePage() {
                 </div>
                 <div className="mt-6 flex items-center justify-between">
                   <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-                    {n} approved · Label-tested
+                    {n} approved · Label reviewed
                   </span>
                   <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors">
                     View →
@@ -208,8 +208,8 @@ export default async function HomePage() {
               How we approve.
             </h2>
             <p className="mt-4 text-[color:var(--ink-soft)] max-w-sm">
-              No paid placements. No brand pitches accepted. Every approval is
-              recorded with the source page on the day we read it.
+              No paid spots. No brand pitches. Every approval is saved with the
+              source page from the day we read it.
             </p>
           </div>
           <ol className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-8">
@@ -217,17 +217,17 @@ export default async function HomePage() {
               {
                 num: "01",
                 title: "Read the label.",
-                body: "We pull the ingredient list from the brand site or e-commerce listing — and we screenshot the page at retrieval.",
+                body: "We pull the ingredient list from the brand website or an e-commerce listing. We also save a screenshot of that page on the day we read it.",
               },
               {
                 num: "02",
                 title: "Run the rules.",
-                body: "Per-category criteria + universal rules (no maida, no palm oil, no artificial anything). Brand-level exclusions for our competitors.",
+                body: "We check the product against the rules for its category. Plus our basic rules: no maida, no palm oil, no artificial anything.",
               },
               {
                 num: "03",
-                title: "Revant signs off.",
-                body: "Every product is reviewed personally by Revant before it appears here. Re-verified every six months — formulations change.",
+                title: "Food Pharmer signs off.",
+                body: "Food Pharmer reviews every product before it goes on this site. We re-check each product every six months. Brands sometimes change recipes.",
               },
             ].map((step, i) => (
               <li key={step.num} className={`rise rise-${(i % 5) + 1}`}>
@@ -254,8 +254,8 @@ export default async function HomePage() {
               Food Pharmer Approved
             </p>
             <p className="mt-2 text-sm text-[color:var(--ink-soft)] max-w-sm">
-              Edited by Revant Himatsingka. A small list of clean-label
-              packaged foods, kept honest.
+              By Food Pharmer. A small list of packaged foods we would actually
+              buy ourselves.
             </p>
           </div>
           <div className="flex flex-col sm:items-end gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
@@ -267,7 +267,7 @@ export default async function HomePage() {
             >
               instagram · @foodpharmer
             </a>
-            <span>© 2026 · v1 · made in Mumbai</span>
+            <span>© 2026 · v1</span>
           </div>
         </div>
       </footer>

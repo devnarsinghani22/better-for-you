@@ -2,6 +2,9 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getLiveProductsForCategory } from "@/lib/products/queries";
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
+import CriteriaBlock from "@/components/CriteriaBlock";
 
 export const revalidate = 60;
 
@@ -14,7 +17,7 @@ export default async function CategoryPage({
   const sb = await createClient();
   const { data: cat } = await sb
     .from("categories")
-    .select("slug, name, blurb")
+    .select("id, slug, name, blurb")
     .eq("slug", slug)
     .eq("active", true)
     .single();
@@ -23,6 +26,8 @@ export default async function CategoryPage({
   const products = await getLiveProductsForCategory(slug);
 
   return (
+    <>
+    <SiteHeader />
     <main className="max-w-[1280px] mx-auto px-6 sm:px-10 py-16 relative z-10">
       <Link
         href="/"
@@ -79,7 +84,7 @@ export default async function CategoryPage({
                 )}
                 <div className="mt-4 pt-3 border-t rule flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.22em]">
                   <span className={isLab ? "text-[color:var(--lab)]" : "text-[color:var(--ink-mute)]"}>
-                    {isLab ? "Lab-verified ✓" : "Label-tested"}
+                    {isLab ? "Lab tested ✓" : "Label reviewed"}
                   </span>
                   <span className="text-[color:var(--ink-mute)] group-hover:text-[color:var(--accent-deep)] transition-colors">
                     View →
@@ -94,6 +99,10 @@ export default async function CategoryPage({
       {products.length === 0 && (
         <p className="mt-12 text-[color:var(--ink-soft)]">No approved products in this category yet.</p>
       )}
+
+      <CriteriaBlock categoryId={cat.id} />
     </main>
+    <SiteFooter />
+    </>
   );
 }
