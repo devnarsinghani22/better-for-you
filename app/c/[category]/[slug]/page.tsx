@@ -161,6 +161,25 @@ export default async function ProductPage({
         </section>
       )}
 
+      {product.lab_report_url && (
+        <section className="mt-12 border-t rule pt-10">
+          <h2 className="font-display text-3xl tracking-tight">Lab report</h2>
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mt-1">
+            Independent third-party assay · the actual PDF
+          </p>
+          <a
+            href={product.lab_report_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 inline-flex items-center gap-3 bg-[color:var(--bg-elev)] border-2 border-[color:var(--lab)] text-[color:var(--lab)] px-5 py-3 font-mono text-xs uppercase tracking-[0.22em] hover:bg-[color:var(--lab)] hover:text-[color:var(--bg)] transition-colors"
+          >
+            <span aria-hidden>📄</span>
+            View the lab report (PDF)
+            <span aria-hidden>→</span>
+          </a>
+        </section>
+      )}
+
       {product.primary_buy_url && (
         <a
           href={product.primary_buy_url}

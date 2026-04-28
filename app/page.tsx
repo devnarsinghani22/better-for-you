@@ -21,7 +21,7 @@ export default async function HomePage() {
   const supabase = await createClient();
   const { data: categories, error } = await supabase
     .from("categories")
-    .select("id, slug, name, blurb")
+    .select("id, slug, name, blurb, hero_image_url")
     .eq("active", true)
     .order("display_order", { ascending: true });
 
@@ -128,41 +128,52 @@ export default async function HomePage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Featured card */}
           {featured && (
-            <article className="lg:col-span-7 lg:row-span-2 group relative bg-[color:var(--bg-elev)] border rule rounded-sm p-8 sm:p-12 flex flex-col justify-between min-h-[420px] overflow-hidden rise rise-3">
-              {/* Lab-tested stamp */}
-              <div className="absolute top-6 right-6 stamp z-10">
-                <div className="border-2 border-[color:var(--lab)] text-[color:var(--lab)] font-mono text-[10px] uppercase tracking-[0.22em] px-3 py-1.5 leading-none bg-[color:var(--bg-elev)]">
-                  Lab-Tested ✓
+            <article className="lg:col-span-7 lg:row-span-2 group relative bg-[color:var(--bg-elev)] border rule rounded-sm flex flex-col min-h-[420px] overflow-hidden rise rise-3">
+              {featured.hero_image_url && (
+                <div className="relative h-[260px] sm:h-[340px] w-full overflow-hidden bg-[color:var(--bg)]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={featured.hero_image_url}
+                    alt={featured.name}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                  />
+                  <div className="absolute top-5 right-5 stamp z-10">
+                    <div className="border-2 border-[color:var(--lab)] text-[color:var(--lab)] font-mono text-[10px] uppercase tracking-[0.22em] px-3 py-1.5 leading-none bg-[color:var(--bg-elev)]">
+                      Lab-Tested ✓
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )}
 
-              <div>
-                <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] block mb-3">
-                  Featured · {counts.get(featured.id) ?? 0} approved
-                </span>
-                <h3 className="font-display text-6xl sm:text-7xl lg:text-8xl tracking-[-0.025em] leading-[0.95] mb-6">
-                  {featured.name}
-                </h3>
-                <p className="text-lg sm:text-xl leading-relaxed text-[color:var(--ink-soft)] max-w-lg">
-                  {featured.blurb}
-                </p>
-              </div>
-
-              <div className="mt-10 flex items-end justify-between gap-6">
-                <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] leading-relaxed">
-                  Criteria<br />
-                  <span className="text-[color:var(--ink-soft)] normal-case tracking-normal font-body text-sm">
-                    Only milk + an acidic agent (lime, citric, or vinegar).
-                    Verified by Eurofins lab assay.
+              <div className="p-8 sm:p-12 flex-1 flex flex-col justify-between">
+                <div>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] block mb-3">
+                    Featured · {counts.get(featured.id) ?? 0} approved
                   </span>
+                  <h3 className="font-display text-5xl sm:text-6xl lg:text-7xl tracking-[-0.025em] leading-[0.95] mb-5">
+                    {featured.name}
+                  </h3>
+                  <p className="text-lg leading-relaxed text-[color:var(--ink-soft)] max-w-lg">
+                    {featured.blurb}
+                  </p>
                 </div>
-                <Link
-                  href={`/c/${featured.slug}`}
-                  className="shrink-0 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink)] border-b border-[color:var(--ink)] pb-1 hover:text-[color:var(--accent-deep)] hover:border-[color:var(--accent-deep)] transition-colors"
-                >
-                  {counts.get(featured.id) ?? 0} approved
-                  <span aria-hidden>→</span>
-                </Link>
+
+                <div className="mt-8 flex items-end justify-between gap-6">
+                  <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] leading-relaxed">
+                    Criteria<br />
+                    <span className="text-[color:var(--ink-soft)] normal-case tracking-normal font-body text-sm">
+                      Only milk + an acidic agent (lime, citric, or vinegar).
+                      Verified by Eurofins lab assay.
+                    </span>
+                  </div>
+                  <Link
+                    href={`/c/${featured.slug}`}
+                    className="shrink-0 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink)] border-b border-[color:var(--ink)] pb-1 hover:text-[color:var(--accent-deep)] hover:border-[color:var(--accent-deep)] transition-colors"
+                  >
+                    {counts.get(featured.id) ?? 0} approved
+                    <span aria-hidden>→</span>
+                  </Link>
+                </div>
               </div>
             </article>
           )}
@@ -174,25 +185,37 @@ export default async function HomePage() {
               <Link
                 key={c.id}
                 href={`/c/${c.slug}`}
-                className={`lg:col-span-5 group relative bg-[color:var(--bg-elev)] border rule rounded-sm p-7 sm:p-8 flex flex-col justify-between min-h-[200px] hover:border-[color:var(--ink)] transition-colors rise rise-${Math.min(i + 4, 5)} block`}
+                className={`lg:col-span-5 group relative bg-[color:var(--bg-elev)] border rule rounded-sm flex flex-col min-h-[220px] overflow-hidden hover:border-[color:var(--ink)] transition-colors rise rise-${Math.min(i + 4, 5)} block`}
               >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-display text-3xl sm:text-4xl tracking-[-0.02em] leading-tight mb-2">
-                      {c.name}
-                    </h3>
-                    <p className="text-[color:var(--ink-soft)] text-base leading-snug">
-                      {c.blurb}
-                    </p>
+                <div className="flex flex-1">
+                  {c.hero_image_url && (
+                    <div className="relative w-[44%] shrink-0 overflow-hidden bg-[color:var(--bg)]">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={c.hero_image_url}
+                        alt={c.name}
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                      />
+                    </div>
+                  )}
+                  <div className="flex-1 p-6 sm:p-7 flex flex-col justify-between">
+                    <div>
+                      <h3 className="font-display text-3xl sm:text-4xl tracking-[-0.02em] leading-tight mb-2">
+                        {c.name}
+                      </h3>
+                      <p className="text-[color:var(--ink-soft)] text-sm sm:text-base leading-snug">
+                        {c.blurb}
+                      </p>
+                    </div>
+                    <div className="mt-5 flex items-center justify-between gap-3">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+                        {n} approved
+                      </span>
+                      <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors">
+                        View →
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <div className="mt-6 flex items-center justify-between">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-                    {n} approved · Label reviewed
-                  </span>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors">
-                    View →
-                  </span>
                 </div>
               </Link>
             );

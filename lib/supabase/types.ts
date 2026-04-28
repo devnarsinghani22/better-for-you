@@ -146,6 +146,7 @@ export type Database = {
           blurb: string | null
           created_at: string
           display_order: number
+          hero_image_url: string | null
           id: number
           name: string
           serving_label: string | null
@@ -157,6 +158,7 @@ export type Database = {
           blurb?: string | null
           created_at?: string
           display_order?: number
+          hero_image_url?: string | null
           id?: number
           name: string
           serving_label?: string | null
@@ -168,6 +170,7 @@ export type Database = {
           blurb?: string | null
           created_at?: string
           display_order?: number
+          hero_image_url?: string | null
           id?: number
           name?: string
           serving_label?: string | null
@@ -308,6 +311,7 @@ export type Database = {
           ingredient_image_url: string | null
           ingredients_parsed: Json | null
           ingredients_raw: string | null
+          lab_report_url: string | null
           label_image_url: string | null
           last_verified_at: string | null
           name: string
@@ -341,6 +345,7 @@ export type Database = {
           ingredient_image_url?: string | null
           ingredients_parsed?: Json | null
           ingredients_raw?: string | null
+          lab_report_url?: string | null
           label_image_url?: string | null
           last_verified_at?: string | null
           name: string
@@ -374,6 +379,7 @@ export type Database = {
           ingredient_image_url?: string | null
           ingredients_parsed?: Json | null
           ingredients_raw?: string | null
+          lab_report_url?: string | null
           label_image_url?: string | null
           last_verified_at?: string | null
           name?: string

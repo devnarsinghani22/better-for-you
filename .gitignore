@@ -49,3 +49,11 @@ supabase/.branches/
 supabase/.temp/
 
 .vercel
+
+# scratch / tool downloads
+_tmp_scrape/
+lab_reports_dl/
+cat_images_dl/
+img_audit/
+off_*.json
+
