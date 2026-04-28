@@ -3,9 +3,11 @@ import { createClient } from "@/lib/supabase/server";
 export default async function CriteriaBlock({
   categoryId,
   variant = "full",
+  productMode = false,
 }: {
   categoryId: number | null;
   variant?: "full" | "compact";
+  productMode?: boolean;
 }) {
   const sb = await createClient();
   const { data: rules } = await sb
@@ -25,29 +27,32 @@ export default async function CriteriaBlock({
     <section className={variant === "compact" ? "" : "mt-12 border-t rule pt-10"}>
       {variant === "full" && (
         <div className="mb-6">
-          <h2 className="font-display text-3xl tracking-tight">What we look for</h2>
+          <h2 className="font-display text-3xl tracking-tight">
+            {productMode ? "What this product passed" : "What we look for"}
+          </h2>
           <p className="text-sm text-[color:var(--ink-soft)] mt-2 max-w-2xl">
-            These are the rules a product has to meet for us to approve it.
-            Some apply to every product. Some are specific to this category.
+            {productMode
+              ? "Every check below was confirmed for this exact product before we put it on the site."
+              : "These are the rules a product has to meet for us to approve it. Some apply to every product. Some are specific to this category."}
           </p>
         </div>
       )}
 
       {perCategory.length > 0 && (
-        <div className="mb-6">
+        <div className="mb-6 bg-[color:var(--bg-elev)] border rule rounded-sm p-5">
           <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-3">
-            For this category
+            {productMode ? "Specific to this category" : "For this category"}
           </div>
           <ul className="space-y-2.5">
             {perCategory.map((r) => (
               <li key={r.id} className="flex gap-3">
                 <span
                   aria-hidden
-                  className="text-[color:var(--lab)] font-mono text-sm leading-relaxed shrink-0"
+                  className="text-[color:var(--lab)] font-bold text-base leading-tight shrink-0 mt-0.5"
                 >
                   ✓
                 </span>
-                <span className="text-[color:var(--ink-soft)] leading-relaxed">
+                <span className="text-[color:var(--ink)] leading-relaxed">
                   {r.description}
                 </span>
               </li>
@@ -58,14 +63,14 @@ export default async function CriteriaBlock({
 
       <div>
         <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-3">
-          For every product on this site
+          {productMode ? "Plus our universal checks" : "For every product on this site"}
         </div>
         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5">
           {universal.map((r) => (
             <li key={r.id} className="flex gap-3">
               <span
                 aria-hidden
-                className="text-[color:var(--lab)] font-mono text-sm leading-relaxed shrink-0"
+                className="text-[color:var(--lab)] font-bold text-sm leading-tight shrink-0 mt-0.5"
               >
                 ✓
               </span>

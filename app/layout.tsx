@@ -24,14 +24,27 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Food Pharmer Approved",
+  metadataBase: new URL("https://foodpharmer-approved.vercel.app"),
+  title: {
+    default: "Food Pharmer Approved",
+    template: "%s | Food Pharmer Approved",
+  },
   description:
     "A small list of packaged foods that meet Food Pharmer's criteria. We read the ingredients so you don't have to.",
   openGraph: {
     title: "Food Pharmer Approved",
     description:
-      "A small list of packaged foods that meet Food Pharmer's criteria.",
+      "A small list of packaged foods that meet Food Pharmer's criteria. We read the ingredients so you don't have to.",
     type: "website",
+    locale: "en_IN",
+    url: "https://foodpharmer-approved.vercel.app",
+    siteName: "Food Pharmer Approved",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Food Pharmer Approved",
+    description:
+      "Packaged foods we'd actually buy. We read the ingredients so you don't have to.",
   },
 };
 

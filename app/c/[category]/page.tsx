@@ -73,15 +73,27 @@ export default async function CategoryPage({
                 )}
               </div>
               <div className="p-5">
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-                  {brand?.name}
-                </p>
-                <h3 className="font-display text-2xl tracking-[-0.02em] mt-1.5 leading-tight">
-                  {p.name}
-                </h3>
-                {p.variant_size && (
-                  <p className="text-sm text-[color:var(--ink-soft)] mt-1">{p.variant_size}</p>
-                )}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1 min-w-0">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+                      {brand?.name}
+                    </p>
+                    <h3 className="font-display text-2xl tracking-[-0.02em] mt-1.5 leading-tight">
+                      {p.name}
+                    </h3>
+                    {p.variant_size && (
+                      <p className="text-sm text-[color:var(--ink-soft)] mt-1">{p.variant_size}</p>
+                    )}
+                  </div>
+                  {p.rating && (
+                    <span
+                      className="shrink-0 bg-[color:var(--accent)] text-[color:var(--ink)] font-mono text-xs uppercase tracking-[0.18em] px-2.5 py-1 leading-none"
+                      title={`Rating ${p.rating}`}
+                    >
+                      {p.rating}
+                    </span>
+                  )}
+                </div>
                 {p.ingredients_raw && (
                   <div className="mt-3">
                     <div className="font-mono text-[9px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-1">
@@ -93,8 +105,20 @@ export default async function CategoryPage({
                   </div>
                 )}
                 <div className="mt-4 pt-3 border-t rule flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.22em]">
-                  <span className={isLab ? "text-[color:var(--lab)]" : "text-[color:var(--ink-mute)]"}>
-                    {isLab ? "Lab tested ✓" : "Label reviewed"}
+                  <span
+                    className={`inline-flex items-center gap-1.5 ${
+                      isLab
+                        ? "text-[color:var(--lab)]"
+                        : "text-[color:var(--ink-mute)]"
+                    }`}
+                  >
+                    {isLab ? (
+                      <>
+                        <span aria-hidden>🧪</span> Lab tested
+                      </>
+                    ) : (
+                      <>Label reviewed</>
+                    )}
                   </span>
                   <span className="text-[color:var(--ink-mute)] group-hover:text-[color:var(--accent-deep)] transition-colors">
                     View →

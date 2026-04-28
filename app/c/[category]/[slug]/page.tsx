@@ -78,10 +78,21 @@ export default async function ProductPage({
         </header>
       </div>
 
-      <section className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <section className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6">
         <div>
           <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-2">
-            Certification
+            Rating
+          </div>
+          <div className="font-display text-2xl tracking-tight text-[color:var(--accent-deep)]">
+            {product.rating ?? "—"}
+          </div>
+          <p className="text-xs text-[color:var(--ink-mute)] mt-1 leading-snug">
+            A+ and A products are the only ones we put on this site.
+          </p>
+        </div>
+        <div>
+          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-2">
+            How we checked
           </div>
           <div
             className={`font-display text-2xl tracking-tight ${
@@ -92,8 +103,7 @@ export default async function ProductPage({
           </div>
           {!isLab && (
             <p className="text-xs text-[color:var(--ink-mute)] mt-1 leading-snug">
-              We read the ingredients off the brand&rsquo;s pack. We did not
-              run a chemistry test on this one.
+              We read the ingredients off the brand&rsquo;s pack. No chemistry test on this one.
             </p>
           )}
           {isLab && (
@@ -109,8 +119,13 @@ export default async function ProductPage({
           <div className="font-display text-2xl tracking-tight">
             {verifiedDate ?? "Pending"}
           </div>
+          <p className="text-xs text-[color:var(--ink-mute)] mt-1 leading-snug">
+            We re-check every 6 months — recipes change.
+          </p>
         </div>
       </section>
+
+      <CriteriaBlock categoryId={cat.id} productMode />
 
       <section className="mt-12 border-t rule pt-10">
         <h2 className="font-display text-3xl tracking-tight">Ingredients</h2>
@@ -191,8 +206,6 @@ export default async function ProductPage({
         </a>
       )}
 
-
-      <CriteriaBlock categoryId={cat.id} />
 
       <footer className="mt-16 pt-8 border-t rule font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
         We re-check every 6 months · brands sometimes change recipes ·{" "}

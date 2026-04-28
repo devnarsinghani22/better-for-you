@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { getLiveCountByCategory } from "@/lib/products/queries";
 import Link from "next/link";
+import SiteFooter from "@/components/SiteFooter";
 
 export const revalidate = 60;
 
@@ -92,7 +93,19 @@ export default async function HomePage() {
               criteria. We read the ingredients so you don&rsquo;t have to.
               Every product links back to where we read it.
             </p>
-            <p className="mt-6 font-display italic text-2xl text-[color:var(--accent-deep)]">
+            <p className="mt-5 text-sm text-[color:var(--ink-mute)] leading-relaxed max-w-md">
+              Reviewed by{" "}
+              <a
+                href="https://instagram.com/foodpharmer"
+                target="_blank"
+                rel="noopener"
+                className="text-[color:var(--ink-soft)] underline decoration-[color:var(--ink-mute)] underline-offset-2 hover:text-[color:var(--accent-deep)]"
+              >
+                Revant Himatsingka
+              </a>{" "}
+              and a team of qualified nutritionists.
+            </p>
+            <p className="mt-5 font-display italic text-2xl text-[color:var(--accent-deep)]">
               Label Padhega India.
             </p>
           </div>
@@ -249,8 +262,8 @@ export default async function HomePage() {
               },
               {
                 num: "03",
-                title: "Food Pharmer signs off.",
-                body: "Food Pharmer reviews every product before it goes on this site. We re-check each product every six months. Brands sometimes change recipes.",
+                title: "Revant + the nutritionists sign off.",
+                body: "Revant Himatsingka and a team of qualified nutritionists review every product before it goes live. We re-check each product every six months — brands sometimes change recipes.",
               },
             ].map((step, i) => (
               <li key={step.num} className={`rise rise-${(i % 5) + 1}`}>
@@ -269,31 +282,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t rule mt-auto">
-        <div className="max-w-[1280px] mx-auto px-6 sm:px-10 py-10 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6">
-          <div>
-            <p className="font-display text-2xl tracking-tight">
-              Food Pharmer Approved
-            </p>
-            <p className="mt-2 text-sm text-[color:var(--ink-soft)] max-w-sm">
-              By Food Pharmer. A small list of packaged foods we would actually
-              buy ourselves.
-            </p>
-          </div>
-          <div className="flex flex-col sm:items-end gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-            <a
-              href="https://instagram.com/foodpharmer"
-              target="_blank"
-              rel="noopener"
-              className="hover:text-[color:var(--accent-deep)] transition-colors"
-            >
-              instagram · @foodpharmer
-            </a>
-            <span>© 2026 · v1</span>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
