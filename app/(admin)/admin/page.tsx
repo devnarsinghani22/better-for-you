@@ -39,6 +39,7 @@ export default async function AdminHome() {
         <Link href="/admin/products/new" className="bg-black text-white px-4 py-2 text-sm">+ New product</Link>
         <Link href="/admin/products" className="border px-4 py-2 text-sm bg-white">View all products</Link>
         <Link href="/admin/approvals" className="border px-4 py-2 text-sm bg-white">Approval queue</Link>
+        <Link href="/admin/contact" className="border px-4 py-2 text-sm bg-white">Contact inbox</Link>
       </div>
     </div>
   );

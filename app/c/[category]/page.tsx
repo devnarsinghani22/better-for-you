@@ -25,6 +25,9 @@ export default async function CategoryPage({
 
   const products = await getLiveProductsForCategory(slug);
 
+  // Categories with boxed products that benefit from a tighter crop
+  const tightCrop = slug === "biscuits" || slug === "rusks";
+
   return (
     <>
     <SiteHeader />
@@ -64,7 +67,11 @@ export default async function CategoryPage({
                   <img
                     src={p.product_photo_url}
                     alt={p.name}
-                    className="max-h-full max-w-full object-contain p-1.5 sm:p-2 group-hover:scale-105 transition-transform duration-500"
+                    className={
+                      tightCrop
+                        ? "h-full w-full object-cover scale-125 group-hover:scale-[1.32] transition-transform duration-500"
+                        : "max-h-full max-w-full object-contain p-1.5 sm:p-2 group-hover:scale-105 transition-transform duration-500"
+                    }
                   />
                 ) : (
                   <span className="font-display italic text-3xl text-[color:var(--ink-mute)]/50">
@@ -75,14 +82,14 @@ export default async function CategoryPage({
               <div className="p-5">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1 min-w-0">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+                    <p className="font-display text-2xl sm:text-[28px] tracking-[-0.02em] leading-tight text-[color:var(--ink-soft)]">
                       {brand?.name}
                     </p>
-                    <h3 className="font-display text-2xl tracking-[-0.02em] mt-1.5 leading-tight">
+                    <h3 className="font-display text-2xl sm:text-[28px] tracking-[-0.02em] leading-tight text-[color:var(--ink)]">
                       {p.name}
                     </h3>
                     {p.variant_size && (
-                      <p className="text-sm text-[color:var(--ink-soft)] mt-1">{p.variant_size}</p>
+                      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mt-2">{p.variant_size}</p>
                     )}
                   </div>
                   {p.rating && (
