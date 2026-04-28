@@ -259,6 +259,41 @@ export type Database = {
         }
         Relationships: []
       }
+      product_feedback: {
+        Row: {
+          created_at: string
+          helpful: boolean
+          id: number
+          product_id: number
+          user_agent: string | null
+          visitor_hash: string | null
+        }
+        Insert: {
+          created_at?: string
+          helpful: boolean
+          id?: number
+          product_id: number
+          user_agent?: string | null
+          visitor_hash?: string | null
+        }
+        Update: {
+          created_at?: string
+          helpful?: boolean
+          id?: number
+          product_id?: number
+          user_agent?: string | null
+          visitor_hash?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_feedback_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       product_rule_results: {
         Row: {
           evaluated_at: string
@@ -473,6 +508,14 @@ export type Database = {
       admin_role_for_email: {
         Args: { p_email: string }
         Returns: Database["public"]["Enums"]["admin_role"]
+      }
+      get_feedback_counts: {
+        Args: { p_product_id: number }
+        Returns: {
+          helpful_count: number
+          total_count: number
+          unhelpful_count: number
+        }[]
       }
     }
     Enums: {

@@ -1,9 +1,11 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getLiveProductBySlug } from "@/lib/products/queries";
+import { createClient } from "@/lib/supabase/server";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import CriteriaBlock from "@/components/CriteriaBlock";
+import FeedbackBlock from "@/components/FeedbackBlock";
 
 export const revalidate = 60;
 
@@ -18,6 +20,13 @@ export default async function ProductPage({
 
   const brand = Array.isArray(product.brand) ? product.brand[0] : product.brand;
   const cat = product.category;
+
+  const sb = await createClient();
+  const { data: counts } = await sb
+    .rpc("get_feedback_counts", { p_product_id: product.id })
+    .single<{ helpful_count: number; unhelpful_count: number; total_count: number }>();
+  const helpful = Number(counts?.helpful_count ?? 0);
+  const unhelpful = Number(counts?.unhelpful_count ?? 0);
   const isLab = product.certification_method === "lab_tested";
   const verifiedDate = product.last_verified_at
     ? new Date(product.last_verified_at).toLocaleDateString("en-IN", {
@@ -30,7 +39,7 @@ export default async function ProductPage({
   return (
     <>
     <SiteHeader />
-    <main className="max-w-[1100px] mx-auto px-6 sm:px-10 py-16 relative z-10">
+    <main className="max-w-[1100px] mx-auto px-5 sm:px-10 py-10 sm:py-16 relative z-10">
       <nav className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
         <Link href={`/c/${category}`} className="hover:text-[color:var(--accent-deep)] transition-colors">
           ← {cat.name}
@@ -39,17 +48,17 @@ export default async function ProductPage({
 
       <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-x-12 gap-y-8 pb-10 border-b rule">
         {product.product_photo_url ? (
-          <div className="lg:col-span-5 bg-white border rule rounded-sm overflow-hidden aspect-square flex items-center justify-center">
+          <div className="lg:col-span-5 bg-white border rule rounded-sm overflow-hidden aspect-[4/3] sm:aspect-square max-h-[440px] flex items-center justify-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={product.product_photo_url}
               alt={product.name}
-              className="max-h-full max-w-full object-contain p-6"
+              className="max-h-full max-w-full object-contain p-4 sm:p-6"
             />
           </div>
         ) : (
-          <div className="lg:col-span-5 bg-[color:var(--bg-elev)] border rule rounded-sm aspect-square flex items-center justify-center">
-            <span className="font-display italic text-4xl text-[color:var(--ink-mute)]/50 text-center px-8">
+          <div className="lg:col-span-5 bg-[color:var(--bg-elev)] border rule rounded-sm aspect-[4/3] sm:aspect-square max-h-[440px] flex items-center justify-center">
+            <span className="font-display italic text-3xl sm:text-4xl text-[color:var(--ink-mute)]/50 text-center px-8">
               {brand?.name}
             </span>
           </div>
@@ -59,7 +68,7 @@ export default async function ProductPage({
           <p className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
             {brand?.name}
           </p>
-          <h1 className="font-display text-5xl sm:text-6xl tracking-[-0.02em] leading-[0.95] mt-3">
+          <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl tracking-[-0.02em] leading-[0.95] mt-3">
             {product.name}
           </h1>
           {product.variant_size && (
@@ -186,7 +195,7 @@ export default async function ProductPage({
             href={product.lab_report_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-5 inline-flex items-center gap-3 bg-[color:var(--bg-elev)] border-2 border-[color:var(--lab)] text-[color:var(--lab)] px-5 py-3 font-mono text-xs uppercase tracking-[0.22em] hover:bg-[color:var(--lab)] hover:text-[color:var(--bg)] transition-colors"
+            className="mt-5 inline-flex w-full sm:w-auto items-center justify-center gap-3 bg-[color:var(--bg-elev)] border-2 border-[color:var(--lab)] text-[color:var(--lab)] px-5 py-3 font-mono text-xs uppercase tracking-[0.22em] hover:bg-[color:var(--lab)] hover:text-[color:var(--bg)] transition-colors"
           >
             <span aria-hidden>📄</span>
             View the lab report (PDF)
@@ -200,12 +209,18 @@ export default async function ProductPage({
           href={product.primary_buy_url}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-10 inline-flex items-center gap-2 bg-[color:var(--ink)] text-[color:var(--bg)] px-6 py-3 font-mono text-xs uppercase tracking-[0.22em] hover:bg-[color:var(--accent-deep)] transition-colors"
+          className="mt-10 inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-[color:var(--ink)] text-[color:var(--bg)] px-6 py-4 sm:py-3 font-mono text-xs uppercase tracking-[0.22em] hover:bg-[color:var(--accent-deep)] transition-colors"
         >
           Where to buy →
         </a>
       )}
 
+      <FeedbackBlock
+        productId={product.id}
+        pathname={`/c/${category}/${slug}`}
+        initialHelpful={helpful}
+        initialUnhelpful={unhelpful}
+      />
 
       <footer className="mt-16 pt-8 border-t rule font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
         We re-check every 6 months · brands sometimes change recipes ·{" "}

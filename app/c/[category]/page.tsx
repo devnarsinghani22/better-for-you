@@ -28,7 +28,7 @@ export default async function CategoryPage({
   return (
     <>
     <SiteHeader />
-    <main className="max-w-[1280px] mx-auto px-6 sm:px-10 py-16 relative z-10">
+    <main className="max-w-[1280px] mx-auto px-5 sm:px-10 py-10 sm:py-16 relative z-10">
       <Link
         href="/"
         className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink-mute)] hover:text-[color:var(--accent-deep)] transition-colors"
@@ -36,7 +36,7 @@ export default async function CategoryPage({
         ← All categories
       </Link>
 
-      <header className="mt-8 pb-10 border-b rule">
+      <header className="mt-6 sm:mt-8 pb-8 sm:pb-10 border-b rule">
         <h1 className="font-display text-5xl sm:text-7xl tracking-[-0.02em] leading-[0.95]">
           {cat.name}
         </h1>

@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { getLiveCountByCategory } from "@/lib/products/queries";
 import Link from "next/link";
+import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
 export const revalidate = 60;
@@ -44,34 +45,25 @@ export default async function HomePage() {
 
   return (
     <div className="relative z-10">
-      {/* Top band */}
-      <header className="border-b rule">
-        <div className="max-w-[1280px] mx-auto px-6 sm:px-10 py-3 flex items-center justify-between text-[11px] sm:text-xs font-mono uppercase tracking-[0.18em]">
-          <span className="text-[color:var(--ink-soft)]">
-            Food Pharmer · Approved
-          </span>
-          <span className="hidden sm:inline text-[color:var(--ink-mute)]">
-            Issue No. 01 · April 2026
-          </span>
-          <a
-            href="https://instagram.com/foodpharmer"
-            className="text-[color:var(--ink-soft)] hover:text-[color:var(--accent-deep)] transition-colors"
-            target="_blank"
-            rel="noopener"
-          >
-            @foodpharmer →
-          </a>
+      <SiteHeader />
+
+      {/* Editorial issue strip */}
+      <div className="border-b rule">
+        <div className="max-w-[1280px] mx-auto px-6 sm:px-10 py-2 flex items-center justify-between text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+          <span>A label-literacy publication</span>
+          <span className="hidden sm:inline">Issue No. 01 · April 2026</span>
+          <span className="text-[color:var(--ink-soft)]">{list.length} categories</span>
         </div>
-      </header>
+      </div>
 
       {/* Hero */}
-      <section className="max-w-[1280px] mx-auto px-6 sm:px-10 pt-16 sm:pt-24 pb-10 sm:pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-8 items-end">
+      <section className="max-w-[1280px] mx-auto px-5 sm:px-10 pt-10 sm:pt-24 pb-10 sm:pb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-6 sm:gap-y-8 items-end">
           <div className="lg:col-span-8 rise rise-1">
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-6">
+            <p className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-4 sm:mb-6">
               A label-literacy publication · {list.length} categories
             </p>
-            <h1 className="font-display font-medium leading-[0.92] tracking-[-0.02em] text-[14vw] sm:text-[10vw] lg:text-[7.2vw] text-[color:var(--ink)]">
+            <h1 className="font-display font-medium leading-[0.92] tracking-[-0.02em] text-[11.5vw] sm:text-[10vw] lg:text-[7.2vw] text-[color:var(--ink)]">
               Products
               <br />
               <em className="italic font-light">Food Pharmer</em>
@@ -128,8 +120,8 @@ export default async function HomePage() {
       </section>
 
       {/* Categories */}
-      <section className="max-w-[1280px] mx-auto px-6 sm:px-10 py-16 sm:py-24">
-        <div className="flex items-baseline justify-between mb-10 rise rise-3">
+      <section className="max-w-[1280px] mx-auto px-5 sm:px-10 py-12 sm:py-24">
+        <div className="flex items-baseline justify-between mb-8 sm:mb-10 rise rise-3">
           <h2 className="font-display text-3xl sm:text-4xl tracking-tight">
             The departments
           </h2>
@@ -141,9 +133,9 @@ export default async function HomePage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Featured card */}
           {featured && (
-            <article className="lg:col-span-7 lg:row-span-2 group relative bg-[color:var(--bg-elev)] border rule rounded-sm flex flex-col min-h-[420px] overflow-hidden rise rise-3">
+            <article className="lg:col-span-7 lg:row-span-2 group relative bg-[color:var(--bg-elev)] border rule rounded-sm flex flex-col min-h-[400px] overflow-hidden rise rise-3">
               {featured.hero_image_url && (
-                <div className="relative h-[260px] sm:h-[340px] w-full overflow-hidden bg-[color:var(--bg)]">
+                <div className="relative h-[200px] sm:h-[300px] lg:h-[340px] w-full overflow-hidden bg-[color:var(--bg)]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={featured.hero_image_url}
@@ -158,20 +150,20 @@ export default async function HomePage() {
                 </div>
               )}
 
-              <div className="p-8 sm:p-12 flex-1 flex flex-col justify-between">
+              <div className="p-6 sm:p-10 lg:p-12 flex-1 flex flex-col justify-between">
                 <div>
                   <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] block mb-3">
                     Featured · {counts.get(featured.id) ?? 0} approved
                   </span>
-                  <h3 className="font-display text-5xl sm:text-6xl lg:text-7xl tracking-[-0.025em] leading-[0.95] mb-5">
+                  <h3 className="font-display text-4xl sm:text-6xl lg:text-7xl tracking-[-0.025em] leading-[0.95] mb-4 sm:mb-5">
                     {featured.name}
                   </h3>
-                  <p className="text-lg leading-relaxed text-[color:var(--ink-soft)] max-w-lg">
+                  <p className="text-base sm:text-lg leading-relaxed text-[color:var(--ink-soft)] max-w-lg">
                     {featured.blurb}
                   </p>
                 </div>
 
-                <div className="mt-8 flex items-end justify-between gap-6">
+                <div className="mt-6 sm:mt-8 flex flex-wrap items-end justify-between gap-4 sm:gap-6">
                   <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] leading-relaxed">
                     Criteria<br />
                     <span className="text-[color:var(--ink-soft)] normal-case tracking-normal font-body text-sm">
