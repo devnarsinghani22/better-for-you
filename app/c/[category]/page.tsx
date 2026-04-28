@@ -64,7 +64,7 @@ export default async function CategoryPage({
                   <img
                     src={p.product_photo_url}
                     alt={p.name}
-                    className="max-h-full max-w-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+                    className="max-h-full max-w-full object-contain p-1.5 sm:p-2 group-hover:scale-105 transition-transform duration-500"
                   />
                 ) : (
                   <span className="font-display italic text-3xl text-[color:var(--ink-mute)]/50">

@@ -6,6 +6,10 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import CriteriaBlock from "@/components/CriteriaBlock";
 import FeedbackBlock from "@/components/FeedbackBlock";
+import NutritionCard from "@/components/NutritionCard";
+import WhatsAppShare from "@/components/WhatsAppShare";
+
+const SITE_URL = "https://foodpharmer-approved.vercel.app";
 
 export const revalidate = 60;
 
@@ -53,7 +57,7 @@ export default async function ProductPage({
             <img
               src={product.product_photo_url}
               alt={product.name}
-              className="max-h-full max-w-full object-contain p-4 sm:p-6"
+              className="max-h-full max-w-full object-contain p-2 sm:p-3"
             />
           </div>
         ) : (
@@ -65,14 +69,16 @@ export default async function ProductPage({
         )}
 
         <header className="lg:col-span-7 flex flex-col justify-center">
-          <p className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+          <p className="font-display text-3xl sm:text-4xl lg:text-5xl tracking-[-0.02em] leading-tight text-[color:var(--ink-soft)]">
             {brand?.name}
           </p>
-          <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl tracking-[-0.02em] leading-[0.95] mt-3">
+          <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl tracking-[-0.02em] leading-[0.95] mt-1 sm:mt-2 text-[color:var(--ink)]">
             {product.name}
           </h1>
           {product.variant_size && (
-            <p className="text-lg text-[color:var(--ink-soft)] mt-2">{product.variant_size}</p>
+            <p className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mt-3">
+              {product.variant_size}
+            </p>
           )}
           <div className="mt-6 inline-flex items-center gap-3">
             <span className="bg-[color:var(--accent)] text-[color:var(--ink)] px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em]">
@@ -168,7 +174,20 @@ export default async function ProductPage({
         )}
       </section>
 
-      {product.label_image_url && (
+      {product.nutrition && Object.keys(product.nutrition as object).length > 0 ? (
+        <section className="mt-12 border-t rule pt-10">
+          <h2 className="font-display text-3xl tracking-tight">Nutrition</h2>
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mt-1">
+            As declared on the pack · re-verified every six months
+          </p>
+          <div className="mt-5">
+            <NutritionCard
+              data={product.nutrition as Parameters<typeof NutritionCard>[0]["data"]}
+              brand={brand?.name}
+            />
+          </div>
+        </section>
+      ) : product.label_image_url ? (
         <section className="mt-12 border-t rule pt-10">
           <h2 className="font-display text-3xl tracking-tight">Nutrition label</h2>
           <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mt-1">
@@ -183,7 +202,7 @@ export default async function ProductPage({
             />
           </div>
         </section>
-      )}
+      ) : null}
 
       {product.lab_report_url && (
         <section className="mt-12 border-t rule pt-10">
@@ -204,16 +223,23 @@ export default async function ProductPage({
         </section>
       )}
 
-      {product.primary_buy_url && (
-        <a
-          href={product.primary_buy_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-10 inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-[color:var(--ink)] text-[color:var(--bg)] px-6 py-4 sm:py-3 font-mono text-xs uppercase tracking-[0.22em] hover:bg-[color:var(--accent-deep)] transition-colors"
-        >
-          Where to buy →
-        </a>
-      )}
+      <div className="mt-10 flex flex-col sm:flex-row sm:flex-wrap gap-3">
+        {product.primary_buy_url && (
+          <a
+            href={product.primary_buy_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-[color:var(--ink)] text-[color:var(--bg)] px-6 py-4 sm:py-3 font-mono text-xs uppercase tracking-[0.22em] hover:bg-[color:var(--accent-deep)] transition-colors"
+          >
+            Where to buy →
+          </a>
+        )}
+        <WhatsAppShare
+          productName={product.name}
+          brand={brand?.name ?? ""}
+          url={`${SITE_URL}/c/${category}/${slug}`}
+        />
+      </div>
 
       <FeedbackBlock
         productId={product.id}
