@@ -135,9 +135,6 @@ export default async function ProductPage({
           {isLab && (
             <p className="text-xs text-[color:var(--ink-mute)] mt-1 leading-snug">
               A certified lab tested this product.
-              {product.lab_report_url && (
-                <> <a href={product.lab_report_url} target="_blank" rel="noopener noreferrer" className="text-[color:var(--lab)] underline underline-offset-2 hover:opacity-80">View report →</a></>
-              )}
             </p>
           )}
         </div>
@@ -217,25 +214,6 @@ export default async function ProductPage({
           </div>
         </section>
       ) : null}
-
-      {product.lab_report_url && (
-        <section className="mt-12 border-t rule pt-10">
-          <h2 className="font-display text-3xl tracking-tight">Lab report</h2>
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mt-1">
-            Independent third-party assay · the actual PDF
-          </p>
-          <a
-            href={product.lab_report_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-5 inline-flex w-full sm:w-auto items-center justify-center gap-3 bg-[color:var(--bg-elev)] border-2 border-[color:var(--lab)] text-[color:var(--lab)] px-5 py-3 font-mono text-xs uppercase tracking-[0.22em] hover:bg-[color:var(--lab)] hover:text-[color:var(--bg)] transition-colors"
-          >
-            <span aria-hidden>📄</span>
-            View the lab report (PDF)
-            <span aria-hidden>→</span>
-          </a>
-        </section>
-      )}
 
       <div className="mt-10 flex flex-col sm:flex-row sm:flex-wrap gap-3">
         {product.primary_buy_url && (
