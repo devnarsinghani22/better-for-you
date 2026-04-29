@@ -109,13 +109,24 @@ export default async function ProductPage({
           <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-2">
             How we checked
           </div>
-          <div
-            className={`font-display text-2xl tracking-tight ${
-              isLab ? "text-[color:var(--lab)]" : ""
-            }`}
-          >
-            {isLab ? "Lab tested ✓" : "Label reviewed"}
-          </div>
+          {isLab && product.lab_report_url ? (
+            <a
+              href={product.lab_report_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-display text-2xl tracking-tight text-[color:var(--lab)] underline decoration-[color:var(--lab)]/40 underline-offset-4 hover:decoration-[color:var(--lab)]"
+            >
+              Lab tested ✓
+            </a>
+          ) : (
+            <div
+              className={`font-display text-2xl tracking-tight ${
+                isLab ? "text-[color:var(--lab)]" : ""
+              }`}
+            >
+              {isLab ? "Lab tested ✓" : "Label reviewed"}
+            </div>
+          )}
           {!isLab && (
             <p className="text-xs text-[color:var(--ink-mute)] mt-1 leading-snug">
               We read the ingredients off the brand&rsquo;s pack. No chemistry test on this one.
@@ -124,6 +135,9 @@ export default async function ProductPage({
           {isLab && (
             <p className="text-xs text-[color:var(--ink-mute)] mt-1 leading-snug">
               A certified lab tested this product.
+              {product.lab_report_url && (
+                <> <a href={product.lab_report_url} target="_blank" rel="noopener noreferrer" className="text-[color:var(--lab)] underline underline-offset-2 hover:opacity-80">View report →</a></>
+              )}
             </p>
           )}
         </div>
