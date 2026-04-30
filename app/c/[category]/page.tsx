@@ -28,6 +28,37 @@ export default async function CategoryPage({
   // Categories with boxed products that benefit from a tighter crop
   const tightCrop = slug === "biscuits" || slug === "rusks";
 
+  // Subcategory groupings (only paneer for now)
+  const subgroupsBySlug: Record<string, { label: string; productSlugs: string[] }[]> = {
+    paneer: [
+      {
+        label: "Regular paneer",
+        productSlugs: [
+          "humpy-a2-paneer",
+          "amul-fresh-paneer",
+          "amul-malai-paneer",
+          "gowardhan-paneer",
+        ],
+      },
+      {
+        label: "High protein paneer",
+        productSlugs: [
+          "milky-mist-high-protein-paneer",
+          "id-fresh-high-protein-paneer",
+        ],
+      },
+      {
+        label: "Low fat paneer",
+        productSlugs: ["desi-farms-low-fat-paneer"],
+      },
+    ],
+  };
+  const subgroups = subgroupsBySlug[slug];
+  const groupedSlugs = new Set(subgroups?.flatMap((g) => g.productSlugs));
+  const ungrouped = subgroups
+    ? products.filter((p) => !groupedSlugs.has(p.slug))
+    : [];
+
   return (
     <>
     <SiteHeader />
@@ -51,8 +82,8 @@ export default async function CategoryPage({
         </div>
       </header>
 
-      <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {products.map((p) => {
+      {(() => {
+        const renderCard = (p: typeof products[number]) => {
           const brand = Array.isArray(p.brand) ? p.brand[0] : p.brand;
           const isLab = p.certification_method === "lab_tested";
           return (
@@ -134,8 +165,54 @@ export default async function CategoryPage({
               </div>
             </Link>
           );
-        })}
-      </div>
+        };
+
+        if (subgroups) {
+          const bySlug = new Map(products.map((p) => [p.slug, p]));
+          return (
+            <div className="mt-10 space-y-12 sm:space-y-16">
+              {subgroups.map((g) => {
+                const items = g.productSlugs
+                  .map((s) => bySlug.get(s))
+                  .filter((p): p is typeof products[number] => Boolean(p));
+                if (items.length === 0) return null;
+                return (
+                  <section key={g.label}>
+                    <h2 className="font-display text-3xl sm:text-4xl tracking-[-0.02em] leading-tight mb-1">
+                      {g.label}
+                    </h2>
+                    <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-5">
+                      {items.length} approved
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                      {items.map(renderCard)}
+                    </div>
+                  </section>
+                );
+              })}
+              {ungrouped.length > 0 && (
+                <section>
+                  <h2 className="font-display text-3xl sm:text-4xl tracking-[-0.02em] leading-tight mb-1">
+                    Other
+                  </h2>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-5">
+                    {ungrouped.length} approved
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                    {ungrouped.map(renderCard)}
+                  </div>
+                </section>
+              )}
+            </div>
+          );
+        }
+
+        return (
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {products.map(renderCard)}
+          </div>
+        );
+      })()}
 
       {products.length === 0 && (
         <p className="mt-12 text-[color:var(--ink-soft)]">No approved products in this category yet.</p>
