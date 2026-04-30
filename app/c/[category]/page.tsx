@@ -175,9 +175,6 @@ export default async function CategoryPage({
                   <h3 className="font-display text-2xl sm:text-[28px] tracking-[-0.02em] leading-tight text-[color:var(--ink)]">
                     {p.name}
                   </h3>
-                  {p.variant_size && (
-                    <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mt-2">{p.variant_size}</p>
-                  )}
                 </div>
                 {p.ingredients_raw && (
                   <div className="mt-3">
