@@ -117,8 +117,8 @@ export default async function ProductPage({
             </p>
           )}
           {isLab && (
-            <p className="text-xs text-[color:var(--ink-mute)] mt-1 leading-snug">
-              A certified lab tested this product.
+            <p className="text-base text-[color:var(--ink-soft)] mt-2 leading-snug">
+              A NABL certified lab tested this product.
             </p>
           )}
         </div>
