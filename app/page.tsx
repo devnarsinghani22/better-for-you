@@ -37,10 +37,7 @@ export default async function HomePage() {
     );
   }
 
-  // Pick the lab-tested category to feature (paneer); fall back to first
   const list = categories ?? [];
-  const featured = list.find((c) => c.slug === "paneer") ?? list[0];
-  const others = list.filter((c) => c.slug !== featured?.slug);
   const counts = await getLiveCountByCategory();
 
   return (
@@ -50,8 +47,7 @@ export default async function HomePage() {
       {/* Editorial issue strip */}
       <div className="border-b rule">
         <div className="max-w-[1280px] mx-auto px-6 sm:px-10 py-2 flex items-center justify-between text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-          <span>A label-literacy publication</span>
-          <span className="hidden sm:inline">Issue No. 01 · April 2026</span>
+          <span>Issue No. 01 · April 2026</span>
           <span className="text-[color:var(--ink-soft)]">{list.length} categories</span>
         </div>
       </div>
@@ -60,9 +56,6 @@ export default async function HomePage() {
       <section className="max-w-[1280px] mx-auto px-5 sm:px-10 pt-10 sm:pt-24 pb-10 sm:pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-6 sm:gap-y-8 items-end">
           <div className="lg:col-span-8 rise rise-1">
-            <p className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-4 sm:mb-6">
-              A label-literacy publication · {list.length} categories
-            </p>
             <h1 className="font-display font-medium leading-[0.92] tracking-[-0.02em] text-[11.5vw] sm:text-[10vw] lg:text-[7.2vw] text-[color:var(--ink)]">
               Products
               <br />
@@ -97,8 +90,11 @@ export default async function HomePage() {
               </a>{" "}
               and a team of qualified nutritionists.
             </p>
-            <p className="mt-5 font-display italic text-2xl text-[color:var(--accent-deep)]">
-              Label Padhega India.
+            <p className="mt-5 font-display italic text-2xl">
+              <span style={{ color: "#FF671F" }}>Label</span>{" "}
+              <span className="text-[color:var(--bg)]">Padhega</span>{" "}
+              <span style={{ color: "#046A38" }}>India</span>
+              <span className="text-[color:var(--accent-deep)]">.</span>
             </p>
           </div>
         </div>
@@ -130,67 +126,14 @@ export default async function HomePage() {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Featured card */}
-          {featured && (
-            <article className="lg:col-span-7 lg:row-span-2 group relative bg-[color:var(--bg-elev)] border rule rounded-sm flex flex-col min-h-[400px] overflow-hidden rise rise-3">
-              {featured.hero_image_url && (
-                <div className="relative h-[200px] sm:h-[300px] lg:h-[340px] w-full overflow-hidden bg-[color:var(--bg)]">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={featured.hero_image_url}
-                    alt={featured.name}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                  />
-                  <div className="absolute top-5 right-5 stamp z-10">
-                    <div className="border-2 border-[color:var(--lab)] text-[color:var(--lab)] font-mono text-[10px] uppercase tracking-[0.22em] px-3 py-1.5 leading-none bg-[color:var(--bg-elev)]">
-                      Lab-Tested ✓
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              <div className="p-6 sm:p-10 lg:p-12 flex-1 flex flex-col justify-between">
-                <div>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] block mb-3">
-                    Featured · {counts.get(featured.id) ?? 0} approved
-                  </span>
-                  <h3 className="font-display text-4xl sm:text-6xl lg:text-7xl tracking-[-0.025em] leading-[0.95] mb-4 sm:mb-5">
-                    {featured.name}
-                  </h3>
-                  <p className="text-base sm:text-lg leading-relaxed text-[color:var(--ink-soft)] max-w-lg">
-                    {featured.blurb}
-                  </p>
-                </div>
-
-                <div className="mt-6 sm:mt-8 flex flex-wrap items-end justify-between gap-4 sm:gap-6">
-                  <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] leading-relaxed">
-                    Criteria<br />
-                    <span className="text-[color:var(--ink-soft)] normal-case tracking-normal font-body text-sm">
-                      Only milk + an acidic agent (lime, citric, or vinegar).
-                      Verified by Eurofins lab assay.
-                    </span>
-                  </div>
-                  <Link
-                    href={`/c/${featured.slug}`}
-                    className="shrink-0 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink)] border-b border-[color:var(--ink)] pb-1 hover:text-[color:var(--accent-deep)] hover:border-[color:var(--accent-deep)] transition-colors"
-                  >
-                    {counts.get(featured.id) ?? 0} approved
-                    <span aria-hidden>→</span>
-                  </Link>
-                </div>
-              </div>
-            </article>
-          )}
-
-          {/* Other 4 cards */}
-          {others.map((c, i) => {
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {list.map((c, i) => {
             const n = counts.get(c.id) ?? 0;
             return (
               <Link
                 key={c.id}
                 href={`/c/${c.slug}`}
-                className={`lg:col-span-5 group relative bg-[color:var(--bg-elev)] border rule rounded-sm flex flex-col min-h-[220px] overflow-hidden hover:border-[color:var(--ink)] transition-colors rise rise-${Math.min(i + 4, 5)} block`}
+                className={`group relative bg-[color:var(--bg-elev)] border rule rounded-sm flex flex-col min-h-[220px] overflow-hidden hover:border-[color:var(--ink)] transition-colors rise rise-${Math.min(i + 1, 5)} block`}
               >
                 <div className="flex flex-1">
                   {c.hero_image_url && (
@@ -225,52 +168,6 @@ export default async function HomePage() {
               </Link>
             );
           })}
-        </div>
-      </section>
-
-      {/* How we approve */}
-      <section className="border-t rule">
-        <div className="max-w-[1280px] mx-auto px-6 sm:px-10 py-16 sm:py-20 grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-10">
-          <div className="lg:col-span-4">
-            <h2 className="font-display text-4xl sm:text-5xl tracking-tight leading-[0.95]">
-              How we approve.
-            </h2>
-            <p className="mt-4 text-[color:var(--ink-soft)] max-w-sm">
-              No paid spots. No brand pitches. Every approval is saved with the
-              source page from the day we read it.
-            </p>
-          </div>
-          <ol className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-8">
-            {[
-              {
-                num: "01",
-                title: "Read the label.",
-                body: "We pull the ingredient list from the brand website or an e-commerce listing. We also save a screenshot of that page on the day we read it.",
-              },
-              {
-                num: "02",
-                title: "Run the rules.",
-                body: "We check the product against the rules for its category. Plus our basic rules: no maida, no palm oil, no artificial anything.",
-              },
-              {
-                num: "03",
-                title: "Revant + the nutritionists sign off.",
-                body: "Revant Himatsingka and a team of qualified nutritionists review every product before it goes live. We re-check each product every six months — brands sometimes change recipes.",
-              },
-            ].map((step, i) => (
-              <li key={step.num} className={`rise rise-${(i % 5) + 1}`}>
-                <div className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--accent-deep)] mb-3">
-                  Step {step.num}
-                </div>
-                <h3 className="font-display text-2xl mb-2 tracking-tight">
-                  {step.title}
-                </h3>
-                <p className="text-[color:var(--ink-soft)] text-sm leading-relaxed">
-                  {step.body}
-                </p>
-              </li>
-            ))}
-          </ol>
         </div>
       </section>
 
