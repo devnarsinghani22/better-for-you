@@ -42,10 +42,10 @@ export default function AboutPage() {
             Who is behind this
           </p>
           <h2 className="font-display text-3xl sm:text-4xl tracking-tight mt-3 leading-tight">
-            Revant Himatsingka, with a team of qualified nutritionists.
+            Food Pharmer, with a team of qualified nutritionists.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-[color:var(--ink-soft)] leading-relaxed">
-            Every product on this site is reviewed by Revant (
+            Every product on this site is reviewed by Food Pharmer (
             <a
               href="https://instagram.com/foodpharmer"
               target="_blank"

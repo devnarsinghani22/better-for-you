@@ -10,8 +10,7 @@ export default function SiteFooter() {
           </p>
           <p className="mt-3 text-sm text-[color:var(--ink-soft)] leading-relaxed max-w-sm">
             A small list of packaged foods we would actually buy ourselves.
-            Reviewed by Revant Himatsingka and a team of qualified
-            nutritionists.
+            Reviewed by Food Pharmer and a team of qualified nutritionists.
           </p>
           <p className="mt-4 text-xs text-[color:var(--ink-mute)] leading-relaxed max-w-sm">
             We are not affiliated with, sponsored by, or paid by any of the

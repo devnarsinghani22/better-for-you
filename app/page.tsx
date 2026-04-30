@@ -141,6 +141,13 @@ export default async function HomePage() {
                         alt={c.name}
                         className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                       />
+                      {c.slug === "paneer" && (
+                        <div className="absolute top-3 left-3 z-10">
+                          <div className="border-2 border-[color:var(--lab)] text-[color:var(--lab)] font-mono text-[9px] uppercase tracking-[0.2em] px-2 py-1 leading-none bg-[color:var(--bg-elev)]">
+                            Lab tested ✓
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
                   <div className="flex-1 p-6 sm:p-7 flex flex-col justify-between">
