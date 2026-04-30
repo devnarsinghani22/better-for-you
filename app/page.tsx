@@ -25,7 +25,7 @@ export default async function HomePage() {
     .from("categories")
     .select("id, slug, name, blurb, hero_image_url")
     .eq("active", true)
-    .order("display_order", { ascending: true });
+    .order("name", { ascending: true });
 
   if (error) {
     return (
@@ -92,7 +92,15 @@ export default async function HomePage() {
             </p>
             <p className="mt-5 font-display italic text-2xl">
               <span style={{ color: "#FF671F" }}>Label</span>{" "}
-              <span className="text-[color:var(--bg)]">Padhega</span>{" "}
+              <span
+                className="bg-clip-text text-transparent"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(to right, #FF671F 0%, #2a2a2a 35%, #2a2a2a 65%, #046A38 100%)",
+                }}
+              >
+                Padhega
+              </span>{" "}
               <span style={{ color: "#046A38" }}>India</span>
               <span className="text-[color:var(--accent-deep)]">.</span>
             </p>
