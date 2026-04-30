@@ -77,6 +77,17 @@ export default async function CategoryPage({
         <p className="text-[color:var(--ink-soft)] text-lg max-w-2xl mt-4">
           {cat.blurb}
         </p>
+        {slug === "paneer" && (
+          <a
+            href="https://youtu.be/zJu117xcs9Y"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 inline-flex items-center gap-2 font-display italic text-lg text-[color:var(--accent-deep)] underline decoration-[color:var(--accent)]/60 underline-offset-4 hover:decoration-[color:var(--accent-deep)]"
+          >
+            Watch Revant&rsquo;s paneer breakdown
+            <span aria-hidden>→</span>
+          </a>
+        )}
         <div className="mt-6 font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
           {products.length} approved
         </div>
