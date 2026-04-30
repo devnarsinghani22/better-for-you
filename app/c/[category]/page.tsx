@@ -28,7 +28,7 @@ export default async function CategoryPage({
   // Categories with boxed products that benefit from a tighter crop
   const tightCrop = slug === "biscuits" || slug === "rusks";
 
-  // Subcategory groupings (only paneer for now)
+  // Subcategory groupings
   const subgroupsBySlug: Record<string, { label: string; productSlugs: string[] }[]> = {
     paneer: [
       {
@@ -50,6 +50,19 @@ export default async function CategoryPage({
       {
         label: "Low fat paneer",
         productSlugs: ["desi-farms-low-fat-paneer"],
+      },
+    ],
+    "peanut-butter": [
+      {
+        label: "100% Peanuts",
+        productSlugs: [
+          "pintola-all-natural-crunchy-pb",
+          "myfitness-unsweetened-crunchy-pb",
+        ],
+      },
+      {
+        label: "Peanuts + Whey",
+        productSlugs: ["pintola-high-protein-pb"],
       },
     ],
   };
@@ -84,7 +97,18 @@ export default async function CategoryPage({
             rel="noopener noreferrer"
             className="mt-5 inline-flex items-center gap-2 font-display italic text-lg text-[color:var(--accent-deep)] underline decoration-[color:var(--accent)]/60 underline-offset-4 hover:decoration-[color:var(--accent-deep)]"
           >
-            Watch Revant&rsquo;s paneer breakdown
+            Watch Food Pharmer&rsquo;s Paneer Breakdown
+            <span aria-hidden>→</span>
+          </a>
+        )}
+        {slug === "peanut-butter" && (
+          <a
+            href="https://youtu.be/5lyGl1X6smk"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 inline-flex items-center gap-2 font-display italic text-lg text-[color:var(--accent-deep)] underline decoration-[color:var(--accent)]/60 underline-offset-4 hover:decoration-[color:var(--accent-deep)]"
+          >
+            Watch Food Pharmer&rsquo;s Peanut Butter Breakdown
             <span aria-hidden>→</span>
           </a>
         )}
@@ -122,25 +146,15 @@ export default async function CategoryPage({
                 )}
               </div>
               <div className="p-5">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex-1 min-w-0">
-                    <p className="font-display text-2xl sm:text-[28px] tracking-[-0.02em] leading-tight text-[color:var(--ink-soft)]">
-                      {brand?.name}
-                    </p>
-                    <h3 className="font-display text-2xl sm:text-[28px] tracking-[-0.02em] leading-tight text-[color:var(--ink)]">
-                      {p.name}
-                    </h3>
-                    {p.variant_size && (
-                      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mt-2">{p.variant_size}</p>
-                    )}
-                  </div>
-                  {p.rating && (
-                    <span
-                      className="shrink-0 bg-[color:var(--accent)] text-[color:var(--ink)] font-mono text-xs uppercase tracking-[0.18em] px-2.5 py-1 leading-none"
-                      title={`Rating ${p.rating}`}
-                    >
-                      {p.rating}
-                    </span>
+                <div className="flex-1 min-w-0">
+                  <p className="font-display text-2xl sm:text-[28px] tracking-[-0.02em] leading-tight text-[color:var(--ink-soft)]">
+                    {brand?.name}
+                  </p>
+                  <h3 className="font-display text-2xl sm:text-[28px] tracking-[-0.02em] leading-tight text-[color:var(--ink)]">
+                    {p.name}
+                  </h3>
+                  {p.variant_size && (
+                    <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mt-2">{p.variant_size}</p>
                   )}
                 </div>
                 {p.ingredients_raw && (
@@ -185,7 +199,8 @@ export default async function CategoryPage({
               {subgroups.map((g) => {
                 const items = g.productSlugs
                   .map((s) => bySlug.get(s))
-                  .filter((p): p is typeof products[number] => Boolean(p));
+                  .filter((p): p is typeof products[number] => Boolean(p))
+                  .sort((a, b) => a.name.localeCompare(b.name));
                 if (items.length === 0) return null;
                 return (
                   <section key={g.label}>

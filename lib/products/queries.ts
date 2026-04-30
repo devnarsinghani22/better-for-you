@@ -34,7 +34,6 @@ export async function getLiveProductsForCategory(categorySlug: string) {
     `)
     .eq('status', 'Live')
     .eq('category_id', cat.id)
-    .order('rating', { ascending: true })
     .order('name', { ascending: true });
   if (error) throw error;
   return data ?? [];
