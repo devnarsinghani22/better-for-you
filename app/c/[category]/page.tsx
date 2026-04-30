@@ -123,6 +123,17 @@ export default async function CategoryPage({
             <span aria-hidden>→</span>
           </a>
         )}
+        {slug === "biscuits" && (
+          <a
+            href="https://youtu.be/ym4qROz_TtI"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 inline-flex items-center gap-2 font-display italic text-lg text-[color:var(--accent-deep)] underline decoration-[color:var(--accent)]/60 underline-offset-4 hover:decoration-[color:var(--accent-deep)]"
+          >
+            Watch Food Pharmer&rsquo;s Biscuit Breakdown
+            <span aria-hidden>→</span>
+          </a>
+        )}
         <div className="mt-6 font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
           {products.length} approved
         </div>
