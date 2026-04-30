@@ -84,27 +84,11 @@ export default async function ProductPage({
             <span className="bg-[color:var(--accent)] text-[color:var(--ink)] px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em]">
               Food Pharmer Approved
             </span>
-            {product.rating && (
-              <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-[color:var(--ink-soft)]">
-                Rating {product.rating}
-              </span>
-            )}
           </div>
         </header>
       </div>
 
-      <section className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div>
-          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-2">
-            Rating
-          </div>
-          <div className="font-display text-2xl tracking-tight text-[color:var(--accent-deep)]">
-            {product.rating ?? "—"}
-          </div>
-          <p className="text-xs text-[color:var(--ink-mute)] mt-1 leading-snug">
-            A+ and A products are the only ones we put on this site.
-          </p>
-        </div>
+      <section className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
           <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-2">
             How we checked

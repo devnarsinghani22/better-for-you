@@ -62,7 +62,7 @@ export default async function CategoryPage({
       },
       {
         label: "Peanuts + Whey",
-        productSlugs: ["pintola-high-protein-pb"],
+        productSlugs: ["pintola-high-protein-pb", "nut-roasters-hp-whey-pb"],
       },
     ],
   };
@@ -109,6 +109,17 @@ export default async function CategoryPage({
             className="mt-5 inline-flex items-center gap-2 font-display italic text-lg text-[color:var(--accent-deep)] underline decoration-[color:var(--accent)]/60 underline-offset-4 hover:decoration-[color:var(--accent-deep)]"
           >
             Watch Food Pharmer&rsquo;s Peanut Butter Breakdown
+            <span aria-hidden>→</span>
+          </a>
+        )}
+        {slug === "noodles" && (
+          <a
+            href="https://youtu.be/b_JZuowrBHQ"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 inline-flex items-center gap-2 font-display italic text-lg text-[color:var(--accent-deep)] underline decoration-[color:var(--accent)]/60 underline-offset-4 hover:decoration-[color:var(--accent-deep)]"
+          >
+            Watch Food Pharmer&rsquo;s Noodles Breakdown
             <span aria-hidden>→</span>
           </a>
         )}

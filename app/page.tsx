@@ -86,7 +86,7 @@ export default async function HomePage() {
                 rel="noopener"
                 className="text-[color:var(--ink-soft)] underline decoration-[color:var(--ink-mute)] underline-offset-2 hover:text-[color:var(--accent-deep)]"
               >
-                Revant Himatsingka
+                Food Pharmer
               </a>{" "}
               and a team of qualified nutritionists.
             </p>
@@ -116,7 +116,7 @@ export default async function HomePage() {
       <section className="max-w-[1280px] mx-auto px-5 sm:px-10 py-12 sm:py-24">
         <div className="flex items-baseline justify-between mb-8 sm:mb-10 rise rise-3">
           <h2 className="font-display text-3xl sm:text-4xl tracking-tight">
-            The departments
+            The categories
           </h2>
           <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
             v1 · {list.length} live
