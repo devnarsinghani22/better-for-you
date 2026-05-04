@@ -199,28 +199,8 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
         {showResults && totalHits === 0 && (
           <div className="mt-10 bg-[color:var(--bg-elev)] border rule rounded-sm p-8">
             <p className="text-lg text-[color:var(--ink-soft)]">
-              No matches for{" "}
+              No matches found for{" "}
               <span className="text-[color:var(--ink)]">&ldquo;{query}&rdquo;</span>.
-            </p>
-            <p className="text-sm text-[color:var(--ink-mute)] mt-3">
-              Either we haven&rsquo;t reviewed it yet, it failed our rules, or
-              it&rsquo;s from a brand that competes with{" "}
-              <a
-                href="https://onlywhatsneeded.in"
-                target="_blank"
-                rel="noopener"
-                className="underline hover:text-[color:var(--accent-deep)]"
-              >
-                Only What&rsquo;s Needed
-              </a>
-              . Want us to look at it?{" "}
-              <Link
-                href="/contact"
-                className="underline hover:text-[color:var(--accent-deep)]"
-              >
-                Tell us
-              </Link>
-              .
             </p>
           </div>
         )}
