@@ -219,7 +219,14 @@ export default async function CategoryPage({
                 const items = g.productSlugs
                   .map((s) => bySlug.get(s))
                   .filter((p): p is typeof products[number] => Boolean(p))
-                  .sort((a, b) => a.name.localeCompare(b.name));
+                  .sort((a, b) => {
+                    const ba = Array.isArray(a.brand) ? a.brand[0] : a.brand;
+                    const bb = Array.isArray(b.brand) ? b.brand[0] : b.brand;
+                    return (
+                      (ba?.name ?? "").localeCompare(bb?.name ?? "") ||
+                      a.name.localeCompare(b.name)
+                    );
+                  });
                 if (items.length === 0) return null;
                 return (
                   <section key={g.label}>

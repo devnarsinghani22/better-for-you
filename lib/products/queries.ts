@@ -33,10 +33,19 @@ export async function getLiveProductsForCategory(categorySlug: string) {
       brand:brands ( slug, name )
     `)
     .eq('status', 'Live')
-    .eq('category_id', cat.id)
-    .order('name', { ascending: true });
+    .eq('category_id', cat.id);
   if (error) throw error;
-  return data ?? [];
+  const rows = data ?? [];
+  const brandName = (p: (typeof rows)[number]) => {
+    const b = Array.isArray(p.brand) ? p.brand[0] : p.brand;
+    return b?.name ?? '';
+  };
+  rows.sort(
+    (a, b) =>
+      brandName(a).localeCompare(brandName(b)) ||
+      a.name.localeCompare(b.name)
+  );
+  return rows;
 }
 
 export async function getLiveProductBySlug(categorySlug: string, productSlug: string) {

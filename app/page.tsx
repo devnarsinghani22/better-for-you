@@ -44,14 +44,6 @@ export default async function HomePage() {
     <div className="relative z-10">
       <SiteHeader />
 
-      {/* Editorial issue strip */}
-      <div className="border-b rule">
-        <div className="max-w-[1280px] mx-auto px-6 sm:px-10 py-2 flex items-center justify-between text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-          <span>Issue No. 01 · April 2026</span>
-          <span className="text-[color:var(--ink-soft)]">{list.length} categories</span>
-        </div>
-      </div>
-
       {/* Hero */}
       <section className="max-w-[1280px] mx-auto px-5 sm:px-10 pt-10 sm:pt-24 pb-10 sm:pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-6 sm:gap-y-8 items-end">

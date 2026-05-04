@@ -62,9 +62,14 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
   const productMap = new Map<number, NonNullable<typeof productsRes.data>[number]>();
   for (const p of productsRes.data ?? []) productMap.set(p.id, p);
   for (const p of brandHits ?? []) productMap.set(p.id, p);
-  const products = Array.from(productMap.values()).sort((a, b) =>
-    a.name.localeCompare(b.name)
-  );
+  const products = Array.from(productMap.values()).sort((a, b) => {
+    const ba = Array.isArray(a.brand) ? a.brand[0] : a.brand;
+    const bb = Array.isArray(b.brand) ? b.brand[0] : b.brand;
+    return (
+      (ba?.name ?? "").localeCompare(bb?.name ?? "") ||
+      a.name.localeCompare(b.name)
+    );
+  });
   const categories = categoriesRes.data ?? [];
 
   const totalHits = products.length + categories.length;

@@ -34,7 +34,6 @@ export default async function OGImage() {
           }}
         >
           <span>Food Pharmer · Approved</span>
-          <span>Issue 01 · 2026</span>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
