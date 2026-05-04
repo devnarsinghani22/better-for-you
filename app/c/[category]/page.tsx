@@ -32,7 +32,7 @@ export default async function CategoryPage({
   const subgroupsBySlug: Record<string, { label: string; productSlugs: string[] }[]> = {
     paneer: [
       {
-        label: "Regular paneer",
+        label: "Regular Paneer",
         productSlugs: [
           "humpy-a2-paneer",
           "amul-fresh-paneer",
@@ -41,14 +41,14 @@ export default async function CategoryPage({
         ],
       },
       {
-        label: "High protein paneer",
+        label: "High Protein and Low Fat Paneer",
         productSlugs: [
           "milky-mist-high-protein-paneer",
           "id-fresh-high-protein-paneer",
         ],
       },
       {
-        label: "Low fat paneer",
+        label: "Low Fat Paneer",
         productSlugs: ["desi-farms-low-fat-paneer"],
       },
     ],
