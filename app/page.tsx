@@ -80,7 +80,7 @@ export default async function HomePage() {
       <section className="max-w-[1280px] mx-auto px-5 sm:px-10 py-12 sm:py-24">
         <div className="flex items-baseline justify-between mb-8 sm:mb-10 rise rise-3">
           <h2 className="font-display text-3xl sm:text-4xl tracking-tight">
-            The categories
+            Categories
           </h2>
           <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
             v1 · {list.length} live
@@ -116,12 +116,9 @@ export default async function HomePage() {
                   )}
                   <div className="flex-1 p-6 sm:p-7 flex flex-col justify-between">
                     <div>
-                      <h3 className="font-display text-3xl sm:text-4xl tracking-[-0.02em] leading-tight mb-2">
+                      <h3 className="font-display text-3xl sm:text-4xl tracking-[-0.02em] leading-tight">
                         {c.name}
                       </h3>
-                      <p className="text-[color:var(--ink-soft)] text-sm sm:text-base leading-snug">
-                        {c.blurb}
-                      </p>
                     </div>
                     <div className="mt-5 flex items-center justify-between gap-3">
                       <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
