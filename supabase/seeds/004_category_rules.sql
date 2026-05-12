@@ -2,7 +2,7 @@
 INSERT INTO public.category_rules (category_id, code, description, evaluator_kind, is_required, display_order) VALUES
   (NULL, 'no_maida',                'No maida (refined wheat flour).',                'boolean', true, 10),
   (NULL, 'no_palm_oil',             'No palm oil.',                                    'boolean', true, 20),
-  (NULL, 'no_artificial_colors',    'No artificial colors.',                           'boolean', true, 30),
+  (NULL, 'no_artificial_colors',    'No artificial colours.',                          'boolean', true, 30),
   (NULL, 'no_artificial_flavours',  'No artificial flavours.',                         'boolean', true, 40),
   (NULL, 'no_artificial_sweeteners','No artificial sweeteners.',                       'boolean', true, 50),
   (NULL, 'no_thickeners',           'No thickeners or emulsifiers.',                   'boolean', true, 60),
@@ -20,15 +20,14 @@ BEGIN
   SELECT id INTO c_paneer   FROM public.categories WHERE slug = 'paneer';
   SELECT id INTO c_pb       FROM public.categories WHERE slug = 'peanut-butter';
 
-  -- Rusks: wholegrains (no maida — covered by universal), no artificial colors (universal),
-  -- <15g added sugar/100g, ≥9g fibre/100g, ≥10g protein/100g
+  -- Rusks: wholegrains (no maida — covered by universal), no artificial colours (universal),
+  -- <15g added sugar/100g, ≥10g protein/100g (fibre rule deactivated post-launch)
   INSERT INTO public.category_rules (category_id, code, description, evaluator_kind, threshold_value, threshold_unit, display_order) VALUES
     (c_rusks, 'wholegrain_only',       'Only wholegrain flour (no maida).',         'boolean',       NULL, NULL,         10),
     (c_rusks, 'sugar_lt_15_per_100g',  'Less than 15g added sugar per 100g.',       'threshold_lt',  15,   'g_per_100g', 20),
-    (c_rusks, 'fibre_gte_9_per_100g',  'At least 9g dietary fibre per 100g.',       'threshold_gte', 9,    'g_per_100g', 30),
     (c_rusks, 'protein_gte_10_per_100g','At least 10g protein per 100g.',           'threshold_gte', 10,   'g_per_100g', 40);
 
-  -- Biscuits: wholegrains, no artificial colors, <20g added sugar/100g, ≥5g fibre/100g
+  -- Biscuits: wholegrains, no artificial colours, <20g added sugar/100g, ≥5g fibre/100g
   INSERT INTO public.category_rules (category_id, code, description, evaluator_kind, threshold_value, threshold_unit, display_order) VALUES
     (c_biscuits, 'wholegrain_only',       'Only wholegrain flour (wheat or millets — no maida).', 'boolean',       NULL, NULL,         10),
     (c_biscuits, 'sugar_lt_20_per_100g',  'Less than 20g added sugar per 100g.',                  'threshold_lt',  20,   'g_per_100g', 20),

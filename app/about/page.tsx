@@ -91,9 +91,9 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <section className="mt-16 border-t rule pt-10">
+        <section id="faqs" className="mt-16 border-t rule pt-10 scroll-mt-24">
           <h2 className="font-display text-3xl sm:text-4xl tracking-tight">
-            Quick answers
+            FAQs
           </h2>
           <p className="text-sm text-[color:var(--ink-soft)] mt-2">
             The questions we get most often. Short, blunt answers.

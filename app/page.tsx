@@ -35,27 +35,20 @@ export default async function HomePage() {
       <section className="max-w-[1280px] mx-auto px-5 sm:px-10 pt-10 sm:pt-24 pb-10 sm:pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-6 sm:gap-y-8 items-end">
           <div className="lg:col-span-8 rise rise-1">
+            <span className="inline-block bg-[color:var(--accent)] text-[color:var(--ink)] font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.22em] px-3 py-1.5 mb-5 sm:mb-7 leading-none">
+              Not sponsored
+            </span>
             <h1 className="font-display font-medium leading-[0.92] tracking-[-0.02em] text-[11.5vw] sm:text-[10vw] lg:text-[7.2vw] text-[color:var(--ink)]">
-              Products
+              Better for You
               <br />
-              <em className="italic font-light">Food Pharmer</em>
-              <br />
-              would actually{" "}
-              <span className="relative inline-block">
-                buy.
-                <span
-                  aria-hidden
-                  className="absolute -bottom-1 left-0 right-0 h-[6px] bg-[color:var(--accent)]/70 -z-10 translate-y-[2px]"
-                />
-              </span>
+              <em className="italic font-light">by Food Pharmer</em>
             </h1>
           </div>
 
           <div className="lg:col-span-4 lg:pb-3 rise rise-2">
             <p className="text-lg sm:text-xl leading-relaxed text-[color:var(--ink-soft)] max-w-md font-normal">
-              A small list of packaged foods that meet Food Pharmer&rsquo;s
-              criteria. We read the ingredients so you don&rsquo;t have to.
-              Every product links back to where we read it.
+              We analyse ingredient lists and nutrition labels to shortlist
+              products that are better for you.
             </p>
             <p className="mt-5 text-sm text-[color:var(--ink-mute)] leading-relaxed max-w-md">
               Reviewed by{" "}
@@ -67,7 +60,8 @@ export default async function HomePage() {
               >
                 Food Pharmer
               </a>{" "}
-              and a team of qualified nutritionists.
+              and a team of qualified nutritionists. Not sponsored by any
+              brand on this list.
             </p>
             <p className="mt-5 font-display italic text-2xl text-[color:var(--accent-deep)]">
               Label Padhega India.

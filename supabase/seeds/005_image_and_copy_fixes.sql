@@ -5,7 +5,7 @@ UPDATE public.products SET product_photo_url = 'https://images.openfoodfacts.org
 UPDATE public.products SET product_photo_url = 'https://shopcdn.mylittlemoppet.com/wp-content/uploads/2017/03/98-Wheat-Noodles-13cm-X-16-cm-Product-Pic_1.jpg' WHERE slug = 'wheat-noodles-little-moppet';
 
 -- Drop em dashes + simplify category blurbs
-UPDATE public.categories SET blurb = 'Wholegrain rusks, no maida, no artificial colors.' WHERE slug = 'rusks';
+UPDATE public.categories SET blurb = 'Wholegrain rusks, no maida, no artificial colours.' WHERE slug = 'rusks';
 UPDATE public.categories SET blurb = 'Made from wholegrains. Low in sugar. Higher in fibre than the usual cookie.' WHERE slug = 'biscuits';
 UPDATE public.categories SET blurb = 'Cleaner spice mixes and lower sodium than mainstream packs.' WHERE slug = 'noodles';
 UPDATE public.categories SET blurb = 'Real milk paneer. Tested by a lab. No starches or thickeners.' WHERE slug = 'paneer';
