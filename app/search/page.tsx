@@ -5,7 +5,7 @@ import SiteFooter from "@/components/SiteFooter";
 
 export const metadata = {
   title: "Search",
-  description: "Search Food Pharmer Approved by product, brand, or category.",
+  description: "Search Better for You by Food Pharmer by product, brand, or category.",
 };
 
 type SP = Promise<{ q?: string }>;

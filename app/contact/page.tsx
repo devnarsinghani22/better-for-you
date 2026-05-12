@@ -5,7 +5,7 @@ import SiteFooter from "@/components/SiteFooter";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 export const metadata = {
-  title: "Contact | Food Pharmer Approved",
+  title: "Contact | Better for You by Food Pharmer",
   description: "Get in touch with Food Pharmer about a product or a tip.",
 };
 

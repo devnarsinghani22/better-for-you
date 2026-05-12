@@ -3,7 +3,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
 export const metadata = {
-  title: "Not found | Food Pharmer Approved",
+  title: "Not found | Better for You by Food Pharmer",
 };
 
 export default function NotFound() {

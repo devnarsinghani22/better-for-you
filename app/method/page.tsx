@@ -6,7 +6,7 @@ import SiteFooter from "@/components/SiteFooter";
 export const revalidate = 300;
 
 export const metadata = {
-  title: "How we approve | Food Pharmer Approved",
+  title: "Our method | Better for You by Food Pharmer",
   description:
     "How Food Pharmer reviews packaged foods. The rules, the process, and how often we re-check.",
 };

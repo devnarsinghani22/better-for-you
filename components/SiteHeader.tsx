@@ -8,8 +8,8 @@ export default function SiteHeader() {
           href="/"
           className="text-[color:var(--ink-soft)] hover:text-[color:var(--accent-deep)] transition-colors shrink-0"
         >
-          <span className="hidden sm:inline">Food Pharmer · Approved</span>
-          <span className="sm:hidden">FP · Approved</span>
+          <span className="hidden sm:inline">Better for You by Food Pharmer</span>
+          <span className="sm:hidden">Better for You</span>
         </Link>
 
         <form

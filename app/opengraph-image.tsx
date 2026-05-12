@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Food Pharmer Approved — packaged foods we'd actually buy.";
+export const alt = "Better for You by Food Pharmer — packaged foods we'd actually buy.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -33,7 +33,7 @@ export default async function OGImage() {
             color: "#5C5145",
           }}
         >
-          <span>Food Pharmer · Approved</span>
+          <span>Better for You · by Food Pharmer</span>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>

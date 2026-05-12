@@ -3,9 +3,9 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
 export const metadata = {
-  title: "About | Food Pharmer Approved",
+  title: "About | Better for You by Food Pharmer",
   description:
-    "What Food Pharmer Approved is, why it exists, and who is behind it.",
+    "What Better for You by Food Pharmer is, why it exists, and who is behind it.",
 };
 
 export default function AboutPage() {

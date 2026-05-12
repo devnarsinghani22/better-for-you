@@ -122,7 +122,7 @@ export default async function HomePage() {
                     </div>
                     <div className="mt-5 flex items-center justify-between gap-3">
                       <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-                        {n} approved
+                        {n} picks
                       </span>
                       <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors">
                         View →

@@ -9,7 +9,7 @@ export default function WhatsAppShare({
   brand: string;
   url: string;
 }) {
-  const text = `${brand} ${productName} — approved on Food Pharmer Approved. ${url}`;
+  const text = `${brand} ${productName} — featured on Better for You by Food Pharmer. ${url}`;
   const waUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
   return (
     <a

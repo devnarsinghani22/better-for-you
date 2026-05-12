@@ -49,7 +49,7 @@ export default async function ContactInbox() {
                   </span>
                   {r.email && (
                     <a
-                      href={`mailto:${r.email}?subject=Re%3A%20${encodeURIComponent(r.reason ?? "Food Pharmer Approved")}`}
+                      href={`mailto:${r.email}?subject=Re%3A%20${encodeURIComponent(r.reason ?? "Better for You by Food Pharmer")}`}
                       className="ml-2 text-sm underline text-stone-700 hover:text-stone-900"
                     >
                       {r.email}

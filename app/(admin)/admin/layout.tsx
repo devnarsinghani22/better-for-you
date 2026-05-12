@@ -30,7 +30,7 @@ export default async function AdminLayout({
         <div className="max-w-md text-center">
           <h1 className="text-2xl font-bold mb-3">Access denied</h1>
           <p className="text-stone-600 mb-6">
-            <span className="font-mono text-sm">{user.email}</span> is not on the admin allowlist for Food Pharmer Approved.
+            <span className="font-mono text-sm">{user.email}</span> is not on the admin allowlist for Better for You by Food Pharmer.
           </p>
           <form action="/auth/signout" method="post">
             <button className="text-sm underline text-stone-700">Sign out and try another account</button>

@@ -82,7 +82,7 @@ export default async function ProductPage({
           )}
           <div className="mt-6 inline-flex items-center gap-3">
             <span className="bg-[color:var(--accent)] text-[color:var(--ink)] px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em]">
-              Food Pharmer Approved
+              Better for You
             </span>
           </div>
         </header>
