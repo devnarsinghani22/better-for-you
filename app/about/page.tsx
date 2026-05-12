@@ -125,10 +125,6 @@ export default function AboutPage() {
                 q: "I bought a pack and the ingredients on it look different from your site.",
                 a: "Tell us. The contact form goes straight to us. We will re-check and update the page within a few days.",
               },
-              {
-                q: "Is this medical advice?",
-                a: "No. We tell you what is in the pack. Whether you should eat it depends on you and your doctor. We're a label-literacy publication, not a nutritionist.",
-              },
             ].map((item, i) => (
               <div key={i}>
                 <h3 className="font-display text-xl sm:text-2xl tracking-tight text-[color:var(--ink)] leading-snug">
