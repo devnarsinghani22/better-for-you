@@ -31,20 +31,9 @@ export default function AboutPage() {
             ingredient list.
           </p>
           <p>
-            Food Pharmer&rsquo;s mission has always been simple: make every
-            Indian health-literate. Years went into studying nutrition science
-            and the marketing tricks food brands use to sell to you. More
-            years went into translating that work into reels and videos
-            &mdash; how to read a label, why a claim on the front of a pack
-            rarely matches the ingredient list on the back, what nutrition
-            fundamentals actually matter.
-          </p>
-          <p>
-            The next question always came back:{" "}
-            <em>OK, but what should I actually buy?</em> This growing list is
-            the answer. Every product here has been vetted by the team, eaten
-            by Food Pharmer, and earned a place on his own family&rsquo;s
-            shelf.
+            Food Pharmer has spent years showing what is really inside those
+            packs. This site is a growing list of products that pass our rules.
+            You can buy them without having to read the label every time.
           </p>
         </div>
 
