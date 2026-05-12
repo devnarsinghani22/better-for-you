@@ -35,7 +35,6 @@ export default async function CategoryPage({
         label: "Regular Paneer",
         productSlugs: [
           "humpy-a2-paneer",
-          "amul-fresh-paneer",
           "amul-malai-paneer",
           "gowardhan-paneer",
         ],
