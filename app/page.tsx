@@ -59,9 +59,9 @@ export default async function HomePage() {
                 className="text-[color:var(--ink-soft)] underline decoration-[color:var(--ink-mute)] underline-offset-2 hover:text-[color:var(--accent-deep)]"
               >
                 Food Pharmer
-              </a>{" "}
-              and a team of qualified nutritionists. Not sponsored by any
-              brand on this list.
+              </a>
+              , plus a team of nutrition experts and researchers. Not
+              sponsored by any brand on this list.
             </p>
             <p className="mt-5 font-display italic text-2xl text-[color:var(--accent-deep)]">
               Label Padhega India.

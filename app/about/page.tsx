@@ -42,7 +42,7 @@ export default function AboutPage() {
             Who is behind this
           </p>
           <h2 className="font-display text-3xl sm:text-4xl tracking-tight mt-3 leading-tight">
-            Food Pharmer, with a team of qualified nutritionists.
+            Food Pharmer, plus a team of nutrition experts and researchers.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-[color:var(--ink-soft)] leading-relaxed">
             Every product on this site is reviewed by Food Pharmer (
@@ -54,7 +54,7 @@ export default function AboutPage() {
             >
               @foodpharmer
             </a>
-            ) and a team of qualified nutritionists. We read the label, run our
+            ), plus a team of nutrition experts and researchers. We read the label, run our
             rules, and where it makes sense we also send the product to a
             certified lab. Nothing goes on this list until that team signs off.
           </p>
