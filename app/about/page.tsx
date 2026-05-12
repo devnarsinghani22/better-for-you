@@ -147,39 +147,126 @@ export default function AboutPage() {
           </p>
 
           <div className="mt-8 space-y-7">
-            {[
-              {
-                q: "Are brands paying you to be on this list?",
-                a: "No. We do not take money, free product, or any other consideration from brands in exchange for an approval. If a brand pitches us, we still run our own checks.",
-              },
-              {
-                q: "How do I know I can trust this?",
-                a: "Two things. One, every product links to the page on the brand's own site where we read the label, so you can verify it yourself. Two, where we ran a chemistry test (e.g. paneer), the actual lab PDF is attached to the product page.",
-              },
-              {
-                q: "Why isn't my favourite brand here?",
-                a: "Probably one of three reasons. The product fails one of our rules (a hidden ingredient like maida or palm oil, or an artificial something). Or we haven't checked it yet. Or it's from a brand that competes with our own brand, Only What's Needed — we do not approve those, to be fair to the reader.",
-              },
-              {
-                q: "What is the difference between 'lab tested' and 'label reviewed'?",
-                a: "Label reviewed means we read the ingredient list off the pack. Lab tested means we also paid a certified lab to run a chemistry test on the product. Lab tests catch things the label can hide.",
-              },
-              {
-                q: "How often do you re-check?",
-                a: "Every six months. Brands change recipes without changing the front of the pack. If a product no longer passes, we mark it Retracted and remove it from the list.",
-              },
-              {
-                q: "I bought a pack and the ingredients on it look different from your site.",
-                a: "Tell us. The contact form goes straight to us. We will re-check and update the page within a few days.",
-              },
-            ].map((item, i) => (
+            {(
+              [
+                {
+                  q: "Do you have to pay a fee to be on this list?",
+                  a: (
+                    <>
+                      No. We do not take money, free product, or any other
+                      consideration from brands in exchange for being on this
+                      list. In fact, everything on this list is something Food
+                      Pharmer hand-picked. If brands come and pitch to be on
+                      this list, they still have to meet every criterion
+                      outlined on our{" "}
+                      <Link
+                        href="/method"
+                        className="underline hover:text-[color:var(--accent-deep)]"
+                      >
+                        method page
+                      </Link>
+                      .
+                    </>
+                  ),
+                },
+                {
+                  q: "How do I know I can trust this?",
+                  a: (
+                    <>
+                      Two reasons:
+                      <ul className="mt-3 space-y-2 list-disc pl-5">
+                        <li>
+                          Every product links to the brand&rsquo;s own page
+                          where we read the label, so you can verify it
+                          yourself.
+                        </li>
+                        <li>
+                          Wherever we did a lab test, the actual test results
+                          are attached to the product page as a PDF.
+                        </li>
+                      </ul>
+                    </>
+                  ),
+                },
+                {
+                  q: "Why isn't my favourite brand here?",
+                  a: (
+                    <>
+                      There could be a few reasons. Either the product
+                      didn&rsquo;t meet our criteria, or the team hasn&rsquo;t
+                      checked it yet &mdash; feel free to{" "}
+                      <Link
+                        href="/contact"
+                        className="underline hover:text-[color:var(--accent-deep)]"
+                      >
+                        contact us
+                      </Link>{" "}
+                      if you have product suggestions. Or the product is in a
+                      category that competes with Food Pharmer&rsquo;s{" "}
+                      <a
+                        href="https://onlywhatsneeded.in"
+                        target="_blank"
+                        rel="noopener"
+                        className="underline hover:text-[color:var(--accent-deep)]"
+                      >
+                        Only What&rsquo;s Needed
+                      </a>{" "}
+                      initiative, which is a conflict of interest, so we leave
+                      those out.
+                    </>
+                  ),
+                },
+                {
+                  q: "What is the difference between 'lab tested' and 'label reviewed'?",
+                  a: (
+                    <>
+                      Label reviewed means we read the ingredient list off the
+                      pack. Lab tested means we also paid a certified lab to
+                      run tests on the product &mdash; lab tests catch things
+                      the label can hide. But lab tests are also very
+                      expensive, which is why at this time we are unable to
+                      lab test every category.
+                    </>
+                  ),
+                },
+                {
+                  q: "What if a company changes its formulation?",
+                  a: (
+                    <>
+                      Food companies update formulations and nutrition labels
+                      even when the front of the pack still looks the same.
+                      So we re-check listings every six months. If a
+                      formulation change means a product no longer meets our
+                      criteria, we mark it as &ldquo;Retracted&rdquo; and
+                      remove it from the site.
+                    </>
+                  ),
+                },
+                {
+                  q: "I bought a product that's listed on your site but the ingredients look different. Why?",
+                  a: (
+                    <>
+                      Use the{" "}
+                      <Link
+                        href="/contact"
+                        className="underline hover:text-[color:var(--accent-deep)]"
+                      >
+                        contact form
+                      </Link>{" "}
+                      to let us know right away. Our team will look into it
+                      and update the product page as needed.
+                    </>
+                  ),
+                },
+              ] as { q: string; a: React.ReactNode }[]
+            ).map((item, i) => (
               <div key={i}>
                 <h3 className="font-display text-xl sm:text-2xl tracking-tight text-[color:var(--ink)] leading-snug">
                   {item.q}
                 </h3>
-                <p className="mt-2 text-base text-[color:var(--ink-soft)] leading-relaxed">
+                <div className="mt-2 text-base text-[color:var(--ink-soft)] leading-relaxed">
                   {item.a}
-                </p>
+                </div>
               </div>
             ))}
           </div>
