@@ -31,9 +31,20 @@ export default function AboutPage() {
             ingredient list.
           </p>
           <p>
-            Food Pharmer has spent years showing what is really inside those
-            packs. This site is a growing list of products that pass our rules.
-            You can buy them without having to read the label every time.
+            Food Pharmer&rsquo;s mission has always been simple: make every
+            Indian health-literate. Years went into studying nutrition science
+            and the marketing tricks food brands use to sell to you. More
+            years went into translating that work into reels and videos
+            &mdash; how to read a label, why a claim on the front of a pack
+            rarely matches the ingredient list on the back, what nutrition
+            fundamentals actually matter.
+          </p>
+          <p>
+            The next question always came back:{" "}
+            <em>OK, but what should I actually buy?</em> This growing list is
+            the answer. Every product here has been vetted by the team, eaten
+            by Food Pharmer, and earned a place on his own family&rsquo;s
+            shelf.
           </p>
         </div>
 
@@ -54,27 +65,63 @@ export default function AboutPage() {
             >
               @foodpharmer
             </a>
-            ), plus a team of nutrition experts and researchers. We read the label, run our
-            rules, and where it makes sense we also send the product to a
-            certified lab. Nothing goes on this list until that team signs off.
+            ), plus a team of nutrition experts and researchers. We read the
+            label, run our rules, and in a few cases, we send products for
+            lab-testing. Nothing goes on this list until the team has vetted
+            the products and Food Pharmer has personally reviewed them too.
           </p>
         </section>
 
-        <div className="mt-10 space-y-6 text-lg text-[color:var(--ink-soft)] leading-relaxed">
-          <p>
-            We do not approve every clean-looking pack. We do not approve
-            products from brands that compete with our own brand,{" "}
-            <a
-              href="https://onlywhatsneeded.in"
-              target="_blank"
-              rel="noopener"
-              className="underline hover:text-[color:var(--accent-deep)]"
-            >
-              Only What&rsquo;s Needed
-            </a>
-            . We also do not approve a product just because the brand asked us
-            to.
+        <section className="mt-12 border-t rule pt-10">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+            What we don&rsquo;t do
           </p>
+          <h2 className="font-display text-3xl sm:text-4xl tracking-tight mt-3 leading-tight">
+            No money, no pitches, no shortcuts.
+          </h2>
+          <ul className="mt-6 space-y-3 text-base sm:text-lg text-[color:var(--ink-soft)] leading-relaxed">
+            <li className="flex gap-3">
+              <span aria-hidden className="text-[color:var(--accent-deep)] shrink-0">·</span>
+              <span>
+                We don&rsquo;t take money, free product, or any other
+                consideration from brands in exchange for being on this list.
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span aria-hidden className="text-[color:var(--accent-deep)] shrink-0">·</span>
+              <span>
+                We don&rsquo;t approve products from brands that compete with
+                our own brand,{" "}
+                <a
+                  href="https://onlywhatsneeded.in"
+                  target="_blank"
+                  rel="noopener"
+                  className="underline hover:text-[color:var(--accent-deep)]"
+                >
+                  Only What&rsquo;s Needed
+                </a>
+                .
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span aria-hidden className="text-[color:var(--accent-deep)] shrink-0">·</span>
+              <span>
+                We don&rsquo;t approve a product just because the brand asked
+                us to.
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span aria-hidden className="text-[color:var(--accent-deep)] shrink-0">·</span>
+              <span>
+                We don&rsquo;t approve a pack just because it looks clean on
+                the front &mdash; we check the ingredient list and the
+                nutrition panel every time.
+              </span>
+            </li>
+          </ul>
+        </section>
+
+        <div className="mt-10 space-y-6 text-lg text-[color:var(--ink-soft)] leading-relaxed">
           <p>
             Want to know how we decide?{" "}
             <Link href="/method" className="underline hover:text-[color:var(--accent-deep)]">
