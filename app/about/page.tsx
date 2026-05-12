@@ -32,7 +32,7 @@ export default function AboutPage() {
           </p>
           <p>
             Food Pharmer has spent years showing what is really inside those
-            packs. This site is a small list of products that pass our rules.
+            packs. This site is a growing list of products that pass our rules.
             You can buy them without having to read the label every time.
           </p>
         </div>

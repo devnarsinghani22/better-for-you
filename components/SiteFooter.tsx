@@ -9,7 +9,7 @@ export default function SiteFooter() {
             Better for You by Food Pharmer
           </p>
           <p className="mt-3 text-sm text-[color:var(--ink-soft)] leading-relaxed max-w-sm">
-            A small list of packaged foods we would actually buy ourselves.
+            A growing list of packaged foods we would actually buy ourselves.
             Reviewed by Food Pharmer, plus a team of nutrition experts and researchers.
           </p>
           <p className="mt-4 text-xs text-[color:var(--ink-mute)] leading-relaxed max-w-sm">

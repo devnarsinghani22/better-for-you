@@ -72,13 +72,10 @@ export default async function HomePage() {
 
       {/* Categories */}
       <section className="max-w-[1280px] mx-auto px-5 sm:px-10 py-12 sm:py-24">
-        <div className="flex items-baseline justify-between mb-8 sm:mb-10 rise rise-3">
+        <div className="mb-8 sm:mb-10 rise rise-3">
           <h2 className="font-display text-3xl sm:text-4xl tracking-tight">
             Categories
           </h2>
-          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-            v1 · {list.length} live
-          </span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

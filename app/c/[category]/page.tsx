@@ -53,7 +53,7 @@ export default async function CategoryPage({
     ],
     "peanut-butter": [
       {
-        label: "100% Peanuts",
+        label: "100% Peanut Butter",
         productSlugs: [
           "pintola-all-natural-crunchy-pb",
           "myfitness-unsweetened-crunchy-pb",
@@ -96,7 +96,7 @@ export default async function CategoryPage({
             rel="noopener noreferrer"
             className="mt-5 inline-flex items-center gap-2 font-display italic text-lg text-[color:var(--accent-deep)] underline decoration-[color:var(--accent)]/60 underline-offset-4 hover:decoration-[color:var(--accent-deep)]"
           >
-            Watch Food Pharmer&rsquo;s Paneer Breakdown
+            Watch Food Pharmer&rsquo;s full breakdown on common paneer brands.
             <span aria-hidden>→</span>
           </a>
         )}
@@ -107,7 +107,7 @@ export default async function CategoryPage({
             rel="noopener noreferrer"
             className="mt-5 inline-flex items-center gap-2 font-display italic text-lg text-[color:var(--accent-deep)] underline decoration-[color:var(--accent)]/60 underline-offset-4 hover:decoration-[color:var(--accent-deep)]"
           >
-            Watch Food Pharmer&rsquo;s Peanut Butter Breakdown
+            Watch Food Pharmer&rsquo;s full breakdown on common peanut butter brands.
             <span aria-hidden>→</span>
           </a>
         )}
@@ -118,7 +118,7 @@ export default async function CategoryPage({
             rel="noopener noreferrer"
             className="mt-5 inline-flex items-center gap-2 font-display italic text-lg text-[color:var(--accent-deep)] underline decoration-[color:var(--accent)]/60 underline-offset-4 hover:decoration-[color:var(--accent-deep)]"
           >
-            Watch Food Pharmer&rsquo;s Noodles Breakdown
+            Watch Food Pharmer&rsquo;s full breakdown on common noodle brands.
             <span aria-hidden>→</span>
           </a>
         )}
@@ -129,7 +129,7 @@ export default async function CategoryPage({
             rel="noopener noreferrer"
             className="mt-5 inline-flex items-center gap-2 font-display italic text-lg text-[color:var(--accent-deep)] underline decoration-[color:var(--accent)]/60 underline-offset-4 hover:decoration-[color:var(--accent-deep)]"
           >
-            Watch Food Pharmer&rsquo;s Biscuit Breakdown
+            Watch Food Pharmer&rsquo;s full breakdown on common biscuit brands.
             <span aria-hidden>→</span>
           </a>
         )}

@@ -207,7 +207,7 @@ export default async function ProductPage({
             rel="noopener noreferrer"
             className="inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-[color:var(--ink)] text-[color:var(--bg)] px-6 py-4 sm:py-3 font-mono text-xs uppercase tracking-[0.22em] hover:bg-[color:var(--accent-deep)] transition-colors"
           >
-            Where to buy →
+            Source →
           </a>
         )}
         <WhatsAppShare
