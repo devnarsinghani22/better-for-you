@@ -25,8 +25,7 @@ export default async function MethodPage() {
     .eq("active", true)
     .order("display_order");
 
-  const universal = (rules ?? []).filter((r) => r.category_id === null);
-  const byCat = new Map<number, typeof universal>();
+  const byCat = new Map<number, NonNullable<typeof rules>>();
   for (const r of rules ?? []) {
     if (r.category_id !== null) {
       if (!byCat.has(r.category_id)) byCat.set(r.category_id, []);
@@ -55,24 +54,10 @@ export default async function MethodPage() {
         </p>
 
         <section className="mt-14">
-          <h2 className="font-display text-3xl tracking-tight">The basic rules</h2>
-          <p className="mt-2 text-[color:var(--ink-soft)] max-w-2xl">
-            Every product on this site has to pass these. No exceptions.
-          </p>
-          <ul className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
-            {universal.map((r) => (
-              <li key={r.id} className="flex gap-3">
-                <span aria-hidden className="text-[color:var(--lab)] font-mono shrink-0">✓</span>
-                <span className="text-[color:var(--ink-soft)] leading-relaxed">{r.description}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section className="mt-14">
           <h2 className="font-display text-3xl tracking-tight">Rules by category</h2>
           <p className="mt-2 text-[color:var(--ink-soft)] max-w-2xl">
-            Each category also has its own rules.
+            Every category has its own rules. A product has to pass the rules
+            for its category to be approved.
           </p>
           <div className="mt-6 space-y-8">
             {(categories ?? []).map((c) => {
@@ -125,9 +110,10 @@ export default async function MethodPage() {
               <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--accent-deep)]">Step 03</div>
               <h3 className="font-display text-xl mt-1">Run the rules</h3>
               <p className="text-[color:var(--ink-soft)] mt-1">
-                We check the product against the rules above. We also check the
-                brand. We do not approve products from brands that compete with
-                Only What&rsquo;s Needed (the brand by Food Pharmer).
+                We check the product against its category&rsquo;s rules. We
+                also check the brand. We do not approve products from brands
+                that compete with Only What&rsquo;s Needed (the brand by Food
+                Pharmer).
               </p>
             </li>
             <li>

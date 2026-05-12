@@ -9,19 +9,17 @@ export default async function CriteriaBlock({
   variant?: "full" | "compact";
   productMode?: boolean;
 }) {
+  if (categoryId == null) return null;
+
   const sb = await createClient();
   const { data: rules } = await sb
     .from("category_rules")
-    .select("id, code, description, category_id, is_required")
+    .select("id, code, description")
     .eq("active", true)
-    .or(`category_id.eq.${categoryId},category_id.is.null`)
-    .order("category_id", { ascending: false, nullsFirst: false })
+    .eq("category_id", categoryId)
     .order("display_order", { ascending: true });
 
   if (!rules || rules.length === 0) return null;
-
-  const perCategory = rules.filter((r) => r.category_id === categoryId);
-  const universal = rules.filter((r) => r.category_id === null);
 
   return (
     <section className={variant === "compact" ? "" : "mt-12 border-t rule pt-10"}>
@@ -33,48 +31,22 @@ export default async function CriteriaBlock({
           <p className="text-sm text-[color:var(--ink-soft)] mt-2 max-w-2xl">
             {productMode
               ? "Every check below was confirmed for this exact product before we put it on the site."
-              : "These are the rules a product has to meet for us to approve it. Some apply to every product. Some are specific to this category."}
+              : "These are the rules a product has to meet for us to approve it in this category."}
           </p>
         </div>
       )}
 
-      {perCategory.length > 0 && (
-        <div className="mb-6 bg-[color:var(--bg-elev)] border rule rounded-sm p-5">
-          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-3">
-            {productMode ? "Specific to this category" : "For this category"}
-          </div>
-          <ul className="space-y-2.5">
-            {perCategory.map((r) => (
-              <li key={r.id} className="flex gap-3">
-                <span
-                  aria-hidden
-                  className="text-[color:var(--lab)] font-bold text-base leading-tight shrink-0 mt-0.5"
-                >
-                  ✓
-                </span>
-                <span className="text-[color:var(--ink)] leading-relaxed">
-                  {r.description}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      <div>
-        <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-3">
-          {productMode ? "Plus our universal checks" : "For every product on this site"}
-        </div>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5">
-          {universal.map((r) => (
+      <div className="bg-[color:var(--bg-elev)] border rule rounded-sm p-5">
+        <ul className="space-y-2.5">
+          {rules.map((r) => (
             <li key={r.id} className="flex gap-3">
               <span
                 aria-hidden
-                className="text-[color:var(--lab)] font-bold text-sm leading-tight shrink-0 mt-0.5"
+                className="text-[color:var(--lab)] font-bold text-base leading-tight shrink-0 mt-0.5"
               >
                 ✓
               </span>
-              <span className="text-[color:var(--ink-soft)] leading-relaxed text-sm">
+              <span className="text-[color:var(--ink)] leading-relaxed">
                 {r.description}
               </span>
             </li>
