@@ -32,7 +32,7 @@ export default async function HomePage() {
       <SiteHeader />
 
       {/* Hero */}
-      <section className="max-w-[1280px] mx-auto px-5 sm:px-10 pt-10 sm:pt-24 pb-10 sm:pb-16">
+      <section className="max-w-[1280px] mx-auto px-5 sm:px-10 pt-10 sm:pt-24 pb-4 sm:pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-6 sm:gap-y-8 items-end">
           <div className="lg:col-span-8 rise rise-1">
             <span className="inline-block bg-[color:var(--accent)] text-[color:var(--ink)] font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.22em] px-3 py-1.5 mb-5 sm:mb-7 leading-none">
@@ -71,7 +71,7 @@ export default async function HomePage() {
       </section>
 
       {/* Categories */}
-      <section className="max-w-[1280px] mx-auto px-5 sm:px-10 py-12 sm:py-24">
+      <section className="max-w-[1280px] mx-auto px-5 sm:px-10 pt-4 sm:pt-10 pb-12 sm:pb-24">
         <div className="mb-8 sm:mb-10 rise rise-3">
           <h2 className="font-display text-3xl sm:text-4xl tracking-tight">
             Categories
