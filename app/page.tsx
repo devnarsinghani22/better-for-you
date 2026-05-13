@@ -126,9 +126,6 @@ export default async function HomePage() {
                     </div>
 
                     <div className="flex-1 p-5 sm:p-7 flex flex-col">
-                      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-2">
-                        Featured · {paneerVariants.length} variants
-                      </p>
                       <h3 className="font-display text-3xl sm:text-4xl tracking-[-0.02em] leading-[0.95] mb-3 sm:mb-4">
                         Paneer
                       </h3>
@@ -142,8 +139,8 @@ export default async function HomePage() {
                                 href={`/c/${v.slug}`}
                                 className="group flex items-center justify-between py-2.5 sm:py-3 hover:text-[color:var(--accent-deep)] transition-colors"
                               >
-                                <div className="flex items-baseline gap-3 min-w-0">
-                                  <span className="font-display text-lg sm:text-xl tracking-[-0.01em] leading-tight text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors">
+                                <div className="flex items-baseline gap-2 sm:gap-3 min-w-0">
+                                  <span className="font-display text-base sm:text-xl tracking-[-0.01em] leading-tight text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors whitespace-nowrap">
                                     {variantShortLabel[v.slug] ?? v.name}
                                   </span>
                                   <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] shrink-0">
