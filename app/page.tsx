@@ -108,8 +108,8 @@ export default async function HomePage() {
                   key={c.id}
                   className={`sm:col-span-2 relative bg-[color:var(--bg-elev)] border rule rounded-sm overflow-hidden rise rise-${Math.min(i + 1, 5)}`}
                 >
-                  <div className="flex flex-row min-h-[180px] sm:min-h-[240px]">
-                    <div className="relative w-[40%] sm:w-[36%] shrink-0 overflow-hidden bg-[color:var(--bg)]">
+                  <div className="flex flex-row items-stretch min-h-[220px] sm:min-h-[260px]">
+                    <div className="relative w-[44%] sm:w-[40%] shrink-0 self-stretch overflow-hidden bg-[color:var(--bg)]">
                       {paneerHero.hero_image_url && (
                         /* eslint-disable-next-line @next/next/no-img-element */
                         <img
@@ -125,10 +125,13 @@ export default async function HomePage() {
                       </div>
                     </div>
 
-                    <div className="flex-1 p-5 sm:p-7 flex flex-col">
-                      <h3 className="font-display text-3xl sm:text-4xl tracking-[-0.02em] leading-[0.95] mb-3 sm:mb-4">
+                    <div className="flex-1 min-w-0 p-5 sm:p-7 flex flex-col">
+                      <h3 className="font-display text-3xl sm:text-4xl tracking-[-0.02em] leading-[0.95]">
                         Paneer
                       </h3>
+                      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mt-2 mb-3 sm:mb-4">
+                        {paneerTotal} picks
+                      </p>
 
                       <ul className="mt-auto border-t rule">
                         {paneerVariants.map((v) => {
