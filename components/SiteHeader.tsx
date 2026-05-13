@@ -29,7 +29,7 @@ export default function SiteHeader() {
             type="search"
             name="q"
             placeholder="Search products, brands…"
-            className="w-full bg-[color:var(--bg-elev)] border border-[color:var(--ink-mute)] focus:border-[color:var(--ink)] rounded-sm px-3 py-1.5 text-[12px] sm:text-xs uppercase tracking-[0.16em] text-[color:var(--ink)] placeholder:text-[color:var(--ink-mute)] outline-none transition-colors"
+            className="w-full bg-[color:var(--bg-elev)] border border-[color:var(--ink-mute)] focus:border-[color:var(--ink)] rounded-sm px-3 py-2 text-[12px] sm:text-xs uppercase tracking-[0.16em] text-[color:var(--ink)] placeholder:text-[color:var(--ink-mute)] outline-none transition-colors min-h-[40px]"
           />
         </form>
 
@@ -57,6 +57,57 @@ export default function SiteHeader() {
           @foodpharmer →
         </a>
       </div>
+
+      {/* Mobile-only nav strip — surfaces section links that are inaccessible from the header otherwise */}
+      <nav
+        aria-label="Mobile navigation"
+        className="md:hidden border-t rule bg-[color:var(--bg-elev)]/40"
+      >
+        <ul className="max-w-[1280px] mx-auto px-4 flex items-stretch justify-between text-[10px] font-mono uppercase tracking-[0.18em] text-[color:var(--ink-mute)]">
+          <li className="flex-1">
+            <Link
+              href="/method"
+              className="flex items-center justify-center min-h-[44px] hover:text-[color:var(--accent-deep)] transition-colors"
+            >
+              Method
+            </Link>
+          </li>
+          <li className="flex-1">
+            <Link
+              href="/about"
+              className="flex items-center justify-center min-h-[44px] hover:text-[color:var(--accent-deep)] transition-colors"
+            >
+              About
+            </Link>
+          </li>
+          <li className="flex-1">
+            <Link
+              href="/about#faqs"
+              className="flex items-center justify-center min-h-[44px] hover:text-[color:var(--accent-deep)] transition-colors"
+            >
+              FAQs
+            </Link>
+          </li>
+          <li className="flex-1">
+            <Link
+              href="/contact"
+              className="flex items-center justify-center min-h-[44px] hover:text-[color:var(--accent-deep)] transition-colors"
+            >
+              Contact
+            </Link>
+          </li>
+          <li className="flex-1">
+            <a
+              href="https://instagram.com/foodpharmer"
+              target="_blank"
+              rel="noopener"
+              className="flex items-center justify-center min-h-[44px] hover:text-[color:var(--accent-deep)] transition-colors"
+            >
+              IG
+            </a>
+          </li>
+        </ul>
+      </nav>
     </header>
   );
 }

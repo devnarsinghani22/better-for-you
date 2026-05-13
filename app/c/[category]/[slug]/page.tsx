@@ -57,6 +57,8 @@ export default async function ProductPage({
             <img
               src={product.product_photo_url}
               alt={product.name}
+              decoding="async"
+              fetchPriority="high"
               className="max-h-full max-w-full object-contain p-2 sm:p-3"
             />
           </div>
@@ -113,7 +115,7 @@ export default async function ProductPage({
           )}
           {!isLab && (
             <p className="text-xs text-[color:var(--ink-mute)] mt-1 leading-snug">
-              We read the ingredients off the brand&rsquo;s pack. No chemistry test on this one.
+              We read the ingredients off the brand&rsquo;s pack. No lab test on this one.
             </p>
           )}
           {isLab && (
@@ -193,6 +195,8 @@ export default async function ProductPage({
             <img
               src={product.label_image_url}
               alt={`${product.name} label`}
+              loading="lazy"
+              decoding="async"
               className="max-w-full h-auto"
             />
           </div>

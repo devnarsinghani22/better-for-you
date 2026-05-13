@@ -115,6 +115,8 @@ export default async function HomePage() {
                         <img
                           src={paneerHero.hero_image_url}
                           alt="Paneer"
+                          loading="lazy"
+                          decoding="async"
                           className="absolute inset-0 w-full h-full object-cover"
                         />
                       )}
@@ -139,7 +141,7 @@ export default async function HomePage() {
                             <li key={v.id} className="border-b rule last:border-b-0">
                               <Link
                                 href={`/c/${v.slug}`}
-                                className="group flex items-center justify-between py-2.5 sm:py-3 hover:text-[color:var(--accent-deep)] transition-colors"
+                                className="group flex items-center justify-between min-h-[44px] py-3 sm:py-3.5 hover:text-[color:var(--accent-deep)] transition-colors"
                               >
                                 <span className="font-display text-base sm:text-xl tracking-[-0.01em] leading-tight text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors whitespace-nowrap">
                                   {variantShortLabel[v.slug] ?? v.name}
@@ -173,6 +175,8 @@ export default async function HomePage() {
                       <img
                         src={c.hero_image_url}
                         alt={c.name}
+                        loading="lazy"
+                        decoding="async"
                         className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                       />
                     </div>

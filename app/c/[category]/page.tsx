@@ -133,6 +133,8 @@ export default async function CategoryPage({
                   <img
                     src={p.product_photo_url}
                     alt={p.name}
+                    loading="lazy"
+                    decoding="async"
                     className={
                       tightCrop
                         ? "h-full w-full object-cover scale-125 group-hover:scale-[1.32] transition-transform duration-500"
