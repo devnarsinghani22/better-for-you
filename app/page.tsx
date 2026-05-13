@@ -108,8 +108,8 @@ export default async function HomePage() {
                   key={c.id}
                   className={`sm:col-span-2 relative bg-[color:var(--bg-elev)] border rule rounded-sm overflow-hidden rise rise-${Math.min(i + 1, 5)}`}
                 >
-                  <div className="grid grid-cols-1 sm:grid-cols-12 sm:items-stretch">
-                    <div className="relative sm:col-span-5 aspect-[4/3] sm:aspect-auto sm:min-h-[360px] bg-[color:var(--bg)] overflow-hidden">
+                  <div className="flex flex-row min-h-[180px] sm:min-h-[240px]">
+                    <div className="relative w-[40%] sm:w-[36%] shrink-0 overflow-hidden bg-[color:var(--bg)]">
                       {paneerHero.hero_image_url && (
                         /* eslint-disable-next-line @next/next/no-img-element */
                         <img
@@ -118,18 +118,18 @@ export default async function HomePage() {
                           className="absolute inset-0 w-full h-full object-cover"
                         />
                       )}
-                      <div className="absolute top-4 left-4 z-10">
-                        <div className="border-2 border-[color:var(--lab)] text-[color:var(--lab)] font-mono text-[10px] uppercase tracking-[0.22em] px-2.5 py-1.5 leading-none bg-[color:var(--bg-elev)]">
+                      <div className="absolute top-3 left-3 z-10">
+                        <div className="border-2 border-[color:var(--lab)] text-[color:var(--lab)] font-mono text-[9px] uppercase tracking-[0.2em] px-2 py-1 leading-none bg-[color:var(--bg-elev)]">
                           Lab tested ✓
                         </div>
                       </div>
                     </div>
 
-                    <div className="sm:col-span-7 p-6 sm:p-9 flex flex-col">
-                      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-3">
-                        Featured · {paneerVariants.length} variants · {paneerTotal} picks
+                    <div className="flex-1 p-5 sm:p-7 flex flex-col">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-2">
+                        Featured · {paneerVariants.length} variants
                       </p>
-                      <h3 className="font-display text-5xl sm:text-6xl tracking-[-0.02em] leading-[0.9] mb-6">
+                      <h3 className="font-display text-3xl sm:text-4xl tracking-[-0.02em] leading-[0.95] mb-3 sm:mb-4">
                         Paneer
                       </h3>
 
@@ -140,17 +140,17 @@ export default async function HomePage() {
                             <li key={v.id} className="border-b rule last:border-b-0">
                               <Link
                                 href={`/c/${v.slug}`}
-                                className="group flex items-center justify-between py-4 sm:py-5 hover:text-[color:var(--accent-deep)] transition-colors"
+                                className="group flex items-center justify-between py-2.5 sm:py-3 hover:text-[color:var(--accent-deep)] transition-colors"
                               >
-                                <div className="flex items-baseline gap-4 min-w-0">
-                                  <span className="font-display text-2xl sm:text-3xl tracking-[-0.01em] leading-tight text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors">
+                                <div className="flex items-baseline gap-3 min-w-0">
+                                  <span className="font-display text-lg sm:text-xl tracking-[-0.01em] leading-tight text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors">
                                     {variantShortLabel[v.slug] ?? v.name}
                                   </span>
-                                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] shrink-0">
+                                  <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] shrink-0">
                                     {n} {n === 1 ? "pick" : "picks"}
                                   </span>
                                 </div>
-                                <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors shrink-0 ml-3">
+                                <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors shrink-0 ml-3">
                                   View →
                                 </span>
                               </Link>
