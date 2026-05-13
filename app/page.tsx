@@ -132,21 +132,15 @@ export default async function HomePage() {
 
                       <ul className="mt-auto border-t rule">
                         {paneerVariants.map((v) => {
-                          const n = counts.get(v.id) ?? 0;
                           return (
                             <li key={v.id} className="border-b rule last:border-b-0">
                               <Link
                                 href={`/c/${v.slug}`}
                                 className="group flex items-center justify-between py-2.5 sm:py-3 hover:text-[color:var(--accent-deep)] transition-colors"
                               >
-                                <div className="flex items-baseline gap-2 sm:gap-3 min-w-0">
-                                  <span className="font-display text-base sm:text-xl tracking-[-0.01em] leading-tight text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors whitespace-nowrap">
-                                    {variantShortLabel[v.slug] ?? v.name}
-                                  </span>
-                                  <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] shrink-0">
-                                    {n} {n === 1 ? "pick" : "picks"}
-                                  </span>
-                                </div>
+                                <span className="font-display text-base sm:text-xl tracking-[-0.01em] leading-tight text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors whitespace-nowrap">
+                                  {variantShortLabel[v.slug] ?? v.name}
+                                </span>
                                 <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors shrink-0 ml-3">
                                   View →
                                 </span>
