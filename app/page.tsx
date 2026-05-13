@@ -32,9 +32,6 @@ export default async function HomePage() {
     .map((s) => list.find((c) => c.slug === s))
     .filter((c): c is NonNullable<typeof c> => Boolean(c));
   const paneerHero = paneerVariants[0];
-  const otherCats = list.filter(
-    (c) => !paneerSlugOrder.includes(c.slug),
-  );
   const variantShortLabel: Record<string, string> = {
     "paneer": "Regular",
     "paneer-high-protein": "High Protein",
@@ -96,70 +93,78 @@ export default async function HomePage() {
           </h2>
         </div>
 
-        {/* Featured: Paneer with three variants */}
-        {paneerVariants.length > 0 && paneerHero && (
-          <article className="relative bg-[color:var(--bg-elev)] border rule rounded-sm overflow-hidden mb-6 rise rise-3">
-            <div className="grid grid-cols-1 sm:grid-cols-12 sm:items-stretch">
-              <div className="relative sm:col-span-5 aspect-[4/3] sm:aspect-auto sm:min-h-[360px] bg-[color:var(--bg)] overflow-hidden">
-                {paneerHero.hero_image_url && (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img
-                    src={paneerHero.hero_image_url}
-                    alt="Paneer"
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
-                )}
-                <div className="absolute top-4 left-4 z-10">
-                  <div className="border-2 border-[color:var(--lab)] text-[color:var(--lab)] font-mono text-[10px] uppercase tracking-[0.22em] px-2.5 py-1.5 leading-none bg-[color:var(--bg-elev)]">
-                    Lab tested ✓
-                  </div>
-                </div>
-              </div>
-
-              <div className="sm:col-span-7 p-6 sm:p-9 flex flex-col">
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-3">
-                  Featured · {paneerVariants.length} variants · {paneerTotal} picks
-                </p>
-                <h3 className="font-display text-5xl sm:text-6xl tracking-[-0.02em] leading-[0.9] mb-2">
-                  Paneer
-                </h3>
-                <p className="text-sm text-[color:var(--ink-soft)] leading-relaxed mb-6 max-w-md">
-                  The only category we lab-test ourselves. Pick the variant
-                  closest to how you cook.
-                </p>
-
-                <ul className="mt-auto border-t rule">
-                  {paneerVariants.map((c) => {
-                    const n = counts.get(c.id) ?? 0;
-                    return (
-                      <li key={c.id} className="border-b rule last:border-b-0">
-                        <Link
-                          href={`/c/${c.slug}`}
-                          className="group flex items-center justify-between py-4 sm:py-5 hover:text-[color:var(--accent-deep)] transition-colors"
-                        >
-                          <div className="flex items-baseline gap-4 min-w-0">
-                            <span className="font-display text-2xl sm:text-3xl tracking-[-0.01em] leading-tight text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors">
-                              {variantShortLabel[c.slug] ?? c.name}
-                            </span>
-                            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] shrink-0">
-                              {n} {n === 1 ? "pick" : "picks"}
-                            </span>
-                          </div>
-                          <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors shrink-0 ml-3">
-                            View →
-                          </span>
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            </div>
-          </article>
-        )}
-
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {otherCats.map((c, i) => {
+          {list.map((c, i) => {
+            // Skip the two paneer variant slugs — they get rendered inside
+            // the parent "paneer" featured card below.
+            if (c.slug === "paneer-high-protein" || c.slug === "paneer-low-fat") {
+              return null;
+            }
+
+            // Featured row for Paneer + its three variants, full-width.
+            if (c.slug === "paneer" && paneerHero) {
+              return (
+                <article
+                  key={c.id}
+                  className={`sm:col-span-2 relative bg-[color:var(--bg-elev)] border rule rounded-sm overflow-hidden rise rise-${Math.min(i + 1, 5)}`}
+                >
+                  <div className="grid grid-cols-1 sm:grid-cols-12 sm:items-stretch">
+                    <div className="relative sm:col-span-5 aspect-[4/3] sm:aspect-auto sm:min-h-[360px] bg-[color:var(--bg)] overflow-hidden">
+                      {paneerHero.hero_image_url && (
+                        /* eslint-disable-next-line @next/next/no-img-element */
+                        <img
+                          src={paneerHero.hero_image_url}
+                          alt="Paneer"
+                          className="absolute inset-0 w-full h-full object-cover"
+                        />
+                      )}
+                      <div className="absolute top-4 left-4 z-10">
+                        <div className="border-2 border-[color:var(--lab)] text-[color:var(--lab)] font-mono text-[10px] uppercase tracking-[0.22em] px-2.5 py-1.5 leading-none bg-[color:var(--bg-elev)]">
+                          Lab tested ✓
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="sm:col-span-7 p-6 sm:p-9 flex flex-col">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-3">
+                        Featured · {paneerVariants.length} variants · {paneerTotal} picks
+                      </p>
+                      <h3 className="font-display text-5xl sm:text-6xl tracking-[-0.02em] leading-[0.9] mb-6">
+                        Paneer
+                      </h3>
+
+                      <ul className="mt-auto border-t rule">
+                        {paneerVariants.map((v) => {
+                          const n = counts.get(v.id) ?? 0;
+                          return (
+                            <li key={v.id} className="border-b rule last:border-b-0">
+                              <Link
+                                href={`/c/${v.slug}`}
+                                className="group flex items-center justify-between py-4 sm:py-5 hover:text-[color:var(--accent-deep)] transition-colors"
+                              >
+                                <div className="flex items-baseline gap-4 min-w-0">
+                                  <span className="font-display text-2xl sm:text-3xl tracking-[-0.01em] leading-tight text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors">
+                                    {variantShortLabel[v.slug] ?? v.name}
+                                  </span>
+                                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] shrink-0">
+                                    {n} {n === 1 ? "pick" : "picks"}
+                                  </span>
+                                </div>
+                                <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors shrink-0 ml-3">
+                                  View →
+                                </span>
+                              </Link>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  </div>
+                </article>
+              );
+            }
+
+            // Default card
             const n = counts.get(c.id) ?? 0;
             return (
               <Link
