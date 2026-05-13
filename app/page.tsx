@@ -27,6 +27,24 @@ export default async function HomePage() {
   const list = categories ?? [];
   const counts = await getLiveCountByCategory();
 
+  const paneerSlugOrder = ["paneer", "paneer-high-protein", "paneer-low-fat"];
+  const paneerVariants = paneerSlugOrder
+    .map((s) => list.find((c) => c.slug === s))
+    .filter((c): c is NonNullable<typeof c> => Boolean(c));
+  const paneerHero = paneerVariants[0];
+  const otherCats = list.filter(
+    (c) => !paneerSlugOrder.includes(c.slug),
+  );
+  const variantShortLabel: Record<string, string> = {
+    "paneer": "Regular",
+    "paneer-high-protein": "High Protein",
+    "paneer-low-fat": "Low Fat",
+  };
+  const paneerTotal = paneerVariants.reduce(
+    (sum, c) => sum + (counts.get(c.id) ?? 0),
+    0,
+  );
+
   return (
     <div className="relative z-10">
       <SiteHeader />
@@ -78,8 +96,70 @@ export default async function HomePage() {
           </h2>
         </div>
 
+        {/* Featured: Paneer with three variants */}
+        {paneerVariants.length > 0 && paneerHero && (
+          <article className="relative bg-[color:var(--bg-elev)] border rule rounded-sm overflow-hidden mb-6 rise rise-3">
+            <div className="grid grid-cols-1 sm:grid-cols-12 sm:items-stretch">
+              <div className="relative sm:col-span-5 aspect-[4/3] sm:aspect-auto sm:min-h-[360px] bg-[color:var(--bg)] overflow-hidden">
+                {paneerHero.hero_image_url && (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    src={paneerHero.hero_image_url}
+                    alt="Paneer"
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                )}
+                <div className="absolute top-4 left-4 z-10">
+                  <div className="border-2 border-[color:var(--lab)] text-[color:var(--lab)] font-mono text-[10px] uppercase tracking-[0.22em] px-2.5 py-1.5 leading-none bg-[color:var(--bg-elev)]">
+                    Lab tested ✓
+                  </div>
+                </div>
+              </div>
+
+              <div className="sm:col-span-7 p-6 sm:p-9 flex flex-col">
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-3">
+                  Featured · {paneerVariants.length} variants · {paneerTotal} picks
+                </p>
+                <h3 className="font-display text-5xl sm:text-6xl tracking-[-0.02em] leading-[0.9] mb-2">
+                  Paneer
+                </h3>
+                <p className="text-sm text-[color:var(--ink-soft)] leading-relaxed mb-6 max-w-md">
+                  The only category we lab-test ourselves. Pick the variant
+                  closest to how you cook.
+                </p>
+
+                <ul className="mt-auto border-t rule">
+                  {paneerVariants.map((c) => {
+                    const n = counts.get(c.id) ?? 0;
+                    return (
+                      <li key={c.id} className="border-b rule last:border-b-0">
+                        <Link
+                          href={`/c/${c.slug}`}
+                          className="group flex items-center justify-between py-4 sm:py-5 hover:text-[color:var(--accent-deep)] transition-colors"
+                        >
+                          <div className="flex items-baseline gap-4 min-w-0">
+                            <span className="font-display text-2xl sm:text-3xl tracking-[-0.01em] leading-tight text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors">
+                              {variantShortLabel[c.slug] ?? c.name}
+                            </span>
+                            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] shrink-0">
+                              {n} {n === 1 ? "pick" : "picks"}
+                            </span>
+                          </div>
+                          <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors shrink-0 ml-3">
+                            View →
+                          </span>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </div>
+          </article>
+        )}
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {list.map((c, i) => {
+          {otherCats.map((c, i) => {
             const n = counts.get(c.id) ?? 0;
             return (
               <Link
@@ -96,13 +176,6 @@ export default async function HomePage() {
                         alt={c.name}
                         className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                       />
-                      {c.slug.startsWith("paneer") && (
-                        <div className="absolute top-3 left-3 z-10">
-                          <div className="border-2 border-[color:var(--lab)] text-[color:var(--lab)] font-mono text-[9px] uppercase tracking-[0.2em] px-2 py-1 leading-none bg-[color:var(--bg-elev)]">
-                            Lab tested ✓
-                          </div>
-                        </div>
-                      )}
                     </div>
                   )}
                   <div className="flex-1 p-6 sm:p-7 flex flex-col justify-between">
