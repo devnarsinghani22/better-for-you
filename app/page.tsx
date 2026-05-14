@@ -148,11 +148,6 @@ export default async function HomePage() {
                         <div className="absolute top-3 left-3 font-mono text-[10px] uppercase tracking-[0.28em] bg-[color:var(--bg)] text-[color:var(--ink)] px-2 py-1 leading-none border rule">
                           {num} / {String(totalEntries).padStart(2, "0")}
                         </div>
-                        {isPaneer && (
-                          <div className="absolute top-3 right-3 border-2 border-[color:var(--lab)] text-[color:var(--lab)] font-mono text-[9px] uppercase tracking-[0.2em] px-2 py-1 leading-none bg-[color:var(--bg-elev)]">
-                            Lab tested ✓
-                          </div>
-                        )}
                       </div>
                     </Link>
 
