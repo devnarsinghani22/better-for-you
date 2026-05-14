@@ -95,7 +95,7 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
             name="q"
             defaultValue={query}
             autoFocus
-            placeholder="Try 'amul', 'rusk', 'palm oil'..."
+            placeholder="Try 'pintola', 'paneer', 'palm oil'..."
             className="flex-1 bg-[color:var(--bg-elev)] border-2 border-[color:var(--ink-mute)] focus:border-[color:var(--ink)] rounded-sm px-4 py-3 text-base text-[color:var(--ink)] placeholder:text-[color:var(--ink-mute)] outline-none transition-colors"
           />
           <button

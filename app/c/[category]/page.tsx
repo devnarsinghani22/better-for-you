@@ -26,7 +26,7 @@ export default async function CategoryPage({
   const products = await getLiveProductsForCategory(slug);
 
   // Categories with boxed products that benefit from a tighter crop
-  const tightCrop = slug === "biscuits" || slug === "rusks";
+  const tightCrop = slug === "biscuits";
 
   // Subcategory groupings
   const subgroupsBySlug: Record<string, { label: string; productSlugs: string[] }[]> = {

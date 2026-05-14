@@ -27,7 +27,7 @@ export default async function HomePage() {
   const list = categories ?? [];
   const counts = await getLiveCountByCategory();
 
-  const paneerSlugOrder = ["paneer", "paneer-high-protein", "paneer-low-fat"];
+  const paneerSlugOrder = ["paneer", "paneer-high-protein"];
   const paneerVariants = paneerSlugOrder
     .map((s) => list.find((c) => c.slug === s))
     .filter((c): c is NonNullable<typeof c> => Boolean(c));
@@ -35,7 +35,6 @@ export default async function HomePage() {
   const variantShortLabel: Record<string, string> = {
     "paneer": "Regular",
     "paneer-high-protein": "High Protein",
-    "paneer-low-fat": "Low Fat",
   };
   const paneerTotal = paneerVariants.reduce(
     (sum, c) => sum + (counts.get(c.id) ?? 0),
@@ -95,9 +94,9 @@ export default async function HomePage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {list.map((c, i) => {
-            // Skip the two paneer variant slugs — they get rendered inside
-            // the parent "paneer" featured card below.
-            if (c.slug === "paneer-high-protein" || c.slug === "paneer-low-fat") {
+            // Skip paneer variant slugs — rendered inside the parent
+            // "paneer" featured card below.
+            if (c.slug === "paneer-high-protein") {
               return null;
             }
 
