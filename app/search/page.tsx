@@ -127,9 +127,6 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
                   <h3 className="font-display text-2xl tracking-tight">
                     {c.name}
                   </h3>
-                  <p className="text-sm text-[color:var(--ink-soft)] mt-1 leading-snug">
-                    {c.blurb}
-                  </p>
                 </Link>
               ))}
             </div>

@@ -51,9 +51,6 @@ export default async function CategoryPage({
         <h1 className="font-display text-5xl sm:text-7xl tracking-[-0.02em] leading-[0.95]">
           {cat.name}
         </h1>
-        <p className="text-[color:var(--ink-soft)] text-lg max-w-2xl mt-4">
-          {cat.blurb}
-        </p>
         {slug.startsWith("paneer") && (
           <a
             href="https://youtu.be/zJu117xcs9Y"

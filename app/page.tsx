@@ -162,9 +162,6 @@ export default async function HomePage() {
                           {c.name}
                         </h3>
                       </Link>
-                      <p className="mt-3 sm:mt-4 text-sm sm:text-base text-[color:var(--ink-soft)] leading-relaxed max-w-[52ch]">
-                        {c.blurb}
-                      </p>
 
                       {isPaneer && paneerVariants.length > 0 ? (
                         <ul className="mt-6 border-t rule">
