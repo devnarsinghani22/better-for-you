@@ -173,20 +173,15 @@ export default async function HomePage() {
                               href={`/c/paneer`}
                               className="flex items-center justify-between min-h-[52px] py-3 group/v"
                             >
-                              <span className="flex items-baseline gap-3 min-w-0">
-                                <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[color:var(--ink-mute)] w-7 shrink-0">
-                                  {num}a
-                                </span>
-                                <span className="font-display text-xl sm:text-2xl tracking-tight text-[color:var(--ink)] group-hover/v:text-[color:var(--accent-deep)] transition-colors truncate">
-                                  Regular
-                                </span>
+                              <span className="font-display text-xl sm:text-2xl tracking-tight text-[color:var(--ink)] group-hover/v:text-[color:var(--accent-deep)] transition-colors truncate">
+                                Regular
                               </span>
                               <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[color:var(--ink-mute)] group-hover/v:text-[color:var(--accent-deep)] transition-colors shrink-0 ml-3 whitespace-nowrap">
                                 {counts.get(paneerParent?.id ?? -1) ?? 0} picks · View →
                               </span>
                             </Link>
                           </li>
-                          {paneerVariants.map((v, vi) => (
+                          {paneerVariants.map((v) => (
                             <li
                               key={v.id}
                               className="border-b rule last:border-b-0"
@@ -195,14 +190,8 @@ export default async function HomePage() {
                                 href={`/c/${v.slug}`}
                                 className="flex items-center justify-between min-h-[52px] py-3 group/v"
                               >
-                                <span className="flex items-baseline gap-3 min-w-0">
-                                  <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[color:var(--ink-mute)] w-7 shrink-0">
-                                    {num}
-                                    {String.fromCharCode(98 + vi)}
-                                  </span>
-                                  <span className="font-display text-xl sm:text-2xl tracking-tight text-[color:var(--ink)] group-hover/v:text-[color:var(--accent-deep)] transition-colors whitespace-nowrap">
-                                    {v.name.replace(/^Paneer · /, "")}
-                                  </span>
+                                <span className="font-display text-xl sm:text-2xl tracking-tight text-[color:var(--ink)] group-hover/v:text-[color:var(--accent-deep)] transition-colors whitespace-nowrap">
+                                  {v.name.replace(/^Paneer · /, "")}
                                 </span>
                                 <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[color:var(--ink-mute)] group-hover/v:text-[color:var(--accent-deep)] transition-colors shrink-0 ml-3 whitespace-nowrap">
                                   {counts.get(v.id) ?? 0} picks · View →
