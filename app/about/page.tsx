@@ -214,7 +214,7 @@ export default function AboutPage() {
                   ),
                 },
                 {
-                  q: "What if a company changes its formulation?",
+                  q: "How often do you recheck labels to ensure they didn't change?",
                   a: (
                     <>
                       Food companies update formulations and nutrition labels

@@ -50,50 +50,6 @@ export default async function CategoryPage({
         <h1 className="font-display text-5xl sm:text-7xl tracking-[-0.02em] leading-[0.95]">
           {cat.name}
         </h1>
-        {slug.startsWith("paneer") && (
-          <a
-            href="https://youtu.be/zJu117xcs9Y"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-5 inline-flex items-center gap-2 font-display italic text-lg text-[color:var(--accent-deep)] underline decoration-[color:var(--accent)]/60 underline-offset-4 hover:decoration-[color:var(--accent-deep)]"
-          >
-            Watch Food Pharmer&rsquo;s full breakdown on common paneer brands.
-            <span aria-hidden>→</span>
-          </a>
-        )}
-        {slug === "peanut-butter" && (
-          <a
-            href="https://youtu.be/5lyGl1X6smk"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-5 inline-flex items-center gap-2 font-display italic text-lg text-[color:var(--accent-deep)] underline decoration-[color:var(--accent)]/60 underline-offset-4 hover:decoration-[color:var(--accent-deep)]"
-          >
-            Watch Food Pharmer&rsquo;s full breakdown on common peanut butter brands.
-            <span aria-hidden>→</span>
-          </a>
-        )}
-        {slug === "noodles" && (
-          <a
-            href="https://youtu.be/b_JZuowrBHQ"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-5 inline-flex items-center gap-2 font-display italic text-lg text-[color:var(--accent-deep)] underline decoration-[color:var(--accent)]/60 underline-offset-4 hover:decoration-[color:var(--accent-deep)]"
-          >
-            Watch Food Pharmer&rsquo;s full breakdown on common noodle brands.
-            <span aria-hidden>→</span>
-          </a>
-        )}
-        {slug === "biscuits" && (
-          <a
-            href="https://youtu.be/ym4qROz_TtI"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-5 inline-flex items-center gap-2 font-display italic text-lg text-[color:var(--accent-deep)] underline decoration-[color:var(--accent)]/60 underline-offset-4 hover:decoration-[color:var(--accent-deep)]"
-          >
-            Watch Food Pharmer&rsquo;s full breakdown on common biscuit brands.
-            <span aria-hidden>→</span>
-          </a>
-        )}
         <div className="mt-6 font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
           {products.length} picks
         </div>
@@ -220,6 +176,51 @@ export default async function CategoryPage({
 
       {products.length === 0 && (
         <p className="mt-12 text-[color:var(--ink-soft)]">No products in this category yet.</p>
+      )}
+
+      {slug.startsWith("paneer") && (
+        <a
+          href="https://youtu.be/zJu117xcs9Y"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-12 sm:mt-16 pt-10 border-t rule inline-flex items-center gap-2 font-display italic text-lg text-[color:var(--accent-deep)] underline decoration-[color:var(--accent)]/60 underline-offset-4 hover:decoration-[color:var(--accent-deep)]"
+        >
+          Watch Food Pharmer&rsquo;s full breakdown on common paneer brands.
+          <span aria-hidden>→</span>
+        </a>
+      )}
+      {slug === "peanut-butter" && (
+        <a
+          href="https://youtu.be/5lyGl1X6smk"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-12 sm:mt-16 pt-10 border-t rule inline-flex items-center gap-2 font-display italic text-lg text-[color:var(--accent-deep)] underline decoration-[color:var(--accent)]/60 underline-offset-4 hover:decoration-[color:var(--accent-deep)]"
+        >
+          Watch Food Pharmer&rsquo;s full breakdown on common peanut butter brands.
+          <span aria-hidden>→</span>
+        </a>
+      )}
+      {slug === "noodles" && (
+        <a
+          href="https://youtu.be/b_JZuowrBHQ"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-12 sm:mt-16 pt-10 border-t rule inline-flex items-center gap-2 font-display italic text-lg text-[color:var(--accent-deep)] underline decoration-[color:var(--accent)]/60 underline-offset-4 hover:decoration-[color:var(--accent-deep)]"
+        >
+          Watch Food Pharmer&rsquo;s full breakdown on common noodle brands.
+          <span aria-hidden>→</span>
+        </a>
+      )}
+      {slug === "biscuits" && (
+        <a
+          href="https://youtu.be/ym4qROz_TtI"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-12 sm:mt-16 pt-10 border-t rule inline-flex items-center gap-2 font-display italic text-lg text-[color:var(--accent-deep)] underline decoration-[color:var(--accent)]/60 underline-offset-4 hover:decoration-[color:var(--accent-deep)]"
+        >
+          Watch Food Pharmer&rsquo;s full breakdown on common biscuit brands.
+          <span aria-hidden>→</span>
+        </a>
       )}
     </main>
     <SiteFooter />
