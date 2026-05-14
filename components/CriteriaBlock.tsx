@@ -23,15 +23,14 @@ export default async function CriteriaBlock({
 
   return (
     <section className={variant === "compact" ? "" : "mt-12 border-t rule pt-10"}>
-      {variant === "full" && (
+      {variant === "full" && productMode && (
         <div className="mb-6">
           <h2 className="font-display text-3xl tracking-tight">
-            {productMode ? "What this product passed" : "What we look for"}
+            What this product passed
           </h2>
           <p className="text-sm text-[color:var(--ink-soft)] mt-2 max-w-2xl">
-            {productMode
-              ? "Every check below was confirmed for this exact product before we put it on the site."
-              : "These are the rules a product has to meet for us to approve it in this category."}
+            Every check below was confirmed for this exact product before we
+            put it on the site.
           </p>
         </div>
       )}
