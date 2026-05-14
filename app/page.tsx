@@ -41,31 +41,16 @@ export default async function HomePage() {
   const indexEntries = list.filter(
     (c) => !(c.slug !== "paneer" && c.slug.startsWith("paneer-")),
   );
-  const grandTotal = Array.from(counts.values()).reduce((s, n) => s + n, 0);
-
-  // Issue masthead date — refreshes every revalidation window.
-  const issueDate = new Date().toLocaleDateString("en-IN", {
-    month: "long",
-    year: "numeric",
-  });
 
   return (
     <div className="relative z-10">
       <SiteHeader />
 
-      {/* HERO — magazine masthead */}
+      {/* HERO */}
       <section>
-        <div className="max-w-[1280px] mx-auto px-5 sm:px-10 pt-8 sm:pt-14 pb-14 sm:pb-24">
-          {/* Masthead row */}
-          <div className="flex items-center justify-between pb-5 sm:pb-7 border-b rule font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-[color:var(--ink-mute)]">
-            <span className="text-[color:var(--ink-soft)]">
-              {issueDate}
-            </span>
-            <span>{grandTotal} picks</span>
-          </div>
-
+        <div className="max-w-[1280px] mx-auto px-5 sm:px-10 pt-10 sm:pt-20 pb-14 sm:pb-24">
           {/* Title + tagline */}
-          <div className="mt-10 sm:mt-16 grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-8 items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-8 items-end">
             <div className="lg:col-span-8 rise rise-1">
               <span className="inline-block bg-[color:var(--accent)] text-[color:var(--ink)] font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.22em] px-3 py-1.5 mb-5 sm:mb-7 leading-none">
                 Not sponsored
@@ -117,10 +102,8 @@ export default async function HomePage() {
 
           <ol className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
             {indexEntries.map((c, i) => {
-              const num = String(i + 1).padStart(2, "0");
               const isPaneer = c.slug === "paneer";
               const picks = isPaneer ? paneerTotal : counts.get(c.id) ?? 0;
-              const totalEntries = indexEntries.length;
               const featured = isPaneer; // featured spans full width on tablet+
 
               return (
@@ -144,9 +127,6 @@ export default async function HomePage() {
                             className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                           />
                         )}
-                        <div className="absolute top-3 left-3 font-mono text-[10px] uppercase tracking-[0.28em] bg-[color:var(--bg)] text-[color:var(--ink)] px-2 py-1 leading-none border rule">
-                          {num} / {String(totalEntries).padStart(2, "0")}
-                        </div>
                       </div>
                     </Link>
 
@@ -210,42 +190,6 @@ export default async function HomePage() {
               );
             })}
           </ol>
-        </div>
-      </section>
-
-      {/* CLOSING — the brand promise */}
-      <section className="border-t rule bg-[color:var(--bg-elev)]/40">
-        <div className="max-w-[1280px] mx-auto px-5 sm:px-10 py-14 sm:py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-6 items-start">
-            <div className="lg:col-span-7">
-              <p className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-[color:var(--ink-mute)]">
-                The fine print
-              </p>
-              <h2 className="mt-3 sm:mt-4 font-display text-3xl sm:text-5xl tracking-[-0.02em] leading-[1.02] max-w-[18ch]">
-                No money from brands. Ever.
-              </h2>
-            </div>
-            <div className="lg:col-span-5">
-              <p className="text-base sm:text-lg leading-relaxed text-[color:var(--ink-soft)] max-w-[44ch]">
-                Every product on this list earned its place by passing our
-                rules. Nothing is here because a brand paid for it to be.
-              </p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Link
-                  href="/method"
-                  className="inline-flex items-center gap-2 bg-[color:var(--ink)] text-[color:var(--bg)] px-5 py-3 font-mono text-[11px] uppercase tracking-[0.22em] hover:bg-[color:var(--accent-deep)] transition-colors min-h-[44px]"
-                >
-                  Read our method →
-                </Link>
-                <Link
-                  href="/about"
-                  className="inline-flex items-center gap-2 border border-[color:var(--ink)] text-[color:var(--ink)] px-5 py-3 font-mono text-[11px] uppercase tracking-[0.22em] hover:bg-[color:var(--ink)] hover:text-[color:var(--bg)] transition-colors min-h-[44px]"
-                >
-                  About →
-                </Link>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
