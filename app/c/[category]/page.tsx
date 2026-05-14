@@ -4,7 +4,6 @@ import { createClient } from "@/lib/supabase/server";
 import { getLiveProductsForCategory } from "@/lib/products/queries";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import CriteriaBlock from "@/components/CriteriaBlock";
 
 export const revalidate = 60;
 
@@ -222,8 +221,6 @@ export default async function CategoryPage({
       {products.length === 0 && (
         <p className="mt-12 text-[color:var(--ink-soft)]">No products in this category yet.</p>
       )}
-
-      <CriteriaBlock categoryId={cat.id} />
     </main>
     <SiteFooter />
     </>
