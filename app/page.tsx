@@ -58,8 +58,7 @@ export default async function HomePage() {
         <div className="max-w-[1280px] mx-auto px-5 sm:px-10 pt-8 sm:pt-14 pb-14 sm:pb-24">
           {/* Masthead row */}
           <div className="flex items-center justify-between pb-5 sm:pb-7 border-b rule font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-[color:var(--ink-mute)]">
-            <span>Issue · 01</span>
-            <span className="hidden sm:inline text-[color:var(--ink-soft)]">
+            <span className="text-[color:var(--ink-soft)]">
               {issueDate}
             </span>
             <span>{grandTotal} picks</span>
