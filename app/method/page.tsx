@@ -71,7 +71,6 @@ export default async function MethodPage() {
                   >
                     {c.name}
                   </Link>
-                  <p className="mt-1 text-sm text-[color:var(--ink-mute)]">{c.blurb}</p>
                   <ul className="mt-3 space-y-2">
                     {catRules.map((r) => (
                       <li key={r.id} className="flex gap-3">
