@@ -22,7 +22,7 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
         sb
           .from("products")
           .select(
-            "id, slug, name, rating, certification_method, product_photo_url, variant_size, brand:brands(slug,name), category:categories(slug,name)"
+            "id, slug, name, certification_method, product_photo_url, variant_size, brand:brands(slug,name), category:categories(slug,name)"
           )
           .eq("status", "Live")
           .or(`name.ilike.%${query}%,ingredients_raw.ilike.%${query}%`)
@@ -49,7 +49,7 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
       const { data } = await sb
         .from("products")
         .select(
-          "id, slug, name, rating, certification_method, product_photo_url, variant_size, brand:brands(slug,name), category:categories(slug,name)"
+          "id, slug, name, certification_method, product_photo_url, variant_size, brand:brands(slug,name), category:categories(slug,name)"
         )
         .eq("status", "Live")
         .in("brand_id", brandIds)
@@ -165,20 +165,13 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
                       )}
                     </div>
                     <div className="flex-1 p-4">
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="min-w-0">
-                          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-                            {brand?.name} · {cat?.name}
-                          </p>
-                          <h3 className="font-display text-lg tracking-tight mt-1 leading-tight">
-                            {p.name}
-                          </h3>
-                        </div>
-                        {p.rating && (
-                          <span className="shrink-0 bg-[color:var(--accent)] text-[color:var(--ink)] font-mono text-xs uppercase tracking-[0.18em] px-2 py-0.5 leading-none">
-                            {p.rating}
-                          </span>
-                        )}
+                      <div className="min-w-0">
+                        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+                          {brand?.name} · {cat?.name}
+                        </p>
+                        <h3 className="font-display text-lg tracking-tight mt-1 leading-tight">
+                          {p.name}
+                        </h3>
                       </div>
                       <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.22em]">
                         <span className={isLab ? "text-[color:var(--lab)]" : "text-[color:var(--ink-mute)]"}>
