@@ -71,10 +71,10 @@ export default async function HomePage() {
               <span className="inline-block bg-[color:var(--accent)] text-[color:var(--ink)] font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.22em] px-3 py-1.5 mb-5 sm:mb-7 leading-none">
                 Not sponsored
               </span>
-              <h1 className="font-display font-medium leading-[0.9] tracking-[-0.025em] text-[13.5vw] sm:text-[10vw] lg:text-[7.4vw] text-[color:var(--ink)]">
+              <h1 className="font-display font-medium leading-[0.9] tracking-[-0.025em] text-[11.5vw] sm:text-[9.5vw] lg:text-[7.2vw] text-[color:var(--ink)]">
                 Better for You
                 <br />
-                <em className="italic font-light">by Food Pharmer</em>
+                <em className="italic font-light whitespace-nowrap">by Food Pharmer</em>
               </h1>
             </div>
 
