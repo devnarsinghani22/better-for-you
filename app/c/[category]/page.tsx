@@ -28,22 +28,8 @@ export default async function CategoryPage({
   // Categories with boxed products that benefit from a tighter crop
   const tightCrop = slug === "biscuits";
 
-  // Subcategory groupings
-  const subgroupsBySlug: Record<string, { label: string; productSlugs: string[] }[]> = {
-    "peanut-butter": [
-      {
-        label: "100% Peanut Butter",
-        productSlugs: [
-          "pintola-all-natural-crunchy-pb",
-          "myfitness-unsweetened-crunchy-pb",
-        ],
-      },
-      {
-        label: "Peanuts + Whey",
-        productSlugs: ["pintola-high-protein-pb", "nut-roasters-hp-whey-pb"],
-      },
-    ],
-  };
+  // Subcategory groupings — currently none
+  const subgroupsBySlug: Record<string, { label: string; productSlugs: string[] }[]> = {};
   const subgroups = subgroupsBySlug[slug];
   const groupedSlugs = new Set(subgroups?.flatMap((g) => g.productSlugs));
   const ungrouped = subgroups
