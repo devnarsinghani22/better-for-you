@@ -118,13 +118,6 @@ export default function AboutPage() {
             </Link>
             .
           </p>
-          <p>
-            Want to flag a product or send us a tip?{" "}
-            <Link href="/contact" className="underline hover:text-[color:var(--accent-deep)]">
-              Get in touch
-            </Link>
-            .
-          </p>
         </div>
 
         <section id="faqs" className="mt-16 border-t rule pt-10 scroll-mt-24">
@@ -183,13 +176,15 @@ export default function AboutPage() {
                     <>
                       There could be a few reasons. Either the product
                       didn&rsquo;t meet our criteria, or the team hasn&rsquo;t
-                      checked it yet &mdash; feel free to{" "}
-                      <Link
-                        href="/contact"
+                      checked it yet &mdash; feel free to DM us on{" "}
+                      <a
+                        href="https://instagram.com/foodpharmer"
+                        target="_blank"
+                        rel="noopener"
                         className="underline hover:text-[color:var(--accent-deep)]"
                       >
-                        contact us
-                      </Link>{" "}
+                        Instagram
+                      </a>{" "}
                       if you have product suggestions. Or the product is in a
                       category that competes with Food Pharmer&rsquo;s{" "}
                       <a
@@ -235,14 +230,16 @@ export default function AboutPage() {
                   q: "I bought a product that's listed on your site but the ingredients look different. Why?",
                   a: (
                     <>
-                      Use the{" "}
-                      <Link
-                        href="/contact"
+                      DM us on{" "}
+                      <a
+                        href="https://instagram.com/foodpharmer"
+                        target="_blank"
+                        rel="noopener"
                         className="underline hover:text-[color:var(--accent-deep)]"
                       >
-                        contact form
-                      </Link>{" "}
-                      to let us know right away. Our team will look into it
+                        Instagram
+                      </a>{" "}
+                      and let us know right away. Our team will look into it
                       and update the product page as needed.
                     </>
                   ),

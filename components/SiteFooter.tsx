@@ -39,11 +39,6 @@ export default function SiteFooter() {
                 Our method
               </Link>
             </li>
-            <li>
-              <Link href="/contact" className="hover:text-[color:var(--accent-deep)]">
-                Contact
-              </Link>
-            </li>
           </ul>
         </div>
 

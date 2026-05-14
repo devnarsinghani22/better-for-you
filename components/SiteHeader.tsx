@@ -43,9 +43,6 @@ export default function SiteHeader() {
           <Link href="/about#faqs" className="hover:text-[color:var(--accent-deep)] transition-colors">
             FAQs
           </Link>
-          <Link href="/contact" className="hover:text-[color:var(--accent-deep)] transition-colors">
-            Contact
-          </Link>
         </nav>
 
         <a
@@ -86,14 +83,6 @@ export default function SiteHeader() {
               className="flex items-center justify-center min-h-[44px] hover:text-[color:var(--accent-deep)] transition-colors"
             >
               FAQs
-            </Link>
-          </li>
-          <li className="flex-1">
-            <Link
-              href="/contact"
-              className="flex items-center justify-center min-h-[44px] hover:text-[color:var(--accent-deep)] transition-colors"
-            >
-              Contact
             </Link>
           </li>
           <li className="flex-1">

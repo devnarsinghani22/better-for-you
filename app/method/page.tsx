@@ -140,10 +140,16 @@ export default async function MethodPage() {
           <h2 className="font-display text-3xl tracking-tight">Find a mistake?</h2>
           <p className="mt-3 text-[color:var(--ink-soft)] max-w-2xl">
             We try to be careful but we are human. If you think a product on
-            this site does not actually meet the rules, please tell us.{" "}
-            <Link href="/contact" className="underline hover:text-[color:var(--accent-deep)]">
-              Use the contact form
-            </Link>{" "}
+            this site does not actually meet the rules, please tell us. DM us
+            on{" "}
+            <a
+              href="https://instagram.com/foodpharmer"
+              target="_blank"
+              rel="noopener"
+              className="underline hover:text-[color:var(--accent-deep)]"
+            >
+              Instagram
+            </a>{" "}
             and we will look at it the same week.
           </p>
         </section>
