@@ -22,7 +22,7 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
         sb
           .from("products")
           .select(
-            "id, slug, name, certification_method, product_photo_url, variant_size, brand:brands(slug,name), category:categories(slug,name)"
+            "id, slug, name, certification_method, product_photo_url, brand:brands(slug,name), category:categories(slug,name)"
           )
           .eq("status", "Live")
           .or(`name.ilike.%${query}%,ingredients_raw.ilike.%${query}%`)
@@ -49,7 +49,7 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
       const { data } = await sb
         .from("products")
         .select(
-          "id, slug, name, certification_method, product_photo_url, variant_size, brand:brands(slug,name), category:categories(slug,name)"
+          "id, slug, name, certification_method, product_photo_url, brand:brands(slug,name), category:categories(slug,name)"
         )
         .eq("status", "Live")
         .in("brand_id", brandIds)

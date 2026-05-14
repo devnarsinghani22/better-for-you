@@ -77,11 +77,6 @@ export default async function ProductPage({
           <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl tracking-[-0.02em] leading-[0.95] mt-1 sm:mt-2 text-[color:var(--ink)]">
             {product.name}
           </h1>
-          {product.variant_size && (
-            <p className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mt-3">
-              {product.variant_size}
-            </p>
-          )}
           <div className="mt-6 inline-flex items-center gap-3">
             <span className="bg-[color:var(--accent)] text-[color:var(--ink)] px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em]">
               Better for You
