@@ -109,7 +109,7 @@ export default async function HomePage() {
         <div className="max-w-[1280px] mx-auto px-5 sm:px-10 pt-10 sm:pt-16 pb-16 sm:pb-24">
           <div className="flex items-end justify-between mb-8 sm:mb-12 rise rise-3">
             <h2 className="font-display text-3xl sm:text-5xl tracking-[-0.02em] leading-none">
-              The Index
+              Categories
             </h2>
             <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-[color:var(--ink-mute)]">
               {indexEntries.length} sections
