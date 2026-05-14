@@ -1,6 +1,6 @@
 # Peanut Butter — combined criteria (staging)
 
-**Status:** awaiting your sign-off. No DB changes have been made.
+**Status:** EXECUTED on 2026-05-14. SQL ran in one transaction. See bottom for the version that actually ran (added `evaluator_kind='boolean'` on the new rules — the column is NOT NULL).
 **Source:** <https://docs.google.com/spreadsheets/d/16RX96lKVUhTz0uVLikS73HICJtaXu3vxS7hR0vGdzw0/edit>
   - Tab "100% Peanut Butter"  → `gid=143839530`
   - Tab "Peanut Butter + Whey" → `gid=1180059534`
@@ -140,10 +140,10 @@ UPDATE category_rules SET active = false
 UPDATE category_rules SET description = '100% peanuts or peanuts + whey'
   WHERE category_id = 5 AND id = 20;  -- rephrase to match sheet
 
-INSERT INTO category_rules (category_id, code, description, display_order, active) VALUES
-  (5, 'pb_no_sugar',         'No sugar',              20, true),
-  (5, 'pb_no_salt',          'No salt',               30, true),
-  (5, 'pb_no_hydrogen_oil',  'No hydrogenated oils',  40, true);
+INSERT INTO category_rules (category_id, code, description, display_order, active, evaluator_kind) VALUES
+  (5, 'pb_no_sugar',         'No sugar',              20, true, 'boolean'),
+  (5, 'pb_no_salt',          'No salt',               30, true, 'boolean'),
+  (5, 'pb_no_hydrogen_oil',  'No hydrogenated oils',  40, true, 'boolean');
 
 -- 2. Retract the stale Pintola Crunchy draft. Touches ONLY the status column on id=7.
 --    The 4 existing Live PB products (id=8, 9, 19, 20) are not touched.
