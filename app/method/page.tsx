@@ -44,15 +44,6 @@ export default async function MethodPage() {
           ← Home
         </Link>
 
-        <h1 className="font-display text-5xl sm:text-7xl tracking-[-0.02em] leading-[0.95] mt-8">
-          How we approve.
-        </h1>
-        <p className="mt-6 text-lg text-[color:var(--ink-soft)] max-w-2xl leading-relaxed">
-          We do not take money to put a product on this site. We do not accept
-          brand pitches. Every approval is saved with the source page from the
-          day we read it.
-        </p>
-
         <section className="mt-14">
           <h2 className="font-display text-3xl tracking-tight">Rules by category</h2>
           <p className="mt-2 text-[color:var(--ink-soft)] max-w-2xl">
@@ -136,11 +127,18 @@ export default async function MethodPage() {
         </section>
 
         <section className="mt-14 border-t rule pt-10">
-          <h2 className="font-display text-3xl tracking-tight">Find a mistake?</h2>
+          <h2 className="font-display text-3xl tracking-tight">Find a mistake? Want to suggest a product?</h2>
           <p className="mt-3 text-[color:var(--ink-soft)] max-w-2xl">
             We try to be careful but we are human. If you think a product on
-            this site does not actually meet the rules, please tell us. DM us
-            on{" "}
+            this site does not actually meet the rules, or you want to suggest
+            a product we should add, email us at{" "}
+            <a
+              href="mailto:betterforyou@foodpharmer.net?subject=Product%20suggestion%20%2F%20feedback"
+              className="underline hover:text-[color:var(--accent-deep)]"
+            >
+              betterforyou@foodpharmer.net
+            </a>{" "}
+            or DM us on{" "}
             <a
               href="https://instagram.com/foodpharmer"
               target="_blank"
@@ -148,8 +146,8 @@ export default async function MethodPage() {
               className="underline hover:text-[color:var(--accent-deep)]"
             >
               Instagram
-            </a>{" "}
-            and we will look at it the same week.
+            </a>
+            . We read everything that comes in.
           </p>
         </section>
       </main>
