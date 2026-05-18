@@ -25,8 +25,8 @@ export default function SiteFooter() {
               </Link>
             </li>
             <li>
-              <Link href="/method" className="hover:text-[color:var(--accent-deep)]">
-                Our method
+              <Link href="/criteria" className="hover:text-[color:var(--accent-deep)]">
+                Criteria
               </Link>
             </li>
           </ul>

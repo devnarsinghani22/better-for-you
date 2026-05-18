@@ -15,8 +15,8 @@ export default function SiteHeader() {
           <Link href="/" className="hover:text-[color:var(--accent-deep)] transition-colors">
             Home
           </Link>
-          <Link href="/method" className="hover:text-[color:var(--accent-deep)] transition-colors">
-            Method
+          <Link href="/criteria" className="hover:text-[color:var(--accent-deep)] transition-colors">
+            Criteria
           </Link>
         </nav>
 
@@ -46,10 +46,10 @@ export default function SiteHeader() {
           </li>
           <li className="flex-1">
             <Link
-              href="/method"
+              href="/criteria"
               className="flex items-center justify-center min-h-[48px] px-2 active:bg-[color:var(--accent)]/30 hover:text-[color:var(--accent-deep)] transition-colors"
             >
-              Method
+              Criteria
             </Link>
           </li>
           <li className="flex-1">

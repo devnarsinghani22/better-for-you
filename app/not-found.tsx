@@ -29,10 +29,10 @@ export default function NotFound() {
             ← Back to home
           </Link>
           <Link
-            href="/method"
+            href="/criteria"
             className="inline-flex items-center gap-2 border-b border-[color:var(--ink)] pb-1 font-mono text-xs uppercase tracking-[0.22em] hover:text-[color:var(--accent-deep)] hover:border-[color:var(--accent-deep)] transition-colors"
           >
-            Read our method →
+            See our criteria →
           </Link>
         </div>
       </main>
