@@ -66,6 +66,18 @@ export default async function HomePage() {
               <p className="font-display italic text-2xl sm:text-3xl text-[color:var(--accent-deep)] leading-none">
                 Label Padhega India.
               </p>
+              <p className="mt-5 text-sm text-[color:var(--ink-mute)] leading-relaxed max-w-md">
+                Reviewed by{" "}
+                <a
+                  href="https://instagram.com/foodpharmer"
+                  target="_blank"
+                  rel="noopener"
+                  className="text-[color:var(--ink-soft)] underline decoration-[color:var(--ink-mute)] underline-offset-2 hover:text-[color:var(--accent-deep)]"
+                >
+                  Food Pharmer
+                </a>
+                , plus a team of nutrition experts and researchers.
+              </p>
             </div>
           </div>
         </div>
