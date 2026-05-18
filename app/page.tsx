@@ -48,14 +48,14 @@ export default async function HomePage() {
 
       {/* HERO */}
       <section>
-        <div className="max-w-[1280px] mx-auto px-5 sm:px-10 pt-10 sm:pt-20 pb-14 sm:pb-24">
+        <div className="max-w-[1280px] mx-auto px-5 sm:px-10 pt-10 sm:pt-20 pb-6 sm:pb-10">
           {/* Title + tagline */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-8 items-end">
             <div className="lg:col-span-8 rise rise-1">
               <span className="inline-block bg-[color:var(--accent)] text-[color:var(--ink)] font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.22em] px-3 py-1.5 mb-5 sm:mb-7 leading-none">
                 Not sponsored
               </span>
-              <h1 className="font-display font-medium leading-[0.9] tracking-[-0.025em] text-[11.5vw] sm:text-[9.5vw] lg:text-[7.2vw] text-[color:var(--ink)]">
+              <h1 className="font-display font-medium leading-[0.9] tracking-[-0.025em] text-[11.5vw] sm:text-[9.5vw] lg:text-[5.6vw] text-[color:var(--ink)]">
                 Better for You
                 <br />
                 <em className="italic font-light whitespace-nowrap">by Food Pharmer</em>
@@ -63,24 +63,7 @@ export default async function HomePage() {
             </div>
 
             <div className="lg:col-span-4 lg:pb-3 rise rise-2">
-              <p className="text-lg sm:text-xl leading-snug text-[color:var(--ink-soft)] max-w-md font-normal">
-                We analyse ingredient lists and nutrition labels to shortlist
-                products that are better for you.
-              </p>
-              <p className="mt-5 text-sm text-[color:var(--ink-mute)] leading-relaxed max-w-md">
-                Reviewed by{" "}
-                <a
-                  href="https://instagram.com/foodpharmer"
-                  target="_blank"
-                  rel="noopener"
-                  className="text-[color:var(--ink-soft)] underline decoration-[color:var(--ink-mute)] underline-offset-2 hover:text-[color:var(--accent-deep)]"
-                >
-                  Food Pharmer
-                </a>
-                , plus a team of nutrition experts and researchers. Not
-                sponsored by any brand on this list.
-              </p>
-              <p className="mt-6 font-display italic text-2xl sm:text-3xl text-[color:var(--accent-deep)] leading-none">
+              <p className="font-display italic text-2xl sm:text-3xl text-[color:var(--accent-deep)] leading-none">
                 Label Padhega India.
               </p>
             </div>
@@ -90,7 +73,7 @@ export default async function HomePage() {
 
       {/* CATEGORIES — editorial index */}
       <section className="border-t rule">
-        <div className="max-w-[1280px] mx-auto px-5 sm:px-10 pt-10 sm:pt-16 pb-16 sm:pb-24">
+        <div className="max-w-[1280px] mx-auto px-5 sm:px-10 pt-8 sm:pt-10 pb-16 sm:pb-24">
           <div className="flex items-end justify-between mb-8 sm:mb-12 rise rise-3">
             <h2 className="font-display text-3xl sm:text-5xl tracking-[-0.02em] leading-none">
               Categories
@@ -104,14 +87,11 @@ export default async function HomePage() {
             {indexEntries.map((c, i) => {
               const isPaneer = c.slug === "paneer";
               const picks = isPaneer ? paneerTotal : counts.get(c.id) ?? 0;
-              const featured = isPaneer; // featured spans full width on tablet+
 
               return (
                 <li
                   key={c.id}
-                  className={`group rise rise-${Math.min(i + 1, 5)} ${
-                    featured ? "sm:col-span-2" : ""
-                  }`}
+                  className={`group rise rise-${Math.min(i + 1, 5)}`}
                 >
                   <article className="bg-[color:var(--bg-elev)] border rule rounded-sm overflow-hidden hover:border-[color:var(--ink)] transition-colors h-full flex flex-col">
                     <Link href={`/c/${c.slug}`} className="block">

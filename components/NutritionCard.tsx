@@ -15,12 +15,12 @@ export default function NutritionCard({ data, brand }: { data: NutritionData; br
   const rows = data.rows ?? [];
   const perLabel =
     data.per === "100g"
-      ? "Per 100 g"
+      ? "Per 100g"
       : data.per === "100ml"
-      ? "Per 100 ml"
+      ? "Per 100ml"
       : data.per === "serving"
       ? `Per serving${data.serving ? ` (${data.serving})` : ""}`
-      : "Per 100 g";
+      : "Per 100g";
 
   return (
     <div className="bg-[color:var(--bg-elev)] border-2 border-[color:var(--ink)] rounded-sm overflow-hidden max-w-md">
@@ -55,7 +55,7 @@ export default function NutritionCard({ data, brand }: { data: NutritionData; br
                 }`}
               >
                 {r.value}
-                {r.unit ? <span className="text-[color:var(--ink-mute)] text-xs ml-0.5">{r.unit}</span> : null}
+                {r.unit ? <span className="text-[color:var(--ink-mute)] text-xs">{r.unit}</span> : null}
               </td>
             </tr>
           ))}
