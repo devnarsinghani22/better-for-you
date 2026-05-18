@@ -42,7 +42,7 @@ export default function AboutPage() {
             Who is behind this
           </p>
           <h2 className="font-display text-3xl sm:text-4xl tracking-tight mt-3 leading-tight">
-            Food Pharmer, plus a team of nutrition experts and researchers.
+            Food Pharmer, with a team of nutrition experts and researchers.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-[color:var(--ink-soft)] leading-relaxed">
             Every product on this site is reviewed by Food Pharmer (
@@ -54,7 +54,7 @@ export default function AboutPage() {
             >
               @foodpharmer
             </a>
-            ), plus a team of nutrition experts and researchers. We read the
+            ), with a team of nutrition experts and researchers. We read the
             label, run our rules, and in a few cases, we send products for
             lab-testing. Nothing goes on this list until the team has vetted
             the products and Food Pharmer has personally reviewed them too.
@@ -176,7 +176,14 @@ export default function AboutPage() {
                     <>
                       There could be a few reasons. Either the product
                       didn&rsquo;t meet our criteria, or the team hasn&rsquo;t
-                      checked it yet &mdash; feel free to DM us on{" "}
+                      checked it yet &mdash; email us at{" "}
+                      <a
+                        href="mailto:betterforyou@foodpharmer.net?subject=Product%20suggestion"
+                        className="underline hover:text-[color:var(--accent-deep)]"
+                      >
+                        betterforyou@foodpharmer.net
+                      </a>{" "}
+                      or DM us on{" "}
                       <a
                         href="https://instagram.com/foodpharmer"
                         target="_blank"
@@ -230,7 +237,14 @@ export default function AboutPage() {
                   q: "I bought a product that's listed on your site but the ingredients look different. Why?",
                   a: (
                     <>
-                      DM us on{" "}
+                      Email us at{" "}
+                      <a
+                        href="mailto:betterforyou@foodpharmer.net?subject=Listing%20ingredients%20mismatch"
+                        className="underline hover:text-[color:var(--accent-deep)]"
+                      >
+                        betterforyou@foodpharmer.net
+                      </a>{" "}
+                      or DM us on{" "}
                       <a
                         href="https://instagram.com/foodpharmer"
                         target="_blank"

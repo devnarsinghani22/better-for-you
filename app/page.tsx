@@ -76,7 +76,7 @@ export default async function HomePage() {
                 >
                   Food Pharmer
                 </a>
-                , plus a team of nutrition experts and researchers.
+                , with a team of nutrition experts and researchers.
               </p>
             </div>
           </div>

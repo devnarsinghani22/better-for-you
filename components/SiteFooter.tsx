@@ -10,7 +10,7 @@ export default function SiteFooter() {
           </p>
           <p className="mt-3 text-sm text-[color:var(--ink-soft)] leading-relaxed max-w-sm">
             A growing list of packaged foods we would actually buy ourselves.
-            Reviewed by Food Pharmer, plus a team of nutrition experts and researchers.
+            Reviewed by Food Pharmer, with a team of nutrition experts and researchers.
           </p>
           <p className="mt-4 text-xs text-[color:var(--ink-mute)] leading-relaxed max-w-sm">
             We are not affiliated with, sponsored by, or paid by any of the
@@ -20,7 +20,7 @@ export default function SiteFooter() {
         </div>
 
         <div className="md:col-span-3">
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-3">
+          <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-[color:var(--ink)] mb-4">
             Site
           </p>
           <ul className="space-y-2 text-sm">
@@ -43,29 +43,25 @@ export default function SiteFooter() {
         </div>
 
         <div className="md:col-span-4">
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-3">
-            Find Food Pharmer
+          <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-[color:var(--ink)] mb-4">
+            Get in touch
           </p>
-          <a
-            href="https://instagram.com/foodpharmer"
-            target="_blank"
-            rel="noopener"
-            className="text-sm hover:text-[color:var(--accent-deep)] transition-colors"
-          >
-            instagram · @foodpharmer →
-          </a>
+          <p className="text-sm text-[color:var(--ink-soft)] leading-relaxed max-w-sm">
+            If you have a brand which follows these criteria, email us at{" "}
+            <a
+              href="mailto:betterforyou@foodpharmer.net?subject=Brand%20submission"
+              className="text-[color:var(--ink)] underline decoration-[color:var(--ink-mute)] underline-offset-2 hover:text-[color:var(--accent-deep)] break-all"
+            >
+              betterforyou@foodpharmer.net
+            </a>
+            .
+          </p>
           <p className="mt-6 font-display italic text-2xl text-[color:var(--accent-deep)]">
             Label Padhega India.
           </p>
         </div>
       </div>
 
-      <div className="border-t rule">
-        <div className="max-w-[1280px] mx-auto px-6 sm:px-10 py-5 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-          <span>© 2026 · Better for You by Food Pharmer · v1</span>
-          <span>Made in India · Label Padhega India</span>
-        </div>
-      </div>
     </footer>
   );
 }
