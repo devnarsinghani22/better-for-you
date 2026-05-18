@@ -12,11 +12,6 @@ export default function SiteFooter() {
             A growing list of packaged foods we would actually buy ourselves.
             Reviewed by Food Pharmer, with a team of nutrition experts and researchers.
           </p>
-          <p className="mt-4 text-xs text-[color:var(--ink-mute)] leading-relaxed max-w-sm">
-            We are not affiliated with, sponsored by, or paid by any of the
-            brands listed. Selections are editorial. Recipes can change —
-            always re-read the pack.
-          </p>
         </div>
 
         <div className="md:col-span-3">
@@ -27,11 +22,6 @@ export default function SiteFooter() {
             <li>
               <Link href="/" className="hover:text-[color:var(--accent-deep)]">
                 Home
-              </Link>
-            </li>
-            <li>
-              <Link href="/about" className="hover:text-[color:var(--accent-deep)]">
-                About
               </Link>
             </li>
             <li>

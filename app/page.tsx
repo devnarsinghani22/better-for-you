@@ -78,6 +78,11 @@ export default async function HomePage() {
                 </a>
                 , with a team of nutrition experts and researchers.
               </p>
+              <p className="mt-4 text-xs text-[color:var(--ink-mute)] leading-relaxed max-w-md">
+                We are not affiliated with, sponsored by, or paid by any of
+                the brands listed. Selections are editorial. Recipes can
+                change &mdash; always re-read the pack.
+              </p>
             </div>
           </div>
         </div>

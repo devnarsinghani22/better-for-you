@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 import { createClient } from "@/lib/supabase/server";
 
-const BASE_URL = "https://foodpharmer-approved.vercel.app";
+const BASE_URL = "https://foodpharmer.health";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const sb = await createClient();
@@ -16,7 +16,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticPages: MetadataRoute.Sitemap = [
     "",
-    "/about",
     "/method",
   ].map((path) => ({
     url: `${BASE_URL}${path}`,

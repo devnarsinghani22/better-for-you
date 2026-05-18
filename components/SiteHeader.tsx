@@ -15,11 +15,8 @@ export default function SiteHeader() {
           <Link href="/" className="hover:text-[color:var(--accent-deep)] transition-colors">
             Home
           </Link>
-          <Link href="/about" className="hover:text-[color:var(--accent-deep)] transition-colors">
-            About
-          </Link>
-          <Link href="/about#faqs" className="hover:text-[color:var(--accent-deep)] transition-colors">
-            FAQs
+          <Link href="/method" className="hover:text-[color:var(--accent-deep)] transition-colors">
+            Method
           </Link>
         </nav>
 
@@ -49,18 +46,10 @@ export default function SiteHeader() {
           </li>
           <li className="flex-1">
             <Link
-              href="/about"
+              href="/method"
               className="flex items-center justify-center min-h-[48px] px-2 active:bg-[color:var(--accent)]/30 hover:text-[color:var(--accent-deep)] transition-colors"
             >
-              About
-            </Link>
-          </li>
-          <li className="flex-1">
-            <Link
-              href="/about#faqs"
-              className="flex items-center justify-center min-h-[48px] px-2 active:bg-[color:var(--accent)]/30 hover:text-[color:var(--accent-deep)] transition-colors"
-            >
-              FAQs
+              Method
             </Link>
           </li>
           <li className="flex-1">
