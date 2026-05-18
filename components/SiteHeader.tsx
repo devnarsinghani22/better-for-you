@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SearchBox from "@/components/SearchBox";
 
 export default function SiteHeader() {
   return (
@@ -8,34 +9,11 @@ export default function SiteHeader() {
       </div>
 
       <div className="max-w-[1280px] mx-auto px-4 sm:px-10 py-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-5 text-[11px] sm:text-xs font-mono uppercase tracking-[0.18em]">
-        <Link
-          href="/"
-          className="text-[color:var(--ink-soft)] hover:text-[color:var(--accent-deep)] transition-colors shrink-0 self-start sm:self-center text-[12px] sm:text-xs"
-        >
-          Better for You by Food Pharmer
-        </Link>
-
-        <form
-          action="/search"
-          method="GET"
-          role="search"
-          className="flex-1 flex items-center max-w-md"
-        >
-          <label htmlFor="site-search" className="sr-only">
-            Search products
-          </label>
-          <input
-            id="site-search"
-            type="search"
-            name="q"
-            placeholder="Search products, brands…"
-            className="w-full bg-[color:var(--bg-elev)] border border-[color:var(--ink-mute)] focus:border-[color:var(--ink)] rounded-sm px-3 py-2 text-[12px] sm:text-xs uppercase tracking-[0.16em] text-[color:var(--ink)] placeholder:text-[color:var(--ink-mute)] outline-none transition-colors min-h-[40px]"
-          />
-        </form>
+        <SearchBox />
 
         <nav className="hidden md:flex gap-4 text-[color:var(--ink-mute)] shrink-0">
-          <Link href="/method" className="hover:text-[color:var(--accent-deep)] transition-colors">
-            Method
+          <Link href="/" className="hover:text-[color:var(--accent-deep)] transition-colors">
+            Home
           </Link>
           <Link href="/about" className="hover:text-[color:var(--accent-deep)] transition-colors">
             About
@@ -58,21 +36,21 @@ export default function SiteHeader() {
       {/* Mobile-only nav strip — surfaces section links that are inaccessible from the header otherwise */}
       <nav
         aria-label="Mobile navigation"
-        className="md:hidden border-t rule bg-[color:var(--bg-elev)]/40"
+        className="md:hidden border-t rule bg-[color:var(--bg-elev)]"
       >
-        <ul className="max-w-[1280px] mx-auto px-4 flex items-stretch justify-between text-[10px] font-mono uppercase tracking-[0.18em] text-[color:var(--ink-mute)]">
+        <ul className="max-w-[1280px] mx-auto px-2 flex items-stretch justify-between text-[11px] font-mono font-semibold uppercase tracking-[0.2em] text-[color:var(--ink)] divide-x divide-[color:var(--ink-mute)]/30">
           <li className="flex-1">
             <Link
-              href="/method"
-              className="flex items-center justify-center min-h-[44px] hover:text-[color:var(--accent-deep)] transition-colors"
+              href="/"
+              className="flex items-center justify-center min-h-[48px] px-2 active:bg-[color:var(--accent)]/30 hover:text-[color:var(--accent-deep)] transition-colors"
             >
-              Method
+              Home
             </Link>
           </li>
           <li className="flex-1">
             <Link
               href="/about"
-              className="flex items-center justify-center min-h-[44px] hover:text-[color:var(--accent-deep)] transition-colors"
+              className="flex items-center justify-center min-h-[48px] px-2 active:bg-[color:var(--accent)]/30 hover:text-[color:var(--accent-deep)] transition-colors"
             >
               About
             </Link>
@@ -80,7 +58,7 @@ export default function SiteHeader() {
           <li className="flex-1">
             <Link
               href="/about#faqs"
-              className="flex items-center justify-center min-h-[44px] hover:text-[color:var(--accent-deep)] transition-colors"
+              className="flex items-center justify-center min-h-[48px] px-2 active:bg-[color:var(--accent)]/30 hover:text-[color:var(--accent-deep)] transition-colors"
             >
               FAQs
             </Link>
@@ -90,9 +68,9 @@ export default function SiteHeader() {
               href="https://instagram.com/foodpharmer"
               target="_blank"
               rel="noopener"
-              className="flex items-center justify-center min-h-[44px] hover:text-[color:var(--accent-deep)] transition-colors"
+              className="flex items-center justify-center gap-1 min-h-[48px] px-2 active:bg-[color:var(--accent)]/30 hover:text-[color:var(--accent-deep)] transition-colors"
             >
-              IG
+              IG <span aria-hidden>→</span>
             </a>
           </li>
         </ul>
