@@ -152,7 +152,7 @@ export default async function HomePage() {
                           ))}
                         </ul>
                       ) : (
-                        <div className="mt-auto pt-5 border-t rule flex items-center justify-between gap-3">
+                        <div className="mt-6 pt-5 border-t rule flex items-center justify-between gap-3">
                           <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-[color:var(--ink-mute)]">
                             {picks} picks
                           </span>
