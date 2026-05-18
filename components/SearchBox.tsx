@@ -101,7 +101,7 @@ export default function SearchBox() {
             setOpen(true);
           }}
           onFocus={() => setOpen(true)}
-          placeholder="Try 'pintola', 'paneer', 'palm oil'…"
+          placeholder="Try 'curd', 'paneer', 'palm oil'…"
           autoComplete="off"
           className="w-full bg-[color:var(--bg-elev)] border border-[color:var(--ink-mute)] focus:border-[color:var(--ink)] rounded-sm px-3 py-2 text-[12px] sm:text-xs uppercase tracking-[0.16em] text-[color:var(--ink)] placeholder:text-[color:var(--ink-mute)] outline-none transition-colors min-h-[40px]"
         />
