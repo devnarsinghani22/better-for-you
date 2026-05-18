@@ -52,9 +52,6 @@ export default async function HomePage() {
           {/* Title + tagline */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-8 items-end">
             <div className="lg:col-span-8 rise rise-1">
-              <span className="inline-block bg-[color:var(--accent)] text-[color:var(--ink)] font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.22em] px-3 py-1.5 mb-5 sm:mb-7 leading-none">
-                Not sponsored
-              </span>
               <h1 className="font-display font-medium leading-[0.9] tracking-[-0.025em] text-[11.5vw] sm:text-[9.5vw] lg:text-[5.6vw] text-[color:var(--ink)]">
                 Better for You
                 <br />
@@ -79,9 +76,7 @@ export default async function HomePage() {
                 , with a team of nutrition experts and researchers.
               </p>
               <p className="mt-4 text-xs text-[color:var(--ink-mute)] leading-relaxed max-w-md">
-                We are not affiliated with, sponsored by, or paid by any of
-                the brands listed. Selections are editorial. Recipes can
-                change &mdash; always re-read the pack.
+                This list is completely non-sponsored.
               </p>
             </div>
           </div>
