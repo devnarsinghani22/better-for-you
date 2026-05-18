@@ -17,13 +17,33 @@ function flatten<T>(x: T | T[] | null): T | null {
   return x;
 }
 
+const PLACEHOLDER_CYCLE = [
+  "curd",
+  "paneer",
+  "biscuits",
+  "noodles",
+  "makhana",
+  "tempeh",
+  "tofu",
+  "soya chunks",
+];
+
 export default function SearchBox() {
   const [q, setQ] = useState("");
   const [open, setOpen] = useState(false);
   const [products, setProducts] = useState<Hit[]>([]);
   const [categories, setCategories] = useState<BrandOrCat[]>([]);
   const [loading, setLoading] = useState(false);
+  const [placeholderIdx, setPlaceholderIdx] = useState(0);
   const wrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (q.length > 0) return;
+    const t = setInterval(() => {
+      setPlaceholderIdx((i) => (i + 1) % PLACEHOLDER_CYCLE.length);
+    }, 2200);
+    return () => clearInterval(t);
+  }, [q]);
 
   useEffect(() => {
     const trimmed = q.trim();
@@ -101,7 +121,7 @@ export default function SearchBox() {
             setOpen(true);
           }}
           onFocus={() => setOpen(true)}
-          placeholder="Try 'curd', 'paneer', 'palm oil'…"
+          placeholder={`Try '${PLACEHOLDER_CYCLE[placeholderIdx]}'…`}
           autoComplete="off"
           className="w-full bg-[color:var(--bg-elev)] border border-[color:var(--ink-mute)] focus:border-[color:var(--ink)] rounded-sm px-3 py-2 text-[12px] sm:text-xs uppercase tracking-[0.16em] text-[color:var(--ink)] placeholder:text-[color:var(--ink-mute)] outline-none transition-colors min-h-[40px]"
         />
