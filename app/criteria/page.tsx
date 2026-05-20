@@ -75,6 +75,132 @@ export default async function CriteriaPage() {
             })}
           </div>
         </section>
+
+        <section id="faqs" className="mt-16 border-t rule pt-10 scroll-mt-24">
+          <h2 className="font-display text-3xl sm:text-4xl tracking-tight">FAQs</h2>
+          <p className="text-sm text-[color:var(--ink-soft)] mt-2">
+            The questions we get most often. Short, blunt answers.
+          </p>
+
+          <div className="mt-8 space-y-7">
+            <div>
+              <h3 className="font-display text-xl sm:text-2xl tracking-tight text-[color:var(--ink)] leading-snug">
+                Do you have to pay a fee to be on this list?
+              </h3>
+              <p className="mt-2 text-base text-[color:var(--ink-soft)] leading-relaxed">
+                No. We do not take money, free product, or any other consideration from brands in
+                exchange for being on this list. In fact, everything on this list is something Food
+                Pharmer hand-picked. If brands come and pitch to be on this list, they still have to
+                meet every criterion outlined on this page.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-display text-xl sm:text-2xl tracking-tight text-[color:var(--ink)] leading-snug">
+                How do I know I can trust this?
+              </h3>
+              <div className="mt-2 text-base text-[color:var(--ink-soft)] leading-relaxed">
+                Two reasons:
+                <ul className="mt-3 space-y-2 list-disc pl-5">
+                  <li>
+                    Every product links to the brand&rsquo;s own page where we read the label, so
+                    you can verify it yourself.
+                  </li>
+                  <li>
+                    Wherever we did a lab test, the actual test results are attached to the product
+                    page as a PDF.
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="font-display text-xl sm:text-2xl tracking-tight text-[color:var(--ink)] leading-snug">
+                Why isn&rsquo;t my favourite brand here?
+              </h3>
+              <p className="mt-2 text-base text-[color:var(--ink-soft)] leading-relaxed">
+                There could be a few reasons. Either the product didn&rsquo;t meet our criteria, or
+                the team hasn&rsquo;t checked it yet &mdash; email us at{" "}
+                <a
+                  href="mailto:betterforyou@foodpharmer.net?subject=Product%20suggestion"
+                  className="underline hover:text-[color:var(--accent-deep)]"
+                >
+                  betterforyou@foodpharmer.net
+                </a>{" "}
+                or DM us on{" "}
+                <a
+                  href="https://instagram.com/foodpharmer"
+                  target="_blank"
+                  rel="noopener"
+                  className="underline hover:text-[color:var(--accent-deep)]"
+                >
+                  Instagram
+                </a>{" "}
+                if you have product suggestions. Or the product is in a category that competes with
+                Food Pharmer&rsquo;s{" "}
+                <a
+                  href="https://onlywhatsneeded.in"
+                  target="_blank"
+                  rel="noopener"
+                  className="underline hover:text-[color:var(--accent-deep)]"
+                >
+                  Only What&rsquo;s Needed
+                </a>{" "}
+                initiative, which is a conflict of interest, so we leave those out.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-display text-xl sm:text-2xl tracking-tight text-[color:var(--ink)] leading-snug">
+                What is the difference between &lsquo;lab tested&rsquo; and &lsquo;label reviewed&rsquo;?
+              </h3>
+              <p className="mt-2 text-base text-[color:var(--ink-soft)] leading-relaxed">
+                Label reviewed means we read the ingredient list off the pack. Lab tested means we
+                also paid a certified lab to run tests on the product &mdash; lab tests catch things
+                the label can hide. But lab tests are also very expensive, which is why at this time
+                we are unable to lab test every category.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-display text-xl sm:text-2xl tracking-tight text-[color:var(--ink)] leading-snug">
+                How often do you recheck labels to ensure they didn&rsquo;t change?
+              </h3>
+              <p className="mt-2 text-base text-[color:var(--ink-soft)] leading-relaxed">
+                Food companies update formulations and nutrition labels even when the front of the
+                pack still looks the same. So we re-check listings every six months. If a
+                formulation change means a product no longer meets our criteria, we mark it as
+                &ldquo;Retracted&rdquo; and remove it from the site.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-display text-xl sm:text-2xl tracking-tight text-[color:var(--ink)] leading-snug">
+                I bought a product that&rsquo;s listed on your site but the ingredients look different. Why?
+              </h3>
+              <p className="mt-2 text-base text-[color:var(--ink-soft)] leading-relaxed">
+                Email us at{" "}
+                <a
+                  href="mailto:betterforyou@foodpharmer.net?subject=Listing%20ingredients%20mismatch"
+                  className="underline hover:text-[color:var(--accent-deep)]"
+                >
+                  betterforyou@foodpharmer.net
+                </a>{" "}
+                or DM us on{" "}
+                <a
+                  href="https://instagram.com/foodpharmer"
+                  target="_blank"
+                  rel="noopener"
+                  className="underline hover:text-[color:var(--accent-deep)]"
+                >
+                  Instagram
+                </a>{" "}
+                and let us know right away. Our team will look into it and update the product page
+                as needed.
+              </p>
+            </div>
+          </div>
+        </section>
       </main>
       <SiteFooter />
     </>
