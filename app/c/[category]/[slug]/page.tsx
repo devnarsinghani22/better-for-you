@@ -51,14 +51,14 @@ export default async function ProductPage({
 
       <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-x-12 gap-y-8 pb-10 border-b rule">
         {product.product_photo_url ? (
-          <div className="lg:col-span-5 overflow-hidden aspect-[4/3] sm:aspect-square max-h-[440px] flex items-center justify-center">
+          <div className="lg:col-span-5 overflow-hidden h-80 sm:h-[440px] flex items-center justify-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={product.product_photo_url}
               alt={product.name}
               decoding="async"
               fetchPriority="high"
-              className="max-h-full max-w-full object-contain p-2 sm:p-3 mix-blend-multiply"
+              className="w-full h-full object-contain p-4 sm:p-6"
             />
           </div>
         ) : (
@@ -152,7 +152,7 @@ export default async function ProductPage({
               alt={`${product.name} label`}
               loading="lazy"
               decoding="async"
-              className="max-w-full h-auto mix-blend-multiply"
+              className="max-w-full h-auto"
             />
           </div>
         </section>

@@ -184,7 +184,7 @@ export default function SearchBox() {
                         <img
                           src={p.product_photo_url}
                           alt=""
-                          className="max-w-full max-h-full object-contain p-1 mix-blend-multiply"
+                          className="w-full h-full object-contain p-1"
                         />
                       ) : (
                         <span className="font-display italic text-xs text-[color:var(--ink-mute)]/60 text-center px-1">

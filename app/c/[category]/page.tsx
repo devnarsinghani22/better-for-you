@@ -44,9 +44,6 @@ export default async function CategoryPage({
       })
     : rawProducts;
 
-  // Categories with boxed products that benefit from a tighter crop
-  const tightCrop = slug === "biscuits";
-
   // Subcategory groupings — currently none
   const subgroupsBySlug: Record<string, { label: string; productSlugs: string[] }[]> = {};
   const subgroups = subgroupsBySlug[slug];
@@ -89,7 +86,7 @@ export default async function CategoryPage({
               href={`/c/${slug}/${p.slug}`}
               className="bg-[color:var(--bg-elev)] overflow-hidden block group transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:hover:scale-[1.03] sm:hover:shadow-[0_24px_60px_-24px_rgba(0,0,0,0.28)]"
             >
-              <div className="aspect-[4/3] flex items-center justify-center overflow-hidden">
+              <div className="h-72 sm:h-80 flex items-center justify-center overflow-hidden">
                 {p.product_photo_url ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -97,11 +94,7 @@ export default async function CategoryPage({
                     alt={p.name}
                     loading="lazy"
                     decoding="async"
-                    className={
-                      tightCrop
-                        ? "h-full w-full object-cover scale-125 sm:group-hover:scale-[1.32] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] mix-blend-multiply"
-                        : "max-h-full max-w-full object-contain p-1.5 sm:p-2 sm:group-hover:scale-[1.08] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] mix-blend-multiply"
-                    }
+                    className="w-full h-full object-contain p-3 sm:group-hover:scale-[1.05] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
                   />
                 ) : (
                   <span className="font-display italic text-3xl text-[color:var(--ink-mute)]/50">

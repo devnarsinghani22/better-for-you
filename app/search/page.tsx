@@ -156,7 +156,7 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
                         <img
                           src={p.product_photo_url}
                           alt={p.name}
-                          className="max-h-full max-w-full object-contain p-3 sm:group-hover:scale-105 transition-transform duration-500 mix-blend-multiply"
+                          className="w-full h-full object-contain p-3 sm:group-hover:scale-105 transition-transform duration-500"
                         />
                       ) : (
                         <span className="font-display italic text-xl text-[color:var(--ink-mute)]/50 px-2 text-center">
