@@ -49,7 +49,7 @@ export default async function ProductPage({
         </Link>
       </nav>
 
-      <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-x-12 gap-y-8 pb-10 border-b rule">
+      <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-x-12 gap-y-8">
         {product.product_photo_url ? (
           <div className="lg:col-span-5 overflow-hidden h-80 sm:h-[440px] flex items-center justify-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
