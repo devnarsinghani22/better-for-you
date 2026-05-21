@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Fraunces, EB_Garamond, IBM_Plex_Mono } from "next/font/google";
+import { Playfair_Display, Newsreader, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const fraunces = Fraunces({
+const playfair = Playfair_Display({
   variable: "--font-display",
   subsets: ["latin"],
   style: ["normal", "italic"],
@@ -10,18 +10,16 @@ const fraunces = Fraunces({
   display: "swap",
 });
 
-const garamond = EB_Garamond({
+const newsreader = Newsreader({
   variable: "--font-body",
   subsets: ["latin"],
   style: ["normal", "italic"],
-  weight: ["400", "500"],
   display: "swap",
 });
 
-const mono = IBM_Plex_Mono({
+const mono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
-  weight: ["400", "500"],
   display: "swap",
 });
 
@@ -58,7 +56,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${garamond.variable} ${mono.variable}`}
+      className={`${playfair.variable} ${newsreader.variable} ${mono.variable}`}
     >
       <body className="min-h-screen flex flex-col">{children}</body>
     </html>
