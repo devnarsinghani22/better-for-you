@@ -58,7 +58,7 @@ export default async function ProductPage({
               alt={product.name}
               decoding="async"
               fetchPriority="high"
-              className="max-h-full max-w-full object-contain p-2 sm:p-3"
+              className="max-h-full max-w-full object-contain p-2 sm:p-3 mix-blend-multiply"
             />
           </div>
         ) : (
@@ -152,7 +152,7 @@ export default async function ProductPage({
               alt={`${product.name} label`}
               loading="lazy"
               decoding="async"
-              className="max-w-full h-auto"
+              className="max-w-full h-auto mix-blend-multiply"
             />
           </div>
         </section>

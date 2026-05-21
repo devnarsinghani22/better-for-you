@@ -148,7 +148,7 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
                   <Link
                     key={p.id}
                     href={`/c/${cat.slug}/${p.slug}`}
-                    className="bg-[color:var(--bg-elev)] overflow-hidden block group flex transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.03] hover:shadow-[0_24px_60px_-24px_rgba(0,0,0,0.28)]"
+                    className="bg-[color:var(--bg-elev)] overflow-hidden block group flex transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:hover:scale-[1.03] sm:hover:shadow-[0_24px_60px_-24px_rgba(0,0,0,0.28)]"
                   >
                     <div className="w-[110px] shrink-0 flex items-center justify-center">
                       {p.product_photo_url ? (
@@ -156,7 +156,7 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
                         <img
                           src={p.product_photo_url}
                           alt={p.name}
-                          className="max-h-full max-w-full object-contain p-3 group-hover:scale-105 transition-transform duration-500"
+                          className="max-h-full max-w-full object-contain p-3 sm:group-hover:scale-105 transition-transform duration-500 mix-blend-multiply"
                         />
                       ) : (
                         <span className="font-display italic text-xl text-[color:var(--ink-mute)]/50 px-2 text-center">
