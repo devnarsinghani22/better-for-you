@@ -4,10 +4,12 @@ export default async function CriteriaBlock({
   categoryId,
   variant = "full",
   productMode = false,
+  heading,
 }: {
   categoryId: number | null;
   variant?: "full" | "compact";
   productMode?: boolean;
+  heading?: string;
 }) {
   if (categoryId == null) return null;
 
@@ -23,6 +25,11 @@ export default async function CriteriaBlock({
 
   return (
     <section className={variant === "compact" ? "" : "mt-12 border-t rule pt-10"}>
+      {heading && (
+        <h2 className="font-display text-3xl sm:text-4xl tracking-tight mb-4 sm:mb-5">
+          {heading}
+        </h2>
+      )}
       {variant === "full" && productMode && (
         <div className="mb-6">
           <h2 className="font-display text-3xl tracking-tight">
