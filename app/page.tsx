@@ -103,7 +103,7 @@ export default async function HomePage() {
               return (
                 <li
                   key={c.id}
-                  className={`group rise rise-${Math.min(i + 1, 5)} transition-transform duration-500 ease-out hover:scale-[1.025]`}
+                  className={`group rise rise-${Math.min(i + 1, 5)} transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.03] hover:shadow-[0_24px_60px_-24px_rgba(0,0,0,0.28)]`}
                 >
                   <article className="bg-[color:var(--bg-elev)] overflow-hidden h-full flex flex-col">
                     <Link href={`/c/${c.slug}`} className="block">
@@ -116,7 +116,7 @@ export default async function HomePage() {
                             loading={i === 0 ? "eager" : "lazy"}
                             decoding="async"
                             fetchPriority={i === 0 ? "high" : "auto"}
-                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.07]"
+                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.08]"
                           />
                         )}
                       </div>
