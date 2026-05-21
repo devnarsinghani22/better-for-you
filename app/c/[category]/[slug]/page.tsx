@@ -77,7 +77,7 @@ export default async function ProductPage({
             {product.name}
           </h1>
           <div className="mt-6 inline-flex items-center gap-3">
-            <span className="bg-[color:var(--accent)] text-[color:var(--ink)] px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em]">
+            <span className="bg-[color:var(--ink)] text-[color:var(--bg)] px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em]">
               Better for You
             </span>
           </div>
