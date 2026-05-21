@@ -178,7 +178,7 @@ export default function SearchBox() {
                     onClick={() => setOpen(false)}
                     className="flex items-center gap-3 px-4 py-2 hover:bg-[color:var(--bg-elev)] normal-case tracking-normal"
                   >
-                    <div className="w-12 h-12 bg-[color:var(--photo-bg)] flex items-center justify-center shrink-0">
+                    <div className="w-12 h-12 flex items-center justify-center shrink-0">
                       {p.product_photo_url ? (
                         /* eslint-disable-next-line @next/next/no-img-element */
                         <img

@@ -87,9 +87,9 @@ export default async function CategoryPage({
             <Link
               key={p.id}
               href={`/c/${slug}/${p.slug}`}
-              className="bg-[color:var(--bg-elev)] overflow-hidden block group"
+              className="bg-[color:var(--bg-elev)] overflow-hidden block group transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.03] hover:shadow-[0_24px_60px_-24px_rgba(0,0,0,0.28)]"
             >
-              <div className="aspect-[4/3] bg-[color:var(--photo-bg)] flex items-center justify-center overflow-hidden">
+              <div className="aspect-[4/3] flex items-center justify-center overflow-hidden">
                 {p.product_photo_url ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -99,8 +99,8 @@ export default async function CategoryPage({
                     decoding="async"
                     className={
                       tightCrop
-                        ? "h-full w-full object-cover scale-125 group-hover:scale-[1.32] transition-transform duration-500"
-                        : "max-h-full max-w-full object-contain p-1.5 sm:p-2 group-hover:scale-105 transition-transform duration-500"
+                        ? "h-full w-full object-cover scale-125 group-hover:scale-[1.32] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                        : "max-h-full max-w-full object-contain p-1.5 sm:p-2 group-hover:scale-[1.08] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
                     }
                   />
                 ) : (

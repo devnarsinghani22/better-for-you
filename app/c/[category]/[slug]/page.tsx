@@ -51,7 +51,7 @@ export default async function ProductPage({
 
       <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-x-12 gap-y-8 pb-10 border-b rule">
         {product.product_photo_url ? (
-          <div className="lg:col-span-5 bg-[color:var(--photo-bg)] overflow-hidden aspect-[4/3] sm:aspect-square max-h-[440px] flex items-center justify-center">
+          <div className="lg:col-span-5 overflow-hidden aspect-[4/3] sm:aspect-square max-h-[440px] flex items-center justify-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={product.product_photo_url}
@@ -145,7 +145,7 @@ export default async function ProductPage({
           <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mt-1">
             Cropped from the source page · {brand?.name}
           </p>
-          <div className="mt-5 bg-[color:var(--photo-bg)] p-3 inline-block max-w-full">
+          <div className="mt-5 p-3 inline-block max-w-full">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={product.label_image_url}
