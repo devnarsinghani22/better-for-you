@@ -60,32 +60,21 @@ export default async function HomePage() {
             </div>
 
             <div className="lg:col-span-4 lg:pb-3 rise rise-2">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/label-padhega-india.png"
-                alt="Label Padhega India"
-                className="w-36 sm:w-44 h-auto"
-              />
-              <div className="mt-5 flex items-start gap-4">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/revant.webp"
-                  alt="Revant Himatsingka — Food Pharmer"
-                  className="w-20 h-24 sm:w-24 sm:h-28 object-cover object-top shrink-0"
-                />
-                <p className="text-sm text-[color:var(--ink-mute)] leading-relaxed">
-                  Reviewed by{" "}
-                  <a
-                    href="https://instagram.com/foodpharmer"
-                    target="_blank"
-                    rel="noopener"
-                    className="text-[color:var(--ink-soft)] underline decoration-[color:var(--ink-mute)] underline-offset-2 hover:text-[color:var(--accent-deep)]"
-                  >
-                    Food Pharmer
-                  </a>
-                  , with a team of nutrition experts and researchers.
-                </p>
-              </div>
+              <p className="font-display italic text-2xl sm:text-3xl text-[color:var(--accent-deep)] leading-none">
+                Label Padhega India.
+              </p>
+              <p className="mt-5 text-sm text-[color:var(--ink-mute)] leading-relaxed max-w-md">
+                Reviewed by{" "}
+                <a
+                  href="https://instagram.com/foodpharmer"
+                  target="_blank"
+                  rel="noopener"
+                  className="text-[color:var(--ink-soft)] underline decoration-[color:var(--ink-mute)] underline-offset-2 hover:text-[color:var(--accent-deep)]"
+                >
+                  Food Pharmer
+                </a>
+                , with a team of nutrition experts and researchers.
+              </p>
               <p className="mt-4 text-xs text-[color:var(--ink-mute)] leading-relaxed max-w-md">
                 This list is completely non-sponsored.
               </p>
