@@ -1,25 +1,30 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #efe8d8;
-  --bg-elev: #f8f2e5;
-  --ink: #2d2620;
-  --ink-soft: #6b5f50;
-  --ink-mute: #a09587;
-  --rule: #d8cab2;
-  --rule-soft: #e8dec5;
-  --accent: #9aa882;
-  --accent-deep: #c47956;
-  --lab: #8b9d7d;
-  --danger: #a44a3a;
+  --bg: #ffffff;
+  --bg-elev: #ffffff;
+  --ink: #000000;
+  --ink-soft: #4a4a4a;
+  --ink-mute: #8a8a8a;
+  --rule: #e5e5e5;
+  --rule-soft: #f0f0f0;
+  --accent: #000000;
+  --accent-deep: #000000;
+  --lab: #000000;
+  --danger: #c00000;
 }
 
 @theme inline {
   --color-background: var(--bg);
   --color-foreground: var(--ink);
   --font-display: var(--font-display);
-  --font-body: var(--font-body);
+  --font-body: var(--font-display);
   --font-mono: var(--font-mono);
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
 }
 
 html {
@@ -29,32 +34,19 @@ html {
 html, body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-body), Georgia, serif;
+  font-family: var(--font-body), system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  background-image:
-    radial-gradient(circle at 20% 10%, rgba(154, 168, 130, 0.10) 0px, transparent 45%),
-    radial-gradient(circle at 80% 80%, rgba(196, 121, 86, 0.08) 0px, transparent 55%);
-}
+/* Flat white canvas — no gradients, no grain */
+body { background-image: none; }
+body::before { content: none; }
 
-/* Subtle paper grain — black noise for cream canvas */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.4;
-  z-index: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-/* Display typography rule */
+/* Display typography — neo-grotesk, tight tracking for clinical feel */
 .font-display {
-  font-family: var(--font-display), Georgia, serif;
-  font-feature-settings: "ss01", "ss02";
+  font-family: var(--font-display), system-ui, "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: -0.01em;
 }
 
 .font-mono {
@@ -79,19 +71,6 @@ body::before {
 .stamp {
   transform: rotate(-6deg);
 }
-
-/* Page-load reveal */
-@keyframes rise {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.rise { animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
-.rise-1 { animation-delay: 0.05s; }
-.rise-2 { animation-delay: 0.15s; }
-.rise-3 { animation-delay: 0.25s; }
-.rise-4 { animation-delay: 0.35s; }
-.rise-5 { animation-delay: 0.45s; }
 
 /* Hairline rule used liberally */
 .rule { border-color: var(--rule); }

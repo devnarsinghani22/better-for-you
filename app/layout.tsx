@@ -1,19 +1,12 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Newsreader, JetBrains_Mono } from "next/font/google";
+import { Hanken_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const playfair = Playfair_Display({
+const hanken = Hanken_Grotesk({
   variable: "--font-display",
   subsets: ["latin"],
   style: ["normal", "italic"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
-
-const newsreader = Newsreader({
-  variable: "--font-body",
-  subsets: ["latin"],
-  style: ["normal", "italic"],
+  weight: ["300", "400", "500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -56,7 +49,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${newsreader.variable} ${mono.variable}`}
+      className={`${hanken.variable} ${mono.variable}`}
     >
       <body className="min-h-screen flex flex-col">{children}</body>
     </html>
