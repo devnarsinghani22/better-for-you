@@ -81,21 +81,18 @@ export default async function ProductPage({
               Better for You
             </span>
           </div>
+          {product.primary_buy_url && (
+            <a
+              href={product.primary_buy_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-[color:var(--ink)] text-[color:var(--bg)] px-6 py-4 sm:py-3 font-mono text-xs uppercase tracking-[0.22em] hover:bg-[color:var(--accent-deep)] transition-colors"
+            >
+              Source →
+            </a>
+          )}
         </header>
       </div>
-
-      {product.primary_buy_url && (
-        <div className="mt-8 sm:mt-10">
-          <a
-            href={product.primary_buy_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-[color:var(--ink)] text-[color:var(--bg)] px-6 py-4 sm:py-3 font-mono text-xs uppercase tracking-[0.22em] hover:bg-[color:var(--accent-deep)] transition-colors"
-          >
-            Source →
-          </a>
-        </div>
-      )}
 
       <section className="mt-12 border-t rule pt-10">
         <h2 className="font-display text-3xl tracking-tight">Ingredients</h2>
