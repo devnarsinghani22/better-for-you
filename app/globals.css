@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #0e0e10;
-  --bg-elev: #19191c;
-  --ink: #efeeec;
-  --ink-soft: #a8a7a3;
-  --ink-mute: #6f6e6a;
-  --rule: #2a2a2d;
-  --rule-soft: #1e1e21;
-  --accent: #d4d4d0;
-  --accent-deep: #ffffff;
-  --lab: #efeeec;
-  --danger: #c97070;
+  --bg: #efe8d8;
+  --bg-elev: #f8f2e5;
+  --ink: #2d2620;
+  --ink-soft: #6b5f50;
+  --ink-mute: #a09587;
+  --rule: #d8cab2;
+  --rule-soft: #e8dec5;
+  --accent: #9aa882;
+  --accent-deep: #c47956;
+  --lab: #8b9d7d;
+  --danger: #a44a3a;
 }
 
 @theme inline {
@@ -23,7 +23,7 @@
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 html, body {
@@ -36,19 +36,19 @@ html, body {
 
 body {
   background-image:
-    radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.035) 0px, transparent 45%),
-    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.025) 0px, transparent 55%);
+    radial-gradient(circle at 20% 10%, rgba(154, 168, 130, 0.10) 0px, transparent 45%),
+    radial-gradient(circle at 80% 80%, rgba(196, 121, 86, 0.08) 0px, transparent 55%);
 }
 
-/* Subtle film grain — white noise for dark canvas */
+/* Subtle paper grain — black noise for cream canvas */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
-  opacity: 0.5;
+  opacity: 0.4;
   z-index: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* Display typography rule */
