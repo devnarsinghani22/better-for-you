@@ -148,9 +148,9 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
                   <Link
                     key={p.id}
                     href={`/c/${cat.slug}/${p.slug}`}
-                    className="bg-[color:var(--bg-elev)] border rule rounded-sm overflow-hidden hover:border-[color:var(--ink)] transition-colors block group flex"
+                    className="bg-[color:var(--bg-elev)] overflow-hidden block group flex"
                   >
-                    <div className="w-[110px] shrink-0 bg-white border-r rule flex items-center justify-center">
+                    <div className="w-[110px] shrink-0 bg-[color:var(--photo-bg)] flex items-center justify-center">
                       {p.product_photo_url ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img

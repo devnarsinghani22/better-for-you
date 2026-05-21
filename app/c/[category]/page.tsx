@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getLiveProductsForCategory } from "@/lib/products/queries";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import CriteriaBlock from "@/components/CriteriaBlock";
 
 export const revalidate = 60;
 
@@ -22,7 +23,26 @@ export default async function CategoryPage({
     .single();
   if (!cat) notFound();
 
-  const products = await getLiveProductsForCategory(slug);
+  const rawProducts = await getLiveProductsForCategory(slug);
+
+  // Explicit per-category display order (only categories that need a non-default sort)
+  const orderBySlug: Record<string, string[]> = {
+    noodles: [
+      "quinoa-noodles-naturally",
+      "urbanplatter-shirataki-konjac-noodles",
+      "wheat-noodles-little-moppet",
+      "jiwa-instant-oats-noodles",
+    ],
+  };
+  const order = orderBySlug[slug];
+  const products = order
+    ? [...rawProducts].sort((a, b) => {
+        const ai = order.indexOf(a.slug);
+        const bi = order.indexOf(b.slug);
+        // Unknown slugs sink to the bottom, preserving relative order
+        return (ai < 0 ? 9999 : ai) - (bi < 0 ? 9999 : bi);
+      })
+    : rawProducts;
 
   // Categories with boxed products that benefit from a tighter crop
   const tightCrop = slug === "biscuits";
@@ -55,6 +75,10 @@ export default async function CategoryPage({
         </div>
       </header>
 
+      <div className="mt-8 sm:mt-10">
+        <CriteriaBlock categoryId={cat.id} variant="compact" heading="Our criteria" />
+      </div>
+
       {(() => {
         const renderCard = (p: typeof products[number]) => {
           const brand = Array.isArray(p.brand) ? p.brand[0] : p.brand;
@@ -63,9 +87,9 @@ export default async function CategoryPage({
             <Link
               key={p.id}
               href={`/c/${slug}/${p.slug}`}
-              className="bg-[color:var(--bg-elev)] border rule rounded-sm overflow-hidden hover:border-[color:var(--ink)] transition-colors block group"
+              className="bg-[color:var(--bg-elev)] overflow-hidden block group"
             >
-              <div className="aspect-[4/3] bg-white border-b rule flex items-center justify-center overflow-hidden">
+              <div className="aspect-[4/3] bg-[color:var(--photo-bg)] flex items-center justify-center overflow-hidden">
                 {p.product_photo_url ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img

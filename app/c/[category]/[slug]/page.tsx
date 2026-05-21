@@ -4,12 +4,11 @@ import { getLiveProductBySlug } from "@/lib/products/queries";
 import { createClient } from "@/lib/supabase/server";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import CriteriaBlock from "@/components/CriteriaBlock";
 import FeedbackBlock from "@/components/FeedbackBlock";
 import NutritionCard from "@/components/NutritionCard";
 import WhatsAppShare from "@/components/WhatsAppShare";
 
-const SITE_URL = "https://foodpharmer-approved.vercel.app";
+const SITE_URL = "https://foodpharmer.health";
 
 export const revalidate = 60;
 
@@ -52,7 +51,7 @@ export default async function ProductPage({
 
       <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-x-12 gap-y-8 pb-10 border-b rule">
         {product.product_photo_url ? (
-          <div className="lg:col-span-5 bg-white border rule rounded-sm overflow-hidden aspect-[4/3] sm:aspect-square max-h-[440px] flex items-center justify-center">
+          <div className="lg:col-span-5 bg-[color:var(--photo-bg)] overflow-hidden aspect-[4/3] sm:aspect-square max-h-[440px] flex items-center justify-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={product.product_photo_url}
@@ -85,54 +84,18 @@ export default async function ProductPage({
         </header>
       </div>
 
-      <section className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <div>
-          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-2">
-            How we checked
-          </div>
-          {isLab && product.lab_report_url ? (
-            <a
-              href={product.lab_report_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-display text-2xl tracking-tight text-[color:var(--lab)] underline decoration-[color:var(--lab)]/40 underline-offset-4 hover:decoration-[color:var(--lab)]"
-            >
-              Lab tested ✓
-            </a>
-          ) : (
-            <div
-              className={`font-display text-2xl tracking-tight ${
-                isLab ? "text-[color:var(--lab)]" : ""
-              }`}
-            >
-              {isLab ? "Lab tested ✓" : "Label reviewed"}
-            </div>
-          )}
-          {!isLab && (
-            <p className="text-xs text-[color:var(--ink-mute)] mt-1 leading-snug">
-              We read the ingredients off the brand&rsquo;s pack. No lab test on this one.
-            </p>
-          )}
-          {isLab && (
-            <p className="text-base text-[color:var(--ink-soft)] mt-2 leading-snug">
-              A NABL certified lab tested this product.
-            </p>
-          )}
+      {product.primary_buy_url && (
+        <div className="mt-8 sm:mt-10">
+          <a
+            href={product.primary_buy_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-[color:var(--ink)] text-[color:var(--bg)] px-6 py-4 sm:py-3 font-mono text-xs uppercase tracking-[0.22em] hover:bg-[color:var(--accent-deep)] transition-colors"
+          >
+            Source →
+          </a>
         </div>
-        <div>
-          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-2">
-            Last verified
-          </div>
-          <div className="font-display text-2xl tracking-tight">
-            {verifiedDate ?? "Pending"}
-          </div>
-          <p className="text-xs text-[color:var(--ink-mute)] mt-1 leading-snug">
-            We re-check every 6 months — recipes change.
-          </p>
-        </div>
-      </section>
-
-      <CriteriaBlock categoryId={cat.id} productMode />
+      )}
 
       <section className="mt-12 border-t rule pt-10">
         <h2 className="font-display text-3xl tracking-tight">Ingredients</h2>
@@ -185,7 +148,7 @@ export default async function ProductPage({
           <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mt-1">
             Cropped from the source page · {brand?.name}
           </p>
-          <div className="mt-5 bg-white border rule rounded-sm p-3 inline-block max-w-full">
+          <div className="mt-5 bg-[color:var(--photo-bg)] p-3 inline-block max-w-full">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={product.label_image_url}
@@ -198,23 +161,52 @@ export default async function ProductPage({
         </section>
       ) : null}
 
-      <div className="mt-10 flex flex-col sm:flex-row sm:flex-wrap gap-3">
-        {product.primary_buy_url && (
-          <a
-            href={product.primary_buy_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-[color:var(--ink)] text-[color:var(--bg)] px-6 py-4 sm:py-3 font-mono text-xs uppercase tracking-[0.22em] hover:bg-[color:var(--accent-deep)] transition-colors"
-          >
-            Source →
-          </a>
-        )}
+      <div className="mt-10">
         <WhatsAppShare
           productName={product.name}
           brand={brand?.name ?? ""}
           url={`${SITE_URL}/c/${category}/${slug}`}
         />
       </div>
+
+      <section className="mt-12 border-t rule pt-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div>
+          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-2">
+            How we checked
+          </div>
+          {isLab && product.lab_report_url ? (
+            <a
+              href={product.lab_report_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-display text-2xl tracking-tight text-[color:var(--lab)] underline decoration-[color:var(--lab)]/40 underline-offset-4 hover:decoration-[color:var(--lab)]"
+            >
+              Lab tested ✓
+            </a>
+          ) : (
+            <div
+              className={`font-display text-2xl tracking-tight ${
+                isLab ? "text-[color:var(--lab)]" : ""
+              }`}
+            >
+              {isLab ? "Lab tested ✓" : "Label reviewed"}
+            </div>
+          )}
+          {isLab && (
+            <p className="text-base text-[color:var(--ink-soft)] mt-2 leading-snug">
+              A NABL certified lab tested this product.
+            </p>
+          )}
+        </div>
+        <div>
+          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-2">
+            Last verified
+          </div>
+          <div className="font-display text-2xl tracking-tight">
+            {verifiedDate ?? "Pending"}
+          </div>
+        </div>
+      </section>
 
       <FeedbackBlock
         productId={product.id}

@@ -105,9 +105,9 @@ export default async function HomePage() {
                   key={c.id}
                   className={`group rise rise-${Math.min(i + 1, 5)}`}
                 >
-                  <article className="bg-[color:var(--bg-elev)] border rule rounded-sm overflow-hidden hover:border-[color:var(--ink)] transition-colors h-full flex flex-col">
+                  <article className="bg-[color:var(--bg-elev)] overflow-hidden h-full flex flex-col">
                     <Link href={`/c/${c.slug}`} className="block">
-                      <div className="relative aspect-[16/10] sm:aspect-[16/11] bg-[color:var(--bg)] overflow-hidden">
+                      <div className="relative aspect-[16/10] sm:aspect-[16/11] bg-[color:var(--photo-bg)] overflow-hidden">
                         {c.hero_image_url && (
                           /* eslint-disable-next-line @next/next/no-img-element */
                           <img
