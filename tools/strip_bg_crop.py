@@ -39,14 +39,14 @@ HEADERS = {"apikey": SERVICE_KEY, "Authorization": f"Bearer {SERVICE_KEY}"}
 # (slug, source_url, left, top, right, bottom) — box as fractions of source.
 JOBS: list[tuple] = [
     (
-        "nutrela-soya-mini-chunks",
-        "https://m.media-amazon.com/images/I/71No2HmkdlL._SL1500_.jpg",
-        0.00, 0.00, 0.70, 1.00,
+        "jiwa-instant-oats-noodles",
+        "https://m.media-amazon.com/images/I/81E+Xr7i8kL._SL1500_.jpg",
+        0.00, 0.00, 1.00, 1.00,
     ),
     (
-        "fortune-soya-chunks",
-        "https://m.media-amazon.com/images/I/81+OxnmB9hS._SL1500_.jpg",
-        0.00, 0.00, 0.58, 1.00,
+        "amul-malai-paneer",
+        "https://m.media-amazon.com/images/I/81XmZiUfm5L._SL1500_.jpg",
+        0.00, 0.00, 0.62, 1.00,
     ),
 ]
 
