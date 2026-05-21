@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #f1f1f2;
-  --bg-elev: #fafafb;
-  --ink: #0d0d0e;
-  --ink-soft: #3f3f42;
-  --ink-mute: #828286;
-  --rule: #c4c4c6;
-  --rule-soft: #dadadc;
-  --accent: #1a1a1c;
-  --accent-deep: #000000;
-  --lab: #0d0d0e;
-  --danger: #5a1818;
+  --bg: #0e0e10;
+  --bg-elev: #19191c;
+  --ink: #efeeec;
+  --ink-soft: #a8a7a3;
+  --ink-mute: #6f6e6a;
+  --rule: #2a2a2d;
+  --rule-soft: #1e1e21;
+  --accent: #d4d4d0;
+  --accent-deep: #ffffff;
+  --lab: #efeeec;
+  --danger: #c97070;
 }
 
 @theme inline {
@@ -23,7 +23,7 @@
 }
 
 html {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 html, body {
@@ -36,19 +36,19 @@ html, body {
 
 body {
   background-image:
-    radial-gradient(circle at 20% 10%, rgba(0, 0, 0, 0.03) 0px, transparent 45%),
-    radial-gradient(circle at 80% 80%, rgba(0, 0, 0, 0.05) 0px, transparent 55%);
+    radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.035) 0px, transparent 45%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.025) 0px, transparent 55%);
 }
 
-/* Subtle paper grain — uses a tiny SVG noise as data-uri */
+/* Subtle film grain — white noise for dark canvas */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
-  opacity: 0.35;
+  opacity: 0.5;
   z-index: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* Display typography rule */
