@@ -107,7 +107,7 @@ export default async function HomePage() {
                 >
                   <article className="bg-[color:var(--bg-elev)] overflow-hidden h-full flex flex-col">
                     <Link href={`/c/${c.slug}`} className="block">
-                      <div className="relative aspect-[16/10] sm:aspect-[16/11] bg-[color:var(--photo-bg)] overflow-hidden">
+                      <div className="relative aspect-[16/10] sm:aspect-[16/11] bg-[color:var(--photo-bg)] overflow-hidden p-6 sm:p-10">
                         {c.hero_image_url && (
                           /* eslint-disable-next-line @next/next/no-img-element */
                           <img
@@ -116,7 +116,7 @@ export default async function HomePage() {
                             loading={i === 0 ? "eager" : "lazy"}
                             decoding="async"
                             fetchPriority={i === 0 ? "high" : "auto"}
-                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                            className="w-full h-full object-contain transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                           />
                         )}
                       </div>
