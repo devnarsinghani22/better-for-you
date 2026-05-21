@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Newsreader, JetBrains_Mono } from "next/font/google";
+import { Fraunces, EB_Garamond, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-const playfair = Playfair_Display({
+const fraunces = Fraunces({
   variable: "--font-display",
   subsets: ["latin"],
   style: ["normal", "italic"],
@@ -10,21 +10,23 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
-const newsreader = Newsreader({
+const garamond = EB_Garamond({
   variable: "--font-body",
   subsets: ["latin"],
   style: ["normal", "italic"],
+  weight: ["400", "500"],
   display: "swap",
 });
 
-const mono = JetBrains_Mono({
+const mono = IBM_Plex_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
+  weight: ["400", "500"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://foodpharmer-approved.vercel.app"),
+  metadataBase: new URL("https://foodpharmer.health"),
   title: {
     default: "Better for You by Food Pharmer",
     template: "%s | Better for You by Food Pharmer",
@@ -37,7 +39,7 @@ export const metadata: Metadata = {
       "We analyse ingredient lists and nutrition labels to shortlist products that are better for you. Not sponsored.",
     type: "website",
     locale: "en_IN",
-    url: "https://foodpharmer-approved.vercel.app",
+    url: "https://foodpharmer.health",
     siteName: "Better for You by Food Pharmer",
   },
   twitter: {
@@ -56,7 +58,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${newsreader.variable} ${mono.variable}`}
+      className={`${fraunces.variable} ${garamond.variable} ${mono.variable}`}
     >
       <body className="min-h-screen flex flex-col">{children}</body>
     </html>
