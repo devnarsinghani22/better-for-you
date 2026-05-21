@@ -37,14 +37,14 @@ export default function SiteFooter() {
             Get in touch
           </p>
           <p className="text-sm text-[color:var(--ink-soft)] leading-relaxed max-w-sm">
-            If you have a brand which follows these criteria, email us at{" "}
+            If you have a brand, email us at{" "}
             <a
               href="mailto:betterforyou@foodpharmer.net?subject=Brand%20submission"
               className="text-[color:var(--ink)] underline decoration-[color:var(--ink-mute)] underline-offset-2 hover:text-[color:var(--accent-deep)] break-all"
             >
               betterforyou@foodpharmer.net
             </a>
-            .
+            . We will review your submission and, if it meets our internal criteria, we will list it.
           </p>
           <p className="mt-6 font-display italic text-2xl text-[color:var(--accent-deep)]">
             Label Padhega India.
