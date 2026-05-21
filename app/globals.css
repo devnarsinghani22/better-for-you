@@ -18,7 +18,7 @@
   --color-background: var(--bg);
   --color-foreground: var(--ink);
   --font-display: var(--font-display);
-  --font-body: var(--font-display);
+  --font-body: var(--font-body);
   --font-mono: var(--font-mono);
   --radius-sm: 0px;
   --radius-md: 0px;
@@ -34,7 +34,7 @@ html {
 html, body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-body), system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-body), Georgia, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -43,10 +43,10 @@ html, body {
 body { background-image: none; }
 body::before { content: none; }
 
-/* Display typography — neo-grotesk, tight tracking for clinical feel */
+/* Display typography rule */
 .font-display {
-  font-family: var(--font-display), system-ui, "Helvetica Neue", Arial, sans-serif;
-  letter-spacing: -0.01em;
+  font-family: var(--font-display), Georgia, serif;
+  font-feature-settings: "ss01", "ss02";
 }
 
 .font-mono {
