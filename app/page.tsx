@@ -134,13 +134,18 @@ export default async function HomePage() {
                           <li className="border-b rule">
                             <Link
                               href={`/c/paneer`}
-                              className="flex items-center justify-between min-h-[52px] py-3 group/v"
+                              className="flex items-center justify-between gap-3 min-h-[52px] py-3 group/v"
                             >
-                              <span className="font-display text-xl sm:text-2xl tracking-tight text-[color:var(--ink)] group-hover/v:text-[color:var(--accent-deep)] transition-colors truncate">
-                                Regular
+                              <span className="flex items-baseline gap-2 whitespace-nowrap min-w-0">
+                                <span className="font-display text-xl sm:text-2xl tracking-tight text-[color:var(--ink)] group-hover/v:text-[color:var(--accent-deep)] transition-colors">
+                                  Regular
+                                </span>
+                                <span className="font-display italic text-sm sm:text-base tracking-tight text-[color:var(--ink-mute)] group-hover/v:text-[color:var(--accent-deep)] transition-colors">
+                                  · {counts.get(paneerParent?.id ?? -1) ?? 0} picks
+                                </span>
                               </span>
-                              <span className="inline-flex items-center justify-center bg-[color:var(--ink)] text-[color:var(--bg)] font-mono text-[11px] uppercase tracking-[0.22em] px-3 py-1.5 group-hover/v:bg-[color:var(--accent-deep)] transition-colors shrink-0 ml-3 whitespace-nowrap">
-                                {counts.get(paneerParent?.id ?? -1) ?? 0} picks · View →
+                              <span className="inline-flex items-center justify-center bg-[color:var(--ink)] text-[color:var(--bg)] font-mono text-[11px] uppercase tracking-[0.22em] px-3 py-1.5 group-hover/v:bg-[color:var(--accent-deep)] transition-colors shrink-0 whitespace-nowrap">
+                                View section →
                               </span>
                             </Link>
                           </li>
@@ -151,13 +156,18 @@ export default async function HomePage() {
                             >
                               <Link
                                 href={`/c/${v.slug}`}
-                                className="flex items-center justify-between min-h-[52px] py-3 group/v"
+                                className="flex items-center justify-between gap-3 min-h-[52px] py-3 group/v"
                               >
-                                <span className="font-display text-xl sm:text-2xl tracking-tight text-[color:var(--ink)] group-hover/v:text-[color:var(--accent-deep)] transition-colors whitespace-nowrap">
-                                  {v.name.replace(/^Paneer · /, "")}
+                                <span className="flex items-baseline gap-2 whitespace-nowrap min-w-0">
+                                  <span className="font-display text-xl sm:text-2xl tracking-tight text-[color:var(--ink)] group-hover/v:text-[color:var(--accent-deep)] transition-colors">
+                                    {v.name.replace(/^Paneer · /, "")}
+                                  </span>
+                                  <span className="font-display italic text-sm sm:text-base tracking-tight text-[color:var(--ink-mute)] group-hover/v:text-[color:var(--accent-deep)] transition-colors">
+                                    · {counts.get(v.id) ?? 0} picks
+                                  </span>
                                 </span>
-                                <span className="inline-flex items-center justify-center bg-[color:var(--ink)] text-[color:var(--bg)] font-mono text-[11px] uppercase tracking-[0.22em] px-3 py-1.5 group-hover/v:bg-[color:var(--accent-deep)] transition-colors shrink-0 ml-3 whitespace-nowrap">
-                                  {counts.get(v.id) ?? 0} picks · View →
+                                <span className="inline-flex items-center justify-center bg-[color:var(--ink)] text-[color:var(--bg)] font-mono text-[11px] uppercase tracking-[0.22em] px-3 py-1.5 group-hover/v:bg-[color:var(--accent-deep)] transition-colors shrink-0 whitespace-nowrap">
+                                  View section →
                                 </span>
                               </Link>
                             </li>
