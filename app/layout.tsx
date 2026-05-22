@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Newsreader, JetBrains_Mono } from "next/font/google";
+import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
+
+const CLARITY_PROJECT_ID = "wv3da4qpra";
 
 const playfair = Playfair_Display({
   variable: "--font-display",
@@ -64,6 +67,13 @@ export default function RootLayout({
         {children}
         <Analytics />
         <SpeedInsights />
+        <Script id="ms-clarity" strategy="afterInteractive">
+          {`(function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+          })(window, document, "clarity", "script", "${CLARITY_PROJECT_ID}");`}
+        </Script>
       </body>
     </html>
   );
