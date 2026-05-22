@@ -33,6 +33,15 @@ export default async function CategoryPage({
       "wheat-noodles-little-moppet",
       "jiwa-instant-oats-noodles",
     ],
+    "peanut-butter": [
+      "alpino-natural-pb-crunch",
+      "muscleblaze-high-protein-pb-crunchy",
+      "myfitness-unsweetened-crunchy-pb",
+      "the-whole-truth-unsweetened-pb-crunchy",
+      "pintola-all-natural-crunchy-pb",
+      "pintola-high-protein-pb",
+      "butternutco-natural-creamy-pb",
+    ],
   };
   const order = orderBySlug[slug];
   const products = order
