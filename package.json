@@ -12,6 +12,7 @@
     "db:types": "supabase gen types typescript --linked > lib/supabase/types.ts"
   },
   "dependencies": {
+    "@microsoft/clarity": "^1.0.2",
     "@supabase/ssr": "^0.10.2",
     "@supabase/supabase-js": "^2.104.1",
     "@vercel/analytics": "^2.0.1",
