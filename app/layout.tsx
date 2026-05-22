@@ -3,6 +3,7 @@ import { Playfair_Display, Newsreader, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import PostHogInit from "@/components/PostHogInit";
 import "./globals.css";
 
 const CLARITY_PROJECT_ID = "wv3da4qpra";
@@ -67,6 +68,7 @@ export default function RootLayout({
         {children}
         <Analytics />
         <SpeedInsights />
+        <PostHogInit />
         <Script id="ms-clarity" strategy="afterInteractive">
           {`(function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
