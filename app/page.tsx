@@ -139,7 +139,7 @@ export default async function HomePage() {
                               <span className="font-display text-xl sm:text-2xl tracking-tight text-[color:var(--ink)] group-hover/v:text-[color:var(--accent-deep)] transition-colors truncate">
                                 Regular
                               </span>
-                              <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[color:var(--ink-mute)] group-hover/v:text-[color:var(--accent-deep)] transition-colors shrink-0 ml-3 whitespace-nowrap">
+                              <span className="inline-flex items-center justify-center bg-[color:var(--ink)] text-[color:var(--bg)] font-mono text-[11px] uppercase tracking-[0.22em] px-3 py-1.5 group-hover/v:bg-[color:var(--accent-deep)] transition-colors shrink-0 ml-3 whitespace-nowrap">
                                 {counts.get(paneerParent?.id ?? -1) ?? 0} picks · View →
                               </span>
                             </Link>
@@ -156,7 +156,7 @@ export default async function HomePage() {
                                 <span className="font-display text-xl sm:text-2xl tracking-tight text-[color:var(--ink)] group-hover/v:text-[color:var(--accent-deep)] transition-colors whitespace-nowrap">
                                   {v.name.replace(/^Paneer · /, "")}
                                 </span>
-                                <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[color:var(--ink-mute)] group-hover/v:text-[color:var(--accent-deep)] transition-colors shrink-0 ml-3 whitespace-nowrap">
+                                <span className="inline-flex items-center justify-center bg-[color:var(--ink)] text-[color:var(--bg)] font-mono text-[11px] uppercase tracking-[0.22em] px-3 py-1.5 group-hover/v:bg-[color:var(--accent-deep)] transition-colors shrink-0 ml-3 whitespace-nowrap">
                                   {counts.get(v.id) ?? 0} picks · View →
                                 </span>
                               </Link>
