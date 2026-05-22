@@ -140,7 +140,7 @@ export default async function HomePage() {
                                 <span className="font-display text-xl sm:text-2xl tracking-tight text-[color:var(--ink)] group-hover/v:text-[color:var(--accent-deep)] transition-colors">
                                   Regular
                                 </span>
-                                <span className="font-display italic text-sm sm:text-base tracking-tight text-[color:var(--ink-mute)] group-hover/v:text-[color:var(--accent-deep)] transition-colors">
+                                <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-[color:var(--ink-mute)] group-hover/v:text-[color:var(--accent-deep)] transition-colors">
                                   · {counts.get(paneerParent?.id ?? -1) ?? 0} picks
                                 </span>
                               </span>
@@ -162,7 +162,7 @@ export default async function HomePage() {
                                   <span className="font-display text-xl sm:text-2xl tracking-tight text-[color:var(--ink)] group-hover/v:text-[color:var(--accent-deep)] transition-colors">
                                     {v.name.replace(/^Paneer · /, "")}
                                   </span>
-                                  <span className="font-display italic text-sm sm:text-base tracking-tight text-[color:var(--ink-mute)] group-hover/v:text-[color:var(--accent-deep)] transition-colors">
+                                  <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-[color:var(--ink-mute)] group-hover/v:text-[color:var(--accent-deep)] transition-colors">
                                     · {counts.get(v.id) ?? 0} picks
                                   </span>
                                 </span>
