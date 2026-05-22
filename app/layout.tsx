@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Newsreader, JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -58,7 +60,11 @@ export default function RootLayout({
       lang="en"
       className={`${playfair.variable} ${newsreader.variable} ${mono.variable}`}
     >
-      <body className="min-h-screen flex flex-col">{children}</body>
+      <body className="min-h-screen flex flex-col">
+        {children}
+        <Analytics />
+        <SpeedInsights />
+      </body>
     </html>
   );
 }
