@@ -6,7 +6,30 @@ export const alt =
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+// Older UA forces Google Fonts to return TTF (woff2 is not supported by satori).
+const FONT_UA =
+  "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0 Safari/537.36";
+
+async function loadGoogleFont(cssUrl: string): Promise<ArrayBuffer> {
+  const css = await fetch(cssUrl, { headers: { "User-Agent": FONT_UA } }).then(
+    (r) => r.text()
+  );
+  const match = css.match(/url\((https:[^)]+\.ttf)\)/);
+  if (!match) throw new Error("Font URL not found in CSS");
+  const buf = await fetch(match[1]).then((r) => r.arrayBuffer());
+  return buf;
+}
+
 export default async function OGImage() {
+  const [playfairMedium, playfairItalic] = await Promise.all([
+    loadGoogleFont(
+      "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap"
+    ),
+    loadGoogleFont(
+      "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&display=swap"
+    ),
+  ]);
+
   return new ImageResponse(
     (
       <div
@@ -16,64 +39,68 @@ export default async function OGImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "72px 80px",
+          padding: "60px 80px",
           backgroundColor: "#FFFFFF",
           color: "#000000",
-          fontFamily: "Georgia, serif",
         }}
       >
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
-            fontFamily: "monospace",
             fontSize: 18,
             letterSpacing: 4,
             textTransform: "uppercase",
-            color: "#666666",
+            color: "#555555",
           }}
         >
           <span>Better for You · by Food Pharmer</span>
           <span>foodpharmer.health</span>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 6,
+            marginTop: -10,
+          }}
+        >
           <div
             style={{
-              fontSize: 132,
-              lineHeight: 0.94,
-              color: "#000000",
+              fontFamily: "Playfair",
+              fontSize: 148,
               fontWeight: 500,
+              lineHeight: 1.0,
               letterSpacing: -4,
-              display: "flex",
-              flexDirection: "column",
+              color: "#000000",
             }}
           >
-            <span>Better for You</span>
-            <span style={{ fontStyle: "italic", fontWeight: 400 }}>
-              by Food Pharmer
-            </span>
+            Better for You
           </div>
           <div
             style={{
+              fontFamily: "Playfair Italic",
               fontStyle: "italic",
-              fontSize: 36,
+              fontSize: 132,
+              fontWeight: 400,
+              lineHeight: 1.0,
+              letterSpacing: -3,
               color: "#000000",
-              marginTop: 8,
+            }}
+          >
+            by Food Pharmer
+          </div>
+          <div
+            style={{
+              fontFamily: "Playfair Italic",
+              fontStyle: "italic",
+              fontSize: 38,
+              color: "#000000",
+              marginTop: 22,
             }}
           >
             Label Padhega India.
-          </div>
-          <div
-            style={{
-              fontSize: 26,
-              lineHeight: 1.4,
-              color: "#444444",
-              maxWidth: 900,
-            }}
-          >
-            We read ingredient lists and nutrition labels to shortlist products
-            that are better for you. Not sponsored.
           </div>
         </div>
 
@@ -82,18 +109,35 @@ export default async function OGImage() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "flex-end",
-            fontFamily: "monospace",
-            fontSize: 16,
-            letterSpacing: 4,
+            fontSize: 18,
+            letterSpacing: 3,
             textTransform: "uppercase",
-            color: "#666666",
+            color: "#555555",
           }}
         >
-          <span>Reviewed by Food Pharmer + nutrition experts</span>
+          <span>
+            We read the labels so you don&rsquo;t have to · Not sponsored
+          </span>
           <span style={{ color: "#000000" }}>foodpharmer.health →</span>
         </div>
       </div>
     ),
-    { ...size }
+    {
+      ...size,
+      fonts: [
+        {
+          name: "Playfair",
+          data: playfairMedium,
+          style: "normal",
+          weight: 500,
+        },
+        {
+          name: "Playfair Italic",
+          data: playfairItalic,
+          style: "italic",
+          weight: 400,
+        },
+      ],
+    }
   );
 }
