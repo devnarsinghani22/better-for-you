@@ -25,7 +25,6 @@ const PLACEHOLDER_CYCLE = [
   "makhana",
   "tempeh",
   "tofu",
-  "soya chunks",
 ];
 
 export default function SearchBox() {
