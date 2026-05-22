@@ -137,7 +137,7 @@ export default async function HomePage() {
                               className="flex items-center justify-between gap-3 min-h-[52px] py-3 group/v"
                             >
                               <span className="flex items-baseline gap-2 whitespace-nowrap min-w-0">
-                                <span className="font-display text-xl sm:text-2xl tracking-tight text-[color:var(--ink)] group-hover/v:text-[color:var(--accent-deep)] transition-colors">
+                                <span className="font-display text-lg sm:text-xl tracking-tight text-[color:var(--ink)] group-hover/v:text-[color:var(--accent-deep)] transition-colors">
                                   Regular
                                 </span>
                                 <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-[color:var(--ink-mute)] group-hover/v:text-[color:var(--accent-deep)] transition-colors">
@@ -159,7 +159,7 @@ export default async function HomePage() {
                                 className="flex items-center justify-between gap-3 min-h-[52px] py-3 group/v"
                               >
                                 <span className="flex items-baseline gap-2 whitespace-nowrap min-w-0">
-                                  <span className="font-display text-xl sm:text-2xl tracking-tight text-[color:var(--ink)] group-hover/v:text-[color:var(--accent-deep)] transition-colors">
+                                  <span className="font-display text-lg sm:text-xl tracking-tight text-[color:var(--ink)] group-hover/v:text-[color:var(--accent-deep)] transition-colors">
                                     {v.name.replace(/^Paneer · /, "")}
                                   </span>
                                   <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-[color:var(--ink-mute)] group-hover/v:text-[color:var(--accent-deep)] transition-colors">
