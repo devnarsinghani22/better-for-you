@@ -110,6 +110,19 @@ export default function SearchBox() {
         <label htmlFor="site-search" className="sr-only">
           Search products
         </label>
+        <svg
+          aria-hidden
+          viewBox="0 0 24 24"
+          className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[color:var(--ink-mute)]"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <circle cx="11" cy="11" r="7" />
+          <path d="m20 20-3.5-3.5" />
+        </svg>
         <input
           id="site-search"
           type="search"
@@ -122,7 +135,7 @@ export default function SearchBox() {
           onFocus={() => setOpen(true)}
           placeholder={`Try '${PLACEHOLDER_CYCLE[placeholderIdx]}'…`}
           autoComplete="off"
-          className="w-full bg-[color:var(--bg-elev)] border border-[color:var(--ink-mute)] focus:border-[color:var(--ink)] rounded-sm px-3 py-2 text-[12px] sm:text-xs uppercase tracking-[0.16em] text-[color:var(--ink)] placeholder:text-[color:var(--ink-mute)] outline-none transition-colors min-h-[40px]"
+          className="w-full bg-[color:var(--bg-elev)] border border-[color:var(--ink-mute)] focus:border-[color:var(--ink)] rounded-sm pl-9 pr-3 py-2 text-[12px] sm:text-xs uppercase tracking-[0.16em] text-[color:var(--ink)] placeholder:text-[color:var(--ink-mute)] outline-none transition-colors min-h-[40px]"
         />
       </form>
 
@@ -182,7 +195,7 @@ export default function SearchBox() {
                         /* eslint-disable-next-line @next/next/no-img-element */
                         <img
                           src={p.product_photo_url}
-                          alt=""
+                          alt={p.name}
                           className="w-full h-full object-contain p-1"
                         />
                       ) : (

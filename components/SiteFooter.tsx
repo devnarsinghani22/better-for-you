@@ -40,7 +40,7 @@ export default function SiteFooter() {
             If you have a brand, email us at{" "}
             <a
               href="mailto:betterforyou@foodpharmer.net?subject=Brand%20submission"
-              className="text-[color:var(--ink)] underline decoration-[color:var(--ink-mute)] underline-offset-2 hover:text-[color:var(--accent-deep)] break-all"
+              className="text-[color:var(--ink)] underline decoration-[color:var(--ink-mute)] underline-offset-2 hover:text-[color:var(--accent-deep)] break-words"
             >
               betterforyou@foodpharmer.net
             </a>

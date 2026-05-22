@@ -164,15 +164,15 @@ export default async function HomePage() {
                           ))}
                         </ul>
                       ) : (
-                        <div className="mt-6 pt-5 border-t rule flex items-center justify-between gap-3">
-                          <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-[color:var(--ink-mute)]">
+                        <div className="mt-6 pt-5 border-t rule flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                          <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-[color:var(--ink-mute)] sm:order-first text-center sm:text-left">
                             {picks} picks
                           </span>
                           <Link
                             href={`/c/${c.slug}`}
-                            className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors"
+                            className="inline-flex items-center justify-center gap-2 bg-[color:var(--ink)] text-[color:var(--bg)] font-mono text-[13px] uppercase tracking-[0.22em] px-4 py-2.5 sm:py-2 w-full sm:w-auto hover:bg-[color:var(--accent-deep)] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[color:var(--ink)] transition-colors"
                           >
-                            View section →
+                            View section <span aria-hidden>→</span>
                           </Link>
                         </div>
                       )}
