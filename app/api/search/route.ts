@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { visibleProductStatuses } from "@/lib/products/visibility";
 
 export const dynamic = "force-dynamic";
 
@@ -29,7 +30,7 @@ export async function GET(req: Request) {
       .select(
         "slug, name, product_photo_url, brand:brands(slug,name), category:categories(slug,name)"
       )
-      .eq("status", "Live")
+      .in("status", visibleProductStatuses() as string[])
       .or(`name.ilike.${like}${brandClause}`)
       .limit(12),
     sb

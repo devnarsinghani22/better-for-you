@@ -1,11 +1,12 @@
 import { createClient } from '@/lib/supabase/server';
+import { visibleProductStatuses } from '@/lib/products/visibility';
 
 export async function getLiveCountByCategory(): Promise<Map<number, number>> {
   const sb = await createClient();
   const { data, error } = await sb
     .from('products')
     .select('category_id')
-    .eq('status', 'Live');
+    .in('status', visibleProductStatuses() as string[]);
   if (error) throw error;
   const counts = new Map<number, number>();
   for (const row of data ?? []) {
@@ -32,7 +33,7 @@ export async function getLiveProductsForCategory(categorySlug: string) {
       ingredients_raw,
       brand:brands ( slug, name )
     `)
-    .eq('status', 'Live')
+    .in('status', visibleProductStatuses() as string[])
     .eq('category_id', cat.id);
   if (error) throw error;
   const rows = data ?? [];
@@ -64,7 +65,7 @@ export async function getLiveProductBySlug(categorySlug: string, productSlug: st
       *,
       brand:brands ( slug, name, website_url )
     `)
-    .eq('status', 'Live')
+    .in('status', visibleProductStatuses() as string[])
     .eq('slug', productSlug)
     .eq('category_id', cat.id)
     .single();

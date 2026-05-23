@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import { visibleProductStatuses } from "@/lib/products/visibility";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -24,7 +25,7 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
           .select(
             "id, slug, name, certification_method, product_photo_url, brand:brands(slug,name), category:categories(slug,name)"
           )
-          .eq("status", "Live")
+          .in("status", visibleProductStatuses() as string[])
           .or(`name.ilike.%${query}%,ingredients_raw.ilike.%${query}%`)
           .limit(40),
         sb
