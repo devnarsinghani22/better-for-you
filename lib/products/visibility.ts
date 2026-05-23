@@ -5,10 +5,10 @@
 // Preview / staging / dev → "Live" + "Draft" so unapproved entries can be
 // reviewed on the staging URL before merging to prod.
 //
-// Vercel auto-injects NEXT_PUBLIC_VERCEL_ENV: "production" on the production
-// deploy, "preview" on branch previews (including staging), undefined locally.
+// Reads VERCEL_ENV (server-only, runtime read, auto-set by Vercel: "production"
+// for prod, "preview" for branch previews including staging, undefined locally).
 export function visibleProductStatuses(): readonly string[] {
-  return process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+  return process.env.VERCEL_ENV === 'production'
     ? ['Live']
     : ['Live', 'Draft'];
 }
