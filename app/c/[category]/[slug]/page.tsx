@@ -31,6 +31,23 @@ export default async function ProductPage({
   const helpful = Number(counts?.helpful_count ?? 0);
   const unhelpful = Number(counts?.unhelpful_count ?? 0);
   const isLab = product.certification_method === "lab_tested";
+
+  // Staging gate for structured nutrition tables. Prod and staging share one DB,
+  // so a populated `nutrition` field would otherwise surface on prod the instant
+  // it's written. We render the table everywhere on preview (for review), but on
+  // production only once it's explicitly approved with `nutrition.live === true`.
+  // Until then prod falls back to the label image (current behaviour). Reversible:
+  // clear the field or drop the flag.
+  const nutritionData = product.nutrition as
+    | { rows?: unknown[]; live?: boolean }
+    | null;
+  const hasNutritionRows =
+    !!nutritionData &&
+    Array.isArray(nutritionData.rows) &&
+    nutritionData.rows.length > 0;
+  const showNutritionTable =
+    hasNutritionRows &&
+    (process.env.VERCEL_ENV !== "production" || nutritionData?.live === true);
   const verifiedDate = product.last_verified_at
     ? new Date(product.last_verified_at).toLocaleDateString("en-IN", {
         year: "numeric",
@@ -126,7 +143,7 @@ export default async function ProductPage({
         )}
       </section>
 
-      {product.nutrition && Object.keys(product.nutrition as object).length > 0 ? (
+      {showNutritionTable ? (
         <section className="mt-12 border-t rule pt-10">
           <h2 className="font-display text-3xl tracking-tight">Nutrition</h2>
           <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mt-1">
