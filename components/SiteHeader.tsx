@@ -8,19 +8,12 @@ export default function SiteHeader() {
         Not sponsored · Not paid · Not affiliated
       </div>
 
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-10 py-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-5 text-[11px] sm:text-xs font-mono uppercase tracking-[0.18em]">
-        <SearchBox />
-
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-10 py-3 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-8 text-[11px] sm:text-xs font-mono uppercase tracking-[0.18em]">
         <VerticalNavDesktop />
 
-        <a
-          href="https://instagram.com/foodpharmer"
-          className="text-[color:var(--ink-soft)] hover:text-[color:var(--accent-deep)] transition-colors shrink-0 hidden sm:inline-block"
-          target="_blank"
-          rel="noopener"
-        >
-          @foodpharmer →
-        </a>
+        <div className="w-full sm:w-auto sm:ml-auto sm:max-w-[18rem] sm:flex-none">
+          <SearchBox />
+        </div>
       </div>
 
       {/* Mobile-only nav strip — surfaces section links that are inaccessible from the header otherwise */}
@@ -30,16 +23,6 @@ export default function SiteHeader() {
       >
         <ul className="max-w-[1280px] mx-auto px-2 flex items-stretch justify-between text-[11px] font-mono font-semibold uppercase tracking-[0.2em] text-[color:var(--ink)] divide-x divide-[color:var(--ink-mute)]/30">
           <VerticalNavMobile />
-          <li className="flex-1">
-            <a
-              href="https://instagram.com/foodpharmer"
-              target="_blank"
-              rel="noopener"
-              className="flex items-center justify-center gap-1 min-h-[48px] px-2 active:bg-[color:var(--accent)]/30 hover:text-[color:var(--accent-deep)] transition-colors"
-            >
-              IG <span aria-hidden>→</span>
-            </a>
-          </li>
         </ul>
       </nav>
     </header>

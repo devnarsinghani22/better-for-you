@@ -58,6 +58,16 @@ export default function SiteFooter() {
             </a>
             . If it meets our criteria, we will list it.
           </p>
+          <p className="mt-5 text-sm">
+            <a
+              href="https://instagram.com/foodpharmer"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[color:var(--ink)] underline decoration-[color:var(--ink-mute)] underline-offset-2 hover:text-[color:var(--accent-deep)]"
+            >
+              @foodpharmer on Instagram →
+            </a>
+          </p>
           <p className="mt-6 font-display italic text-2xl text-[color:var(--accent-deep)]">
             Label Padhega India.
           </p>
