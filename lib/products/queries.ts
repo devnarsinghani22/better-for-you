@@ -1,5 +1,19 @@
 import { createClient } from '@/lib/supabase/server';
 import { visibleProductStatuses } from '@/lib/products/visibility';
+import {
+  previewCategoriesEnabled,
+  STAGING_CATEGORY_ORDER_MIN,
+} from '@/lib/categories/visibility';
+
+// A category is visible if active, or (on staging) a sentinel preview category.
+function categoryVisible(cat: { active?: boolean; display_order?: number | null } | null) {
+  if (!cat) return false;
+  return Boolean(
+    cat.active ||
+      (previewCategoriesEnabled() &&
+        (cat.display_order ?? 0) >= STAGING_CATEGORY_ORDER_MIN)
+  );
+}
 
 export async function getLiveCountByCategory(): Promise<Map<number, number>> {
   const sb = await createClient();
@@ -19,11 +33,10 @@ export async function getLiveProductsForCategory(categorySlug: string) {
   const sb = await createClient();
   const { data: cat } = await sb
     .from('categories')
-    .select('id')
+    .select('id, active, display_order')
     .eq('slug', categorySlug)
-    .eq('active', true)
     .single();
-  if (!cat) return [];
+  if (!cat || !categoryVisible(cat)) return [];
 
   const { data, error } = await sb
     .from('products')
@@ -53,11 +66,10 @@ export async function getLiveProductBySlug(categorySlug: string, productSlug: st
   const sb = await createClient();
   const { data: cat } = await sb
     .from('categories')
-    .select('id, slug, name, blurb')
+    .select('id, slug, name, blurb, active, display_order')
     .eq('slug', categorySlug)
-    .eq('active', true)
     .single();
-  if (!cat) return null;
+  if (!cat || !categoryVisible(cat)) return null;
 
   const { data, error } = await sb
     .from('products')
