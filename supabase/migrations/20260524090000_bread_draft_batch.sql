@@ -14,15 +14,16 @@
 --
 -- bread-multigrain (criteria: no colour, no maida, no preservatives, >=6g fibre/100g):
 --   • The Health Factory — Zero Maida Super Multigrain Bread (250g)  [BigBasket]
---   • Baker's Loaf — Multigrain Bread (350g)                          [Zepto]
+--   • Modern — Baker's Loaf Multigrain Bread (350g)                   [Zepto]
 --   • The Baker's Dozen — Multigrain Loaf (375g)                      [Zepto]
 -- bread-protein (criteria: no colour, no maida, no preservatives, >=15g protein/100g):
 --   • Protein Chef — Protein Multigrain Bread (270g)                  [Zepto]
 --   • The Health Factory — Zero Maida Protein Bread (250g)            [Zepto]
 --   • The Baker's Dozen — Zero Maida Protein Bread (240g)             [Swiggy Instamart]
 --
--- NOTE: Baker's Loaf Multigrain has no published nutrition panel on any retail
--- listing (Zepto shows ingredients only) — nutrition left NULL pending the pack.
+-- NOTE: Modern's Baker's Loaf Multigrain has Dietary Fibre 1.51g/100g (read from
+-- the pack panel on Zepto), which FAILS the >=6g fibre criterion. Kept as Draft
+-- on staging for review; recommend dropping unless the criterion is revisited.
 
 BEGIN;
 
@@ -32,19 +33,19 @@ VALUES
   ('bread', 'Bread', 100, 'per 100g',
    'No-maida breads — multigrain and high-protein — that pass our label checks.',
    900, false,
-   'https://eprwzftfxtkgunnkewyk.supabase.co/storage/v1/object/public/products/the-bakers-dozen-multigrain-bread.jpg'),
+   'https://eprwzftfxtkgunnkewyk.supabase.co/storage/v1/object/public/categories/bread.jpg'),
   ('bread-multigrain', 'Bread · Multigrain', 100, 'per 100g',
    'Multigrain breads with no maida, no preservatives, and real fibre.',
    901, false,
-   'https://eprwzftfxtkgunnkewyk.supabase.co/storage/v1/object/public/products/the-bakers-dozen-multigrain-bread.jpg'),
+   'https://eprwzftfxtkgunnkewyk.supabase.co/storage/v1/object/public/categories/bread.jpg'),
   ('bread-protein', 'Bread · Protein', 100, 'per 100g',
    'High-protein breads with no maida and no preservatives.',
    902, false,
-   'https://eprwzftfxtkgunnkewyk.supabase.co/storage/v1/object/public/products/the-health-factory-zero-maida-protein-bread.jpg')
+   'https://eprwzftfxtkgunnkewyk.supabase.co/storage/v1/object/public/categories/bread.jpg')
 ON CONFLICT (slug) DO NOTHING;
 
 INSERT INTO public.brands (slug, name, website_url) VALUES
-  ('bakers-loaf',      'Baker''s Loaf',      NULL),
+  ('modern',           'Modern',             'https://www.modernfoods.co.in/'),
   ('the-bakers-dozen', 'The Baker''s Dozen', 'https://thebakersdozen.in/'),
   ('protein-chef',     'Protein Chef',       NULL)
 ON CONFLICT (slug) DO NOTHING;
@@ -85,11 +86,11 @@ FROM b, cat,
         'Chakki Fresh Atta (Whole Wheat Flour), Multigrain Mix (20%) (Rolled Oats, Barley Flakes, Flax Seeds, Sunflower Seeds, White Sesame Seeds, Soya Bean Seed Grits, Watermelon Seeds), Yeast, Wheat Gluten, Rice Bran Oil (Edible Vegetable Oil), Cane Sugar, Iodised Salt, Cultured Wheat Flour, Cultured Glucose.',
         '{"per":"100g","source":"https://www.bigbasket.com/pd/40291988/the-health-factory-zero-maida-bread-simply-multi-grain-no-chemical-preservatives-low-sugar-fat-250-g/","rows":[{"label":"Energy","value":238.17,"unit":"kcal","bold":true},{"label":"Protein","value":12.91,"unit":"g","bold":true},{"label":"Carbohydrate","value":43.19,"unit":"g","bold":true},{"label":"Total Sugars","value":4.41,"unit":"g","indent":true},{"label":"Added Sugars","value":2.15,"unit":"g","indent":true},{"label":"Dietary Fibre","value":7.37,"unit":"g","indent":true},{"label":"Total Fat","value":1.53,"unit":"g","bold":true},{"label":"Saturated Fat","value":0.22,"unit":"g","indent":true},{"label":"Trans Fat","value":0,"unit":"g","indent":true},{"label":"Cholesterol","value":0,"unit":"mg"},{"label":"Sodium","value":365.91,"unit":"mg"}]}',
         'https://www.bigbasket.com/pd/40291988/the-health-factory-zero-maida-bread-simply-multi-grain-no-chemical-preservatives-low-sugar-fat-250-g/'),
-       ('bakers-loaf-multigrain-bread', 'Multigrain Bread',
-        'bakers-loaf', 'bread-multigrain', '350g',
+       ('bakers-loaf-multigrain-bread', 'Baker''s Loaf Multigrain Bread',
+        'modern', 'bread-multigrain', '350g',
         'https://eprwzftfxtkgunnkewyk.supabase.co/storage/v1/object/public/products/bakers-loaf-multigrain-bread.jpg',
-        'Wholewheat Flour (Atta), Seeds (9%) (Flax, Sesame, Pumpkin, Sunflower), Butter, Sugar, Iodized Salt, Sourdough, Yeast, Flour Treatment Agent (Amylases).',
-        NULL,
+        'Whole Wheat Flour (Atta) (48.15%), Grains & Seeds (15.2%) [Rolled Oats (3.5%), Flax Seeds (2.31%), Maize Flour (1.44%), Rice Flour (1.20%), Barley Flour (1.20%), Bajra Flour (0.96%), Ragi Flour (0.96%), Jowar Flour (0.96%), Sesame Seeds (0.96%), Soya Flour (0.49%), Sunflower Seeds (0.36%), White Watermelon Seeds (0.36%)], Bengal Gram Flour (0.24%), Yeast, Sugar, Gluten, Edible Vegetable Oil (Refined Soyabean Oil), Iodised Salt, Fermented Wheat Flour, Brewed Vinegar, Malt Products, Cultured Sugar, Wheat Bran.',
+        '{"per":"100g","source":"https://www.zepto.com/pn/bakers-loaf-zero-preservatives-multigrain-bread/pvid/50ce2591-795f-4eaa-bfc7-62f7c0e758ba","rows":[{"label":"Energy","value":234.95,"unit":"kcal","bold":true},{"label":"Protein","value":6.63,"unit":"g","bold":true},{"label":"Carbohydrate","value":47.80,"unit":"g","bold":true},{"label":"Total Sugars","value":5.25,"unit":"g","indent":true},{"label":"Added Sugars","value":1.57,"unit":"g","indent":true},{"label":"Dietary Fibre","value":1.51,"unit":"g","indent":true},{"label":"Total Fat","value":1.35,"unit":"g","bold":true},{"label":"Saturated Fat","value":0.52,"unit":"g","indent":true},{"label":"Trans Fat","value":0,"unit":"g","indent":true},{"label":"Cholesterol","value":0,"unit":"mg"},{"label":"Sodium","value":351.31,"unit":"mg"}]}',
         'https://www.zepto.com/pn/bakers-loaf-zero-preservatives-multigrain-bread/pvid/50ce2591-795f-4eaa-bfc7-62f7c0e758ba'),
        ('the-bakers-dozen-multigrain-bread', 'Multigrain Loaf',
         'the-bakers-dozen', 'bread-multigrain', '375g',
