@@ -76,10 +76,8 @@ export default function PrivacyPage() {
               How long we keep it
             </h2>
             <p className="mt-3">
-              We keep your details until the launch you signed up for is done
-              and you&rsquo;ve heard from us, or until you ask us to delete them
-              — whichever comes first. You can ask us to remove your data at any
-              time.
+              We keep your details until you ask us to remove them. You can
+              request deletion of your data at any time, and we will act on it.
             </p>
           </section>
 
