@@ -12,8 +12,8 @@ function isActive(pathname: string, v: Vertical): boolean {
 
 function SoonTag() {
   return (
-    <span className="inline-flex items-center rounded-full border border-[color:var(--ink-mute)]/45 px-1.5 py-[2px] text-[8px] leading-none tracking-[0.14em] text-[color:var(--ink-mute)] uppercase">
-      soon
+    <span className="mt-1 text-[8px] leading-none tracking-[0.16em] text-[color:var(--ink-mute)] uppercase">
+      coming soon
     </span>
   );
 }
@@ -23,7 +23,7 @@ export function VerticalNavDesktop() {
   return (
     <nav
       aria-label="Sections"
-      className="hidden md:flex gap-4 items-center text-[color:var(--ink-mute)] shrink-0"
+      className="hidden md:flex gap-5 items-start text-[color:var(--ink-mute)] shrink-0"
     >
       {VERTICALS.map((v) => {
         const active = isActive(pathname, v);
@@ -32,13 +32,13 @@ export function VerticalNavDesktop() {
             key={v.slug}
             href={v.href}
             aria-current={active ? "page" : undefined}
-            className={`inline-flex items-center gap-1.5 transition-colors ${
+            className={`inline-flex flex-col items-start leading-none transition-colors ${
               active
                 ? "text-[color:var(--ink)]"
                 : "hover:text-[color:var(--accent-deep)]"
             }`}
           >
-            {v.label}
+            <span>{v.label}</span>
             {v.status === "soon" && <SoonTag />}
           </Link>
         );
@@ -58,13 +58,13 @@ export function VerticalNavMobile() {
             <Link
               href={v.href}
               aria-current={active ? "page" : undefined}
-              className={`flex items-center justify-center gap-1 min-h-[48px] px-2 active:bg-[color:var(--accent)]/30 transition-colors ${
+              className={`flex flex-col items-center justify-center gap-1 min-h-[48px] px-2 active:bg-[color:var(--accent)]/30 transition-colors ${
                 active
                   ? "text-[color:var(--accent-deep)]"
                   : "hover:text-[color:var(--accent-deep)]"
               }`}
             >
-              {v.label}
+              <span>{v.label}</span>
               {v.status === "soon" && <SoonTag />}
             </Link>
           </li>
