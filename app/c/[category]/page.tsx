@@ -9,7 +9,6 @@ import {
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import CriteriaBlock from "@/components/CriteriaBlock";
-import NewBadge from "@/components/NewBadge";
 import StagingRibbon from "@/components/StagingRibbon";
 
 export const revalidate = 60;
@@ -118,11 +117,6 @@ export default async function CategoryPage({
               className="bg-[color:var(--bg-elev)] overflow-hidden block group transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:hover:scale-[1.03] sm:hover:shadow-[0_24px_60px_-24px_rgba(0,0,0,0.28)]"
             >
               <div className="relative h-72 sm:h-80 flex items-center justify-center overflow-hidden">
-                {p.is_new && (
-                  <div className="absolute top-3 left-3 z-10">
-                    <NewBadge />
-                  </div>
-                )}
                 {previewCategoriesEnabled() && p.status !== "Live" && (
                   <StagingRibbon />
                 )}

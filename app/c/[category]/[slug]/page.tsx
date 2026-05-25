@@ -7,7 +7,6 @@ import SiteFooter from "@/components/SiteFooter";
 import FeedbackBlock from "@/components/FeedbackBlock";
 import NutritionCard from "@/components/NutritionCard";
 import WhatsAppShare from "@/components/WhatsAppShare";
-import NewBadge from "@/components/NewBadge";
 import StagingRibbon from "@/components/StagingRibbon";
 import { previewCategoriesEnabled } from "@/lib/categories/visibility";
 
@@ -100,7 +99,6 @@ export default async function ProductPage({
             <span className="bg-[color:var(--ink)] text-[color:var(--bg)] px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em]">
               Better for You
             </span>
-            {product.is_new && <NewBadge />}
           </div>
           {product.primary_buy_url && (
             <a

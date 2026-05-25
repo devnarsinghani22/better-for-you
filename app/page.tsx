@@ -4,7 +4,6 @@ import { previewCategoriesEnabled, visibleCategoryOrFilter } from "@/lib/categor
 import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import NewBadge from "@/components/NewBadge";
 import StagingRibbon from "@/components/StagingRibbon";
 
 export const revalidate = 60;
@@ -136,11 +135,6 @@ export default async function HomePage() {
                   <article className="bg-[color:var(--bg-elev)] overflow-hidden h-full flex flex-col">
                     <Link href={`/c/${c.slug}`} className="block">
                       <div className="relative aspect-[16/10] sm:aspect-[16/11] bg-[color:var(--photo-bg)] overflow-hidden">
-                        {c.is_new && (
-                          <div className="absolute top-3 left-3 z-10">
-                            <NewBadge />
-                          </div>
-                        )}
                         {previewCategoriesEnabled() && !c.active && (
                           <StagingRibbon />
                         )}
