@@ -1,10 +1,9 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 
-// Shared CSV builder for contact_submissions, used by both the admin export
-// route and the token-protected /export/contact link. Supabase is the source
-// of truth. `select *` so it tolerates the phone_cc/phone columns whether or
-// not the migration has run.
-type Row = {
+// Shared data + CSV builder for contact_submissions, used by the export link
+// and the browser view. Supabase is the source of truth. `select *` so it
+// tolerates the phone_cc/phone columns whether or not the migration has run.
+export type ContactRow = {
   created_at?: string | null;
   name?: string | null;
   email?: string | null;
@@ -15,6 +14,28 @@ type Row = {
   user_agent?: string | null;
 };
 
+export async function fetchContactRows(): Promise<
+  { rows: ContactRow[] } | { error: string }
+> {
+  const admin = createAdminClient();
+  const { data, error } = await admin
+    .from("contact_submissions")
+    .select("*")
+    .order("created_at", { ascending: false });
+  if (error) return { error: error.message };
+  return { rows: (data ?? []) as ContactRow[] };
+}
+
+export function contactNumber(r: ContactRow): string {
+  return [r.phone_cc, r.phone].filter(Boolean).join(" ");
+}
+
+export function contactDate(r: ContactRow): string {
+  return r.created_at
+    ? new Date(r.created_at).toISOString().slice(0, 16).replace("T", " ")
+    : "";
+}
+
 // RFC-4180 field escaping: wrap in quotes, double any inner quotes.
 function csvField(value: unknown): string {
   const s = value == null ? "" : String(value);
@@ -24,23 +45,14 @@ function csvField(value: unknown): string {
 export async function buildContactCsv(): Promise<
   { csv: string } | { error: string }
 > {
-  const admin = createAdminClient();
-  const { data, error } = await admin
-    .from("contact_submissions")
-    .select("*")
-    .order("created_at", { ascending: false });
-
-  if (error) return { error: error.message };
+  const result = await fetchContactRows();
+  if ("error" in result) return { error: result.error };
 
   const header = ["Date", "Name", "Email", "Number", "Reason", "Notes"];
   const lines = [header.map(csvField).join(",")];
-  for (const r of (data ?? []) as Row[]) {
-    const date = r.created_at
-      ? new Date(r.created_at).toISOString().slice(0, 16).replace("T", " ")
-      : "";
-    const number = [r.phone_cc, r.phone].filter(Boolean).join(" ");
+  for (const r of result.rows) {
     lines.push(
-      [date, r.name, r.email, number, r.reason, r.message]
+      [contactDate(r), r.name, r.email, contactNumber(r), r.reason, r.message]
         .map(csvField)
         .join(","),
     );
