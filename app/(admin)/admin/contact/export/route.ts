@@ -6,12 +6,14 @@ import { createAdminClient } from "@/lib/supabase/admin";
 export const dynamic = "force-dynamic";
 
 type Row = {
-  created_at: string | null;
-  name: string | null;
-  email: string | null;
-  reason: string | null;
-  message: string | null;
-  user_agent: string | null;
+  created_at?: string | null;
+  name?: string | null;
+  email?: string | null;
+  phone_cc?: string | null;
+  phone?: string | null;
+  reason?: string | null;
+  message?: string | null;
+  user_agent?: string | null;
 };
 
 // RFC-4180 field escaping: wrap in quotes, double any inner quotes.
@@ -22,20 +24,39 @@ function csvField(value: unknown): string {
 
 export async function GET() {
   const admin = createAdminClient();
+  // select * so this keeps working whether or not phone_cc/phone are migrated.
   const { data, error } = await admin
     .from("contact_submissions")
-    .select("created_at, name, email, reason, message, user_agent")
+    .select("*")
     .order("created_at", { ascending: false });
 
   if (error) {
     return new Response(`Could not export: ${error.message}`, { status: 500 });
   }
 
-  const header = ["Date", "Name", "Email", "Reason", "Message", "User agent"];
+  const header = [
+    "Date",
+    "Name",
+    "Email",
+    "Extension",
+    "Phone",
+    "Reason",
+    "Message",
+    "User agent",
+  ];
   const lines = [header.map(csvField).join(",")];
   for (const r of (data ?? []) as Row[]) {
     lines.push(
-      [r.created_at, r.name, r.email, r.reason, r.message, r.user_agent]
+      [
+        r.created_at,
+        r.name,
+        r.email,
+        r.phone_cc,
+        r.phone,
+        r.reason,
+        r.message,
+        r.user_agent,
+      ]
         .map(csvField)
         .join(","),
     );
