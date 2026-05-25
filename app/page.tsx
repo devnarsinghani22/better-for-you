@@ -4,6 +4,7 @@ import { visibleCategoryOrFilter } from "@/lib/categories/visibility";
 import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import NewBadge from "@/components/NewBadge";
 
 export const revalidate = 60;
 
@@ -24,7 +25,7 @@ export default async function HomePage() {
   const supabase = await createClient();
   const { data: categories, error } = await supabase
     .from("categories")
-    .select("id, slug, name, blurb, hero_image_url, display_order")
+    .select("id, slug, name, blurb, hero_image_url, display_order, is_new")
     .or(visibleCategoryOrFilter())
     .order("name", { ascending: true });
 
@@ -134,6 +135,11 @@ export default async function HomePage() {
                   <article className="bg-[color:var(--bg-elev)] overflow-hidden h-full flex flex-col">
                     <Link href={`/c/${c.slug}`} className="block">
                       <div className="relative aspect-[16/10] sm:aspect-[16/11] bg-[color:var(--photo-bg)] overflow-hidden">
+                        {c.is_new && (
+                          <div className="absolute top-3 left-3 z-10">
+                            <NewBadge />
+                          </div>
+                        )}
                         {c.hero_image_url && (
                           /* eslint-disable-next-line @next/next/no-img-element */
                           <img

@@ -43,7 +43,7 @@ export async function getLiveProductsForCategory(categorySlug: string) {
     .select(`
       id, slug, name, variant_size, rating, certification_method,
       product_photo_url, label_image_url, primary_buy_url, last_verified_at,
-      ingredients_raw,
+      ingredients_raw, is_new,
       brand:brands ( slug, name )
     `)
     .in('status', visibleProductStatuses() as string[])
