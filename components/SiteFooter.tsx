@@ -24,6 +24,11 @@ export default function SiteFooter() {
                 Criteria
               </Link>
             </li>
+            <li>
+              <Link href="/privacy" className="hover:text-[color:var(--accent-deep)]">
+                Privacy
+              </Link>
+            </li>
           </ul>
         </div>
 

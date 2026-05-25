@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import Link from "next/link";
 import { submitVerticalInterest } from "@/app/v/[vertical]/actions";
 
 // Self-contained "invite" card. The card border/heading stay constant; the
@@ -11,6 +12,7 @@ export default function NotifyForm({ vertical }: { vertical: string }) {
   const [email, setEmail] = useState("");
   const [phoneCc, setPhoneCc] = useState("+91");
   const [phone, setPhone] = useState("");
+  const [agreed, setAgreed] = useState(false);
   const [pending, startTransition] = useTransition();
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -104,6 +106,27 @@ export default function NotifyForm({ vertical }: { vertical: string }) {
                 />
               </div>
             </div>
+            <label className="flex items-start gap-2 text-xs text-[color:var(--ink-soft)] leading-relaxed">
+              <input
+                type="checkbox"
+                name="consent"
+                required
+                checked={agreed}
+                onChange={(e) => setAgreed(e.target.checked)}
+                className="mt-0.5 h-4 w-4 shrink-0 accent-[color:var(--ink)]"
+              />
+              <span>
+                I agree to be contacted about the launch on WhatsApp and email.
+                We won&rsquo;t share your details or spam you. See our{" "}
+                <Link
+                  href="/privacy"
+                  className="underline hover:text-[color:var(--accent-deep)]"
+                >
+                  Privacy Policy
+                </Link>
+                .
+              </span>
+            </label>
             <button
               type="submit"
               disabled={pending}
