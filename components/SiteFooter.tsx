@@ -68,9 +68,6 @@ export default function SiteFooter() {
               @foodpharmer on Instagram →
             </a>
           </p>
-          <p className="mt-6 font-display italic text-2xl text-[color:var(--accent-deep)]">
-            Label Padhega India.
-          </p>
         </div>
       </div>
 
