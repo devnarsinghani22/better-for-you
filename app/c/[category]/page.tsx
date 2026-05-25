@@ -41,14 +41,10 @@ export default async function CategoryPage({
 
   const rawProducts = await getLiveProductsForCategory(slug);
 
-  // Explicit per-category display order (only categories that need a non-default sort)
+  // Explicit per-category display order. Everything else sorts alphabetically
+  // by brand (default from getLiveProductsForCategory). Peanut butter keeps a
+  // curated order per Food Pharmer's video.
   const orderBySlug: Record<string, string[]> = {
-    noodles: [
-      "quinoa-noodles-naturally",
-      "urbanplatter-shirataki-konjac-noodles",
-      "wheat-noodles-little-moppet",
-      "jiwa-instant-oats-noodles",
-    ],
     "peanut-butter": [
       "alpino-natural-pb-crunch",
       "muscleblaze-high-protein-pb-crunchy",
