@@ -32,12 +32,11 @@ export default async function ProductPage({
   const unhelpful = Number(counts?.unhelpful_count ?? 0);
   const isLab = product.certification_method === "lab_tested";
 
-  // Staging gate for structured nutrition tables. Prod and staging share one DB,
-  // so a populated `nutrition` field would otherwise surface on prod the instant
-  // it's written. We render the table everywhere on preview (for review), but on
-  // production only once it's explicitly approved with `nutrition.live === true`.
-  // Until then prod falls back to the label image (current behaviour). Reversible:
-  // clear the field or drop the flag.
+  // Nutrition display: every product shows its label IMAGE (the original
+  // behaviour). The structured table is OFF by default everywhere — it only
+  // renders for a product explicitly opted in with `nutrition.live === true`.
+  // The OCR'd `nutrition` JSON stays in the DB untouched, so re-enabling a
+  // product (or the whole feature) later is just a flag flip — nothing to redo.
   const nutritionData = product.nutrition as
     | { rows?: unknown[]; live?: boolean }
     | null;
@@ -45,9 +44,7 @@ export default async function ProductPage({
     !!nutritionData &&
     Array.isArray(nutritionData.rows) &&
     nutritionData.rows.length > 0;
-  const showNutritionTable =
-    hasNutritionRows &&
-    (process.env.VERCEL_ENV !== "production" || nutritionData?.live === true);
+  const showNutritionTable = hasNutritionRows && nutritionData?.live === true;
   const verifiedDate = product.last_verified_at
     ? new Date(product.last_verified_at).toLocaleDateString("en-IN", {
         year: "numeric",
