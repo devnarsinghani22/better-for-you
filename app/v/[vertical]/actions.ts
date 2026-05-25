@@ -12,6 +12,7 @@ export async function submitVerticalInterest(input: {
   vertical: string;
   name: string;
   email: string;
+  phoneCc?: string;
   phone: string;
 }): Promise<{ ok: true } | { ok: false; error: string }> {
   const v = getVertical(input.vertical);
@@ -21,6 +22,7 @@ export async function submitVerticalInterest(input: {
 
   const name = (input.name ?? "").trim();
   const email = (input.email ?? "").trim();
+  const phoneCc = ((input.phoneCc ?? "").trim() || "+91").replace(/[^\d+]/g, "");
   const phone = (input.phone ?? "").trim();
   if (name.length < 1) {
     return { ok: false, error: "Please enter your name." };
@@ -39,6 +41,7 @@ export async function submitVerticalInterest(input: {
   let { error } = await admin.from("contact_submissions").insert({
     name,
     email,
+    phone_cc: phoneCc,
     phone,
     reason,
     message: `Wants Better for You ${v.label} launch updates`,
@@ -56,7 +59,7 @@ export async function submitVerticalInterest(input: {
       name,
       email,
       reason,
-      message: `Phone: ${phone} — wants Better for You ${v.label} launch updates`,
+      message: `Phone: ${phoneCc} ${phone} — wants Better for You ${v.label} launch updates`,
     }));
   }
 
