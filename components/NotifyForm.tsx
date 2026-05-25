@@ -6,13 +6,7 @@ import { submitVerticalInterest } from "@/app/v/[vertical]/actions";
 // Self-contained "invite" card. The card border/heading stay constant; the
 // form swaps to a confirmation in place. Used on the /v/<vertical> coming-soon
 // pages — kept borderless-inside-a-frame so it reads as one editorial block.
-export default function NotifyForm({
-  vertical,
-  label,
-}: {
-  vertical: string;
-  label: string;
-}) {
+export default function NotifyForm({ vertical }: { vertical: string }) {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [pending, startTransition] = useTransition();
@@ -31,19 +25,11 @@ export default function NotifyForm({
 
   return (
     <div className="border-2 border-[color:var(--ink)] bg-[color:var(--bg-elev)] p-6 sm:p-7">
-      <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[color:var(--ink-mute)]">
-        The list, before anyone else
-      </p>
-      <h2 className="mt-2 font-display text-2xl sm:text-3xl tracking-tight leading-tight text-[color:var(--ink)]">
+      <h2 className="font-display text-2xl sm:text-3xl tracking-tight leading-tight text-[color:var(--ink)]">
         {done ? "You’re on the list." : "Get the first invite."}
       </h2>
 
-      {done ? (
-        <p className="mt-3 text-sm text-[color:var(--ink-soft)] leading-relaxed">
-          We&rsquo;ll message you the moment Better for You {label} goes live.
-          Nothing else.
-        </p>
-      ) : (
+      {!done && (
         <>
           <form onSubmit={onSubmit} className="mt-5">
             <div className="flex flex-col gap-3">

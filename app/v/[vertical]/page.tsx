@@ -66,7 +66,7 @@ export default async function VerticalComingSoon({
 
           {/* Right rail — the invite card */}
           <div className="lg:col-span-5 lg:pt-2 flex flex-col">
-            <NotifyForm vertical={v.slug} label={v.label} />
+            <NotifyForm vertical={v.slug} />
           </div>
         </div>
       </main>
