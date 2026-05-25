@@ -39,10 +39,11 @@ export default async function VerticalComingSoon({
     <div className="relative z-10 flex flex-col min-h-screen">
       <SiteHeader />
       <main className="flex-1 max-w-[1280px] w-full mx-auto px-5 sm:px-10 pt-10 sm:pt-16 pb-20 sm:pb-28">
-        {/* Masthead meta row — reads like a magazine section marker */}
-        <div className="flex items-center justify-between gap-4 border-b rule pb-4 font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-[color:var(--ink-mute)]">
-          <span>Better for You · {v.label}</span>
-          <span className="inline-flex items-center gap-2 text-[color:var(--ink)]">
+        {/* Masthead meta row — reads like a magazine section marker.
+            Stacks on mobile so neither line wraps awkwardly. */}
+        <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4 border-b rule pb-4 font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.26em] text-[color:var(--ink-mute)]">
+          <span className="whitespace-nowrap">Better for You · {v.label}</span>
+          <span className="inline-flex items-center gap-2 whitespace-nowrap text-[color:var(--ink)]">
             <span className="relative flex h-2 w-2" aria-hidden>
               <span className="absolute inline-flex h-full w-full rounded-full bg-[color:var(--ink)] opacity-50 animate-ping" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-[color:var(--ink)]" />
@@ -57,7 +58,7 @@ export default async function VerticalComingSoon({
             <p className="font-mono text-[11px] uppercase tracking-[0.32em] text-[color:var(--ink-mute)]">
               Coming soon
             </p>
-            <h1 className="mt-4 font-display font-medium leading-[0.86] tracking-[-0.03em] text-[19vw] sm:text-[13vw] lg:text-[8.5vw] text-[color:var(--ink)]">
+            <h1 className="mt-4 font-display font-medium leading-[0.86] tracking-[-0.03em] text-[clamp(2.75rem,14vw,9rem)] lg:text-[8.5vw] text-[color:var(--ink)] break-words">
               {v.label}
             </h1>
             {v.tagline && (
