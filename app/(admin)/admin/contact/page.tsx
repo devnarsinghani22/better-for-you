@@ -20,9 +20,16 @@ export default async function ContactInbox() {
         </span>
       </div>
       <p className="mt-2 text-stone-600 text-sm">
-        Submissions from the public <code>/contact</code> form. Newest first.
-        Reply by emailing the address shown (if provided).
+        Submissions from the public <code>/contact</code> form and the
+        &ldquo;notify me&rdquo; signups (tagged <code>interest:*</code>). Newest
+        first. Reply by emailing the address shown (if provided).
       </p>
+      <a
+        href="/admin/contact/export"
+        className="mt-4 inline-flex items-center gap-2 border border-stone-800 bg-stone-900 text-white px-4 py-2 text-xs uppercase tracking-wider hover:bg-stone-700"
+      >
+        ↓ Download all as CSV
+      </a>
 
       {error && (
         <p className="mt-6 text-sm text-red-700 bg-red-50 border border-red-200 p-3">
