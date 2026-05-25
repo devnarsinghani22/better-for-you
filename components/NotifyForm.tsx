@@ -37,14 +37,8 @@ export default function NotifyForm({ vertical }: { vertical: string }) {
   return (
     <div className="border-2 border-[color:var(--ink)] bg-[color:var(--bg-elev)] p-6 sm:p-7">
       <h2 className="font-display text-2xl sm:text-3xl tracking-tight leading-tight text-[color:var(--ink)]">
-        {done ? "Thank you for registering!" : "Get the first invite."}
+        {done ? "Thank you for registering." : "Get the first invite."}
       </h2>
-
-      {done && (
-        <p className="mt-3 text-sm text-[color:var(--ink-soft)] leading-relaxed">
-          You&rsquo;re on the list — we&rsquo;ll tell you the moment we launch. ♥
-        </p>
-      )}
 
       {!done && (
         <form onSubmit={onSubmit} className="mt-5">
