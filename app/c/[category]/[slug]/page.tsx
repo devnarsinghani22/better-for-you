@@ -7,6 +7,8 @@ import SiteFooter from "@/components/SiteFooter";
 import FeedbackBlock from "@/components/FeedbackBlock";
 import NutritionCard from "@/components/NutritionCard";
 import WhatsAppShare from "@/components/WhatsAppShare";
+import StagingRibbon from "@/components/StagingRibbon";
+import { previewCategoriesEnabled } from "@/lib/categories/visibility";
 
 const SITE_URL = "https://foodpharmer.health";
 
@@ -31,6 +33,20 @@ export default async function ProductPage({
   const helpful = Number(counts?.helpful_count ?? 0);
   const unhelpful = Number(counts?.unhelpful_count ?? 0);
   const isLab = product.certification_method === "lab_tested";
+
+  // Nutrition display: every product shows its label IMAGE (the original
+  // behaviour). The structured table is OFF by default everywhere — it only
+  // renders for a product explicitly opted in with `nutrition.live === true`.
+  // The OCR'd `nutrition` JSON stays in the DB untouched, so re-enabling a
+  // product (or the whole feature) later is just a flag flip — nothing to redo.
+  const nutritionData = product.nutrition as
+    | { rows?: unknown[]; live?: boolean }
+    | null;
+  const hasNutritionRows =
+    !!nutritionData &&
+    Array.isArray(nutritionData.rows) &&
+    nutritionData.rows.length > 0;
+  const showNutritionTable = hasNutritionRows && nutritionData?.live === true;
   const verifiedDate = product.last_verified_at
     ? new Date(product.last_verified_at).toLocaleDateString("en-IN", {
         year: "numeric",
@@ -51,7 +67,10 @@ export default async function ProductPage({
 
       <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-x-12 gap-y-8">
         {product.product_photo_url ? (
-          <div className="lg:col-span-5 overflow-hidden h-80 sm:h-[440px] flex items-center justify-center">
+          <div className="relative lg:col-span-5 overflow-hidden h-80 sm:h-[440px] flex items-center justify-center">
+            {previewCategoriesEnabled() && product.status !== "Live" && (
+              <StagingRibbon />
+            )}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={product.product_photo_url}
@@ -88,7 +107,7 @@ export default async function ProductPage({
               rel="noopener noreferrer"
               className="mt-6 inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-[color:var(--ink)] text-[color:var(--bg)] px-6 py-4 sm:py-3 font-mono text-xs uppercase tracking-[0.22em] hover:bg-[color:var(--accent-deep)] transition-colors"
             >
-              Source →
+              Product website →
             </a>
           )}
         </header>
@@ -126,7 +145,7 @@ export default async function ProductPage({
         )}
       </section>
 
-      {product.nutrition && Object.keys(product.nutrition as object).length > 0 ? (
+      {showNutritionTable ? (
         <section className="mt-12 border-t rule pt-10">
           <h2 className="font-display text-3xl tracking-tight">Nutrition</h2>
           <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mt-1">
@@ -211,13 +230,6 @@ export default async function ProductPage({
         initialHelpful={helpful}
         initialUnhelpful={unhelpful}
       />
-
-      <footer className="mt-16 pt-8 border-t rule font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-        We re-check every 6 months · brands sometimes change recipes ·{" "}
-        <Link href="/" className="underline hover:text-[color:var(--accent-deep)]">
-          back to home
-        </Link>
-      </footer>
     </main>
     <SiteFooter />
     </>

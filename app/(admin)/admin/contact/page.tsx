@@ -20,9 +20,16 @@ export default async function ContactInbox() {
         </span>
       </div>
       <p className="mt-2 text-stone-600 text-sm">
-        Submissions from the public <code>/contact</code> form. Newest first.
-        Reply by emailing the address shown (if provided).
+        Submissions from the public <code>/contact</code> form and the
+        &ldquo;notify me&rdquo; signups (tagged <code>interest:*</code>). Newest
+        first. Reply by emailing the address shown (if provided).
       </p>
+      <a
+        href="/admin/contact/export"
+        className="mt-4 inline-flex items-center gap-2 border border-stone-800 bg-stone-900 text-white px-4 py-2 text-xs uppercase tracking-wider hover:bg-stone-700"
+      >
+        ↓ Download all as CSV
+      </a>
 
       {error && (
         <p className="mt-6 text-sm text-red-700 bg-red-50 border border-red-200 p-3">
@@ -40,6 +47,21 @@ export default async function ContactInbox() {
             dateStyle: "medium",
             timeStyle: "short",
           });
+          // Clean phone from the dedicated columns when present; the digits-only
+          // form makes a tap-to-WhatsApp link. Pre-migration rows have the phone
+          // only inside `message`, so we fall back to showing that. Cast because
+          // the generated row type predates the phone_cc / phone columns.
+          const rp = r as typeof r & {
+            phone_cc?: string | null;
+            phone?: string | null;
+          };
+          const phoneText = rp.phone
+            ? `${rp.phone_cc ?? ""} ${rp.phone}`.trim()
+            : null;
+          const waDigits = `${rp.phone_cc ?? ""}${rp.phone ?? ""}`.replace(
+            /\D/g,
+            "",
+          );
           return (
             <li key={r.id} className="p-5">
               <div className="flex flex-wrap items-baseline justify-between gap-3">
@@ -61,9 +83,23 @@ export default async function ContactInbox() {
                   {r.reason ? ` · ${r.reason}` : ""}
                 </div>
               </div>
-              <p className="mt-3 whitespace-pre-wrap text-stone-800 leading-relaxed">
-                {r.message}
-              </p>
+              {phoneText ? (
+                <p className="mt-3 text-stone-800 leading-relaxed">
+                  <span className="text-stone-500">Phone:</span>{" "}
+                  <a
+                    href={`https://wa.me/${waDigits}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:text-stone-900"
+                  >
+                    {phoneText}
+                  </a>
+                </p>
+              ) : (
+                <p className="mt-3 whitespace-pre-wrap text-stone-800 leading-relaxed">
+                  {r.message}
+                </p>
+              )}
             </li>
           );
         })}

@@ -5,11 +5,13 @@ export default async function CriteriaBlock({
   variant = "full",
   productMode = false,
   heading,
+  note,
 }: {
   categoryId: number | null;
   variant?: "full" | "compact";
   productMode?: boolean;
   heading?: string;
+  note?: string | null;
 }) {
   if (categoryId == null) return null;
 
@@ -58,6 +60,17 @@ export default async function CriteriaBlock({
             </li>
           ))}
         </ul>
+
+        {note && note.trim() && (
+          <div className="mt-4 pt-4 border-t rule">
+            <p className="font-hand text-xl sm:text-2xl leading-snug text-[color:var(--ink)]">
+              {note}
+            </p>
+            <p className="font-hand text-xl sm:text-2xl mt-1 text-right text-[color:var(--ink-soft)]">
+              &mdash; Food Pharmer
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );

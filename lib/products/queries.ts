@@ -1,11 +1,26 @@
 import { createClient } from '@/lib/supabase/server';
+import { visibleProductStatuses } from '@/lib/products/visibility';
+import {
+  previewCategoriesEnabled,
+  STAGING_CATEGORY_ORDER_MIN,
+} from '@/lib/categories/visibility';
+
+// A category is visible if active, or (on staging) a sentinel preview category.
+function categoryVisible(cat: { active?: boolean; display_order?: number | null } | null) {
+  if (!cat) return false;
+  return Boolean(
+    cat.active ||
+      (previewCategoriesEnabled() &&
+        (cat.display_order ?? 0) >= STAGING_CATEGORY_ORDER_MIN)
+  );
+}
 
 export async function getLiveCountByCategory(): Promise<Map<number, number>> {
   const sb = await createClient();
   const { data, error } = await sb
     .from('products')
     .select('category_id')
-    .eq('status', 'Live');
+    .in('status', visibleProductStatuses() as string[]);
   if (error) throw error;
   const counts = new Map<number, number>();
   for (const row of data ?? []) {
@@ -18,21 +33,20 @@ export async function getLiveProductsForCategory(categorySlug: string) {
   const sb = await createClient();
   const { data: cat } = await sb
     .from('categories')
-    .select('id')
+    .select('id, active, display_order')
     .eq('slug', categorySlug)
-    .eq('active', true)
     .single();
-  if (!cat) return [];
+  if (!cat || !categoryVisible(cat)) return [];
 
   const { data, error } = await sb
     .from('products')
     .select(`
-      id, slug, name, variant_size, rating, certification_method,
+      id, slug, name, variant_size, rating, certification_method, status,
       product_photo_url, label_image_url, primary_buy_url, last_verified_at,
-      ingredients_raw,
+      ingredients_raw, is_new,
       brand:brands ( slug, name )
     `)
-    .eq('status', 'Live')
+    .in('status', visibleProductStatuses() as string[])
     .eq('category_id', cat.id);
   if (error) throw error;
   const rows = data ?? [];
@@ -52,11 +66,10 @@ export async function getLiveProductBySlug(categorySlug: string, productSlug: st
   const sb = await createClient();
   const { data: cat } = await sb
     .from('categories')
-    .select('id, slug, name, blurb')
+    .select('id, slug, name, blurb, active, display_order')
     .eq('slug', categorySlug)
-    .eq('active', true)
     .single();
-  if (!cat) return null;
+  if (!cat || !categoryVisible(cat)) return null;
 
   const { data, error } = await sb
     .from('products')
@@ -64,7 +77,7 @@ export async function getLiveProductBySlug(categorySlug: string, productSlug: st
       *,
       brand:brands ( slug, name, website_url )
     `)
-    .eq('status', 'Live')
+    .in('status', visibleProductStatuses() as string[])
     .eq('slug', productSlug)
     .eq('category_id', cat.id)
     .single();

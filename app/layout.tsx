@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Newsreader, JetBrains_Mono } from "next/font/google";
+import { Playfair_Display, Newsreader, JetBrains_Mono, Caveat } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -25,6 +25,14 @@ const newsreader = Newsreader({
 const mono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
+  display: "swap",
+});
+
+// Handwriting face — used only for personal notes from Revant.
+const caveat = Caveat({
+  variable: "--font-hand",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -61,7 +69,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${newsreader.variable} ${mono.variable}`}
+      className={`${playfair.variable} ${newsreader.variable} ${mono.variable} ${caveat.variable}`}
     >
       <body className="min-h-screen flex flex-col">
         {children}

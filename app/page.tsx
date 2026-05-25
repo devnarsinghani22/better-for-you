@@ -1,17 +1,32 @@
 import { createClient } from "@/lib/supabase/server";
 import { getLiveCountByCategory } from "@/lib/products/queries";
+import { previewCategoriesEnabled, visibleCategoryOrFilter } from "@/lib/categories/visibility";
 import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import StagingRibbon from "@/components/StagingRibbon";
 
 export const revalidate = 60;
+
+// Compound categories: a parent card that nests sibling "<parent>-*" slugs as
+// rows. `hasOwnProducts` controls whether a "Regular" row linking to the parent
+// section is shown (paneer has plain paneer; bread is only a wrapper).
+const COMPOUNDS: {
+  slug: string;
+  hasOwnProducts: boolean;
+  regularLabel?: string;
+}[] = [
+  { slug: "paneer", hasOwnProducts: true },
+  { slug: "bread", hasOwnProducts: false },
+  { slug: "chips", hasOwnProducts: true },
+];
 
 export default async function HomePage() {
   const supabase = await createClient();
   const { data: categories, error } = await supabase
     .from("categories")
-    .select("id, slug, name, blurb, hero_image_url")
-    .eq("active", true)
+    .select("id, slug, name, blurb, hero_image_url, display_order, is_new, active")
+    .or(visibleCategoryOrFilter())
     .order("name", { ascending: true });
 
   if (error) {
@@ -27,20 +42,34 @@ export default async function HomePage() {
   const list = categories ?? [];
   const counts = await getLiveCountByCategory();
 
-  // Paneer compound: the "paneer" slug is the parent; nest other "paneer-*"
-  // slugs as variants underneath it.
-  const paneerParent = list.find((c) => c.slug === "paneer");
-  const paneerVariants = list
-    .filter((c) => c.slug !== "paneer" && c.slug.startsWith("paneer-"))
-    .sort((a, b) => a.name.localeCompare(b.name));
-  const paneerTotal =
-    (paneerParent ? counts.get(paneerParent.id) ?? 0 : 0) +
-    paneerVariants.reduce((s, c) => s + (counts.get(c.id) ?? 0), 0);
+  type Cat = (typeof list)[number];
+  const isVariantOf = (c: Cat, parent: string) =>
+    c.slug !== parent && c.slug.startsWith(`${parent}-`);
+  const compoundForParent = (slug: string) =>
+    COMPOUNDS.find((cc) => cc.slug === slug);
 
-  // Hide variant slugs from top-level index — they live inside the parent card.
+  // Variants of any compound parent are nested inside the parent card, so they
+  // are hidden from the top-level index.
   const indexEntries = list.filter(
-    (c) => !(c.slug !== "paneer" && c.slug.startsWith("paneer-")),
+    (c) => !COMPOUNDS.some((cc) => isVariantOf(c, cc.slug)),
   );
+
+  // Per-parent: its variants (sorted by display order) and total pick count.
+  const variantsForParent = (slug: string) =>
+    list
+      .filter((c) => isVariantOf(c, slug))
+      .sort(
+        (a, b) =>
+          (a.display_order ?? 0) - (b.display_order ?? 0) ||
+          a.name.localeCompare(b.name),
+      );
+  const compoundTotal = (parent: Cat, variants: Cat[]) =>
+    (counts.get(parent.id) ?? 0) +
+    variants.reduce((s, c) => s + (counts.get(c.id) ?? 0), 0);
+
+  // Strip the "<Parent> · " prefix from a variant name → "Multigrain", etc.
+  const variantLabel = (name: string) =>
+    name.includes(" · ") ? name.split(" · ").slice(1).join(" · ") : name;
 
   return (
     <div className="relative z-10">
@@ -91,8 +120,12 @@ export default async function HomePage() {
 
           <ol className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
             {indexEntries.map((c, i) => {
-              const isPaneer = c.slug === "paneer";
-              const picks = isPaneer ? paneerTotal : counts.get(c.id) ?? 0;
+              const compound = compoundForParent(c.slug);
+              const variants = compound ? variantsForParent(c.slug) : [];
+              const isCompound = Boolean(compound) && variants.length > 0;
+              const picks = isCompound
+                ? compoundTotal(c, variants)
+                : counts.get(c.id) ?? 0;
 
               return (
                 <li
@@ -102,6 +135,9 @@ export default async function HomePage() {
                   <article className="bg-[color:var(--bg-elev)] overflow-hidden h-full flex flex-col">
                     <Link href={`/c/${c.slug}`} className="block">
                       <div className="relative aspect-[16/10] sm:aspect-[16/11] bg-[color:var(--photo-bg)] overflow-hidden">
+                        {previewCategoriesEnabled() && !c.active && (
+                          <StagingRibbon />
+                        )}
                         {c.hero_image_url && (
                           /* eslint-disable-next-line @next/next/no-img-element */
                           <img
@@ -123,22 +159,24 @@ export default async function HomePage() {
                         </h3>
                       </Link>
 
-                      {isPaneer && paneerVariants.length > 0 ? (
+                      {isCompound ? (
                         <ul className="mt-6 border-t rule">
-                          <li className="border-b rule">
-                            <Link
-                              href={`/c/paneer`}
-                              className="flex items-center justify-between gap-3 min-h-[52px] py-3 group/v"
-                            >
-                              <span className="font-display text-lg sm:text-xl tracking-tight text-[color:var(--ink)] group-hover/v:text-[color:var(--accent-deep)] transition-colors whitespace-nowrap min-w-0">
-                                Regular
-                              </span>
-                              <span className="inline-flex items-center justify-center bg-[color:var(--ink)] text-[color:var(--bg)] font-mono text-[11px] uppercase tracking-[0.22em] px-3 py-1.5 group-hover/v:bg-[color:var(--accent-deep)] transition-colors shrink-0 whitespace-nowrap">
-                                View section →
-                              </span>
-                            </Link>
-                          </li>
-                          {paneerVariants.map((v) => (
+                          {compound!.hasOwnProducts && (
+                            <li className="border-b rule">
+                              <Link
+                                href={`/c/${c.slug}`}
+                                className="flex items-center justify-between gap-3 min-h-[52px] py-3 group/v"
+                              >
+                                <span className="font-display text-lg sm:text-xl tracking-tight text-[color:var(--ink)] group-hover/v:text-[color:var(--accent-deep)] transition-colors whitespace-nowrap min-w-0">
+                                  {compound!.regularLabel ?? "Regular"}
+                                </span>
+                                <span className="inline-flex items-center justify-center bg-[color:var(--ink)] text-[color:var(--bg)] font-mono text-[11px] uppercase tracking-[0.22em] px-3 py-1.5 group-hover/v:bg-[color:var(--accent-deep)] transition-colors shrink-0 whitespace-nowrap">
+                                  View section →
+                                </span>
+                              </Link>
+                            </li>
+                          )}
+                          {variants.map((v) => (
                             <li
                               key={v.id}
                               className="border-b rule last:border-b-0"
@@ -148,7 +186,7 @@ export default async function HomePage() {
                                 className="flex items-center justify-between gap-3 min-h-[52px] py-3 group/v"
                               >
                                 <span className="font-display text-lg sm:text-xl tracking-tight text-[color:var(--ink)] group-hover/v:text-[color:var(--accent-deep)] transition-colors whitespace-nowrap min-w-0">
-                                  {v.name.replace(/^Paneer · /, "")}
+                                  {variantLabel(v.name)}
                                 </span>
                                 <span className="inline-flex items-center justify-center bg-[color:var(--ink)] text-[color:var(--bg)] font-mono text-[11px] uppercase tracking-[0.22em] px-3 py-1.5 group-hover/v:bg-[color:var(--accent-deep)] transition-colors shrink-0 whitespace-nowrap">
                                   View section →

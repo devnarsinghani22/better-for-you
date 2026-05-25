@@ -1,10 +1,15 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getLiveProductsForCategory } from "@/lib/products/queries";
+import {
+  previewCategoriesEnabled,
+  STAGING_CATEGORY_ORDER_MIN,
+} from "@/lib/categories/visibility";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import CriteriaBlock from "@/components/CriteriaBlock";
+import StagingRibbon from "@/components/StagingRibbon";
 
 export const revalidate = 60;
 
@@ -14,14 +19,25 @@ export default async function CategoryPage({
   params: Promise<{ category: string }>;
 }) {
   const { category: slug } = await params;
+
+  // "bread" is a wrapper parent with no products of its own — send visitors to
+  // the first variant section.
+  if (slug === "bread") redirect("/c/bread-multigrain");
+
   const sb = await createClient();
   const { data: cat } = await sb
     .from("categories")
-    .select("id, slug, name, blurb")
+    .select("id, slug, name, blurb, active, display_order, curator_note")
     .eq("slug", slug)
-    .eq("active", true)
     .single();
-  if (!cat) notFound();
+  // Env-aware visibility: prod shows only active categories; staging also shows
+  // sentinel (display_order >= STAGING_CATEGORY_ORDER_MIN) preview categories.
+  const catVisible =
+    cat &&
+    (cat.active ||
+      (previewCategoriesEnabled() &&
+        (cat.display_order ?? 0) >= STAGING_CATEGORY_ORDER_MIN));
+  if (!cat || !catVisible) notFound();
 
   const rawProducts = await getLiveProductsForCategory(slug);
 
@@ -82,7 +98,12 @@ export default async function CategoryPage({
       </header>
 
       <div className="mt-8 sm:mt-10">
-        <CriteriaBlock categoryId={cat.id} variant="compact" heading="Our criteria" />
+        <CriteriaBlock
+          categoryId={cat.id}
+          variant="compact"
+          heading="Our criteria"
+          note={cat.curator_note}
+        />
       </div>
 
       {(() => {
@@ -95,7 +116,10 @@ export default async function CategoryPage({
               href={`/c/${slug}/${p.slug}`}
               className="bg-[color:var(--bg-elev)] overflow-hidden block group transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:hover:scale-[1.03] sm:hover:shadow-[0_24px_60px_-24px_rgba(0,0,0,0.28)]"
             >
-              <div className="h-72 sm:h-80 flex items-center justify-center overflow-hidden">
+              <div className="relative h-72 sm:h-80 flex items-center justify-center overflow-hidden">
+                {previewCategoriesEnabled() && p.status !== "Live" && (
+                  <StagingRibbon />
+                )}
                 {p.product_photo_url ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -234,6 +258,17 @@ export default async function CategoryPage({
           className="mt-12 sm:mt-16 pt-10 border-t rule inline-flex items-center gap-2 font-display italic text-lg text-[color:var(--accent-deep)] underline decoration-[color:var(--accent)]/60 underline-offset-4 hover:decoration-[color:var(--accent-deep)]"
         >
           Watch Food Pharmer&rsquo;s full breakdown on common noodle brands.
+          <span aria-hidden>→</span>
+        </a>
+      )}
+      {slug.startsWith("bread") && (
+        <a
+          href="https://youtu.be/z6V_8xJRQWk"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-12 sm:mt-16 pt-10 border-t rule inline-flex items-center gap-2 font-display italic text-lg text-[color:var(--accent-deep)] underline decoration-[color:var(--accent)]/60 underline-offset-4 hover:decoration-[color:var(--accent-deep)]"
+        >
+          Watch Food Pharmer&rsquo;s full breakdown on common bread brands.
           <span aria-hidden>→</span>
         </a>
       )}
