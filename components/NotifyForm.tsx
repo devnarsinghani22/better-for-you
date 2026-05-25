@@ -80,9 +80,6 @@ export default function NotifyForm({
               </p>
             )}
           </form>
-          <p className="mt-3 text-xs text-[color:var(--ink-mute)] leading-relaxed">
-            We&rsquo;ll only use this to tell you when {label} launches. No spam.
-          </p>
         </>
       )}
     </div>

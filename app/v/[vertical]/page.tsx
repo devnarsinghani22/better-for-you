@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import NotifyForm from "@/components/NotifyForm";
@@ -79,18 +78,6 @@ export default async function VerticalComingSoon({
               <NotifyForm vertical={v.slug} label={v.label} />
             </div>
           </div>
-        </div>
-
-        <div className="mt-16 sm:mt-24 pt-8 border-t rule flex flex-wrap items-center justify-between gap-3">
-          <Link
-            href="/"
-            className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink-mute)] hover:text-[color:var(--accent-deep)] transition-colors"
-          >
-            ← Browse Better for You · Packaged Food
-          </Link>
-          <span className="font-mono text-[10px] uppercase tracking-[0.26em] text-[color:var(--ink-mute)]">
-            We only message at launch
-          </span>
         </div>
       </main>
       <SiteFooter />
