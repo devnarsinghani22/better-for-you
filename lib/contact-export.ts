@@ -32,29 +32,15 @@ export async function buildContactCsv(): Promise<
 
   if (error) return { error: error.message };
 
-  const header = [
-    "Date",
-    "Name",
-    "Email",
-    "Extension",
-    "Phone",
-    "Reason",
-    "Message",
-    "User agent",
-  ];
+  const header = ["Date", "Name", "Email", "Number", "Reason", "Notes"];
   const lines = [header.map(csvField).join(",")];
   for (const r of (data ?? []) as unknown as Row[]) {
+    const date = r.created_at
+      ? new Date(r.created_at).toISOString().slice(0, 16).replace("T", " ")
+      : "";
+    const number = [r.phone_cc, r.phone].filter(Boolean).join(" ");
     lines.push(
-      [
-        r.created_at,
-        r.name,
-        r.email,
-        r.phone_cc,
-        r.phone,
-        r.reason,
-        r.message,
-        r.user_agent,
-      ]
+      [date, r.name, r.email, number, r.reason, r.message]
         .map(csvField)
         .join(","),
     );
