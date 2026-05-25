@@ -10,6 +10,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import CriteriaBlock from "@/components/CriteriaBlock";
 import NewBadge from "@/components/NewBadge";
+import StagingRibbon from "@/components/StagingRibbon";
 
 export const revalidate = 60;
 
@@ -121,6 +122,9 @@ export default async function CategoryPage({
                   <div className="absolute top-3 left-3 z-10">
                     <NewBadge />
                   </div>
+                )}
+                {previewCategoriesEnabled() && p.status !== "Live" && (
+                  <StagingRibbon />
                 )}
                 {p.product_photo_url ? (
                   // eslint-disable-next-line @next/next/no-img-element

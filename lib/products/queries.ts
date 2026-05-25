@@ -41,7 +41,7 @@ export async function getLiveProductsForCategory(categorySlug: string) {
   const { data, error } = await sb
     .from('products')
     .select(`
-      id, slug, name, variant_size, rating, certification_method,
+      id, slug, name, variant_size, rating, certification_method, status,
       product_photo_url, label_image_url, primary_buy_url, last_verified_at,
       ingredients_raw, is_new,
       brand:brands ( slug, name )

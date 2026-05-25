@@ -8,6 +8,8 @@ import FeedbackBlock from "@/components/FeedbackBlock";
 import NutritionCard from "@/components/NutritionCard";
 import WhatsAppShare from "@/components/WhatsAppShare";
 import NewBadge from "@/components/NewBadge";
+import StagingRibbon from "@/components/StagingRibbon";
+import { previewCategoriesEnabled } from "@/lib/categories/visibility";
 
 const SITE_URL = "https://foodpharmer.health";
 
@@ -66,7 +68,10 @@ export default async function ProductPage({
 
       <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-x-12 gap-y-8">
         {product.product_photo_url ? (
-          <div className="lg:col-span-5 overflow-hidden h-80 sm:h-[440px] flex items-center justify-center">
+          <div className="relative lg:col-span-5 overflow-hidden h-80 sm:h-[440px] flex items-center justify-center">
+            {previewCategoriesEnabled() && product.status !== "Live" && (
+              <StagingRibbon />
+            )}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={product.product_photo_url}
@@ -104,7 +109,7 @@ export default async function ProductPage({
               rel="noopener noreferrer"
               className="mt-6 inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-[color:var(--ink)] text-[color:var(--bg)] px-6 py-4 sm:py-3 font-mono text-xs uppercase tracking-[0.22em] hover:bg-[color:var(--accent-deep)] transition-colors"
             >
-              Source →
+              Product website →
             </a>
           )}
         </header>

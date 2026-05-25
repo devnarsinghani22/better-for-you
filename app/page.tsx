@@ -1,10 +1,11 @@
 import { createClient } from "@/lib/supabase/server";
 import { getLiveCountByCategory } from "@/lib/products/queries";
-import { visibleCategoryOrFilter } from "@/lib/categories/visibility";
+import { previewCategoriesEnabled, visibleCategoryOrFilter } from "@/lib/categories/visibility";
 import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import NewBadge from "@/components/NewBadge";
+import StagingRibbon from "@/components/StagingRibbon";
 
 export const revalidate = 60;
 
@@ -18,14 +19,14 @@ const COMPOUNDS: {
 }[] = [
   { slug: "paneer", hasOwnProducts: true },
   { slug: "bread", hasOwnProducts: false },
-  { slug: "chips", hasOwnProducts: true, regularLabel: "Normal" },
+  { slug: "chips", hasOwnProducts: true },
 ];
 
 export default async function HomePage() {
   const supabase = await createClient();
   const { data: categories, error } = await supabase
     .from("categories")
-    .select("id, slug, name, blurb, hero_image_url, display_order, is_new")
+    .select("id, slug, name, blurb, hero_image_url, display_order, is_new, active")
     .or(visibleCategoryOrFilter())
     .order("name", { ascending: true });
 
@@ -139,6 +140,9 @@ export default async function HomePage() {
                           <div className="absolute top-3 left-3 z-10">
                             <NewBadge />
                           </div>
+                        )}
+                        {previewCategoriesEnabled() && !c.active && (
+                          <StagingRibbon />
                         )}
                         {c.hero_image_url && (
                           /* eslint-disable-next-line @next/next/no-img-element */
