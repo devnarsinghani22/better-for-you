@@ -48,9 +48,6 @@ export default function SiteFooter() {
             </a>
             . If it meets our criteria, we will list it.
           </p>
-          <p className="mt-6 font-display italic text-2xl text-[color:var(--accent-deep)]">
-            Label Padhega India.
-          </p>
         </div>
       </div>
 

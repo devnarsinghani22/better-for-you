@@ -4,10 +4,6 @@ import SearchBox from "@/components/SearchBox";
 export default function SiteHeader() {
   return (
     <header className="border-b rule sticky top-0 z-30 bg-[color:var(--bg)]/90 backdrop-blur-md">
-      <div className="bg-[color:var(--ink)] text-[color:var(--bg)] py-1.5 text-center font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.22em]">
-        Not sponsored · Not paid · Not affiliated
-      </div>
-
       <div className="max-w-[1280px] mx-auto px-4 sm:px-10 py-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-5 text-[11px] sm:text-xs font-mono uppercase tracking-[0.18em]">
         <SearchBox />
 
