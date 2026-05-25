@@ -225,13 +225,6 @@ export default async function ProductPage({
         initialHelpful={helpful}
         initialUnhelpful={unhelpful}
       />
-
-      <footer className="mt-16 pt-8 border-t rule font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-        We re-check every 6 months · brands sometimes change recipes ·{" "}
-        <Link href="/" className="underline hover:text-[color:var(--accent-deep)]">
-          back to home
-        </Link>
-      </footer>
     </main>
     <SiteFooter />
     </>
