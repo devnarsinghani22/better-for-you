@@ -4,17 +4,7 @@ export default function SiteFooter() {
   return (
     <footer className="border-t rule mt-auto relative z-10 bg-[color:var(--bg-elev)]/40">
       <div className="max-w-[1280px] mx-auto px-6 sm:px-10 py-12 grid grid-cols-1 md:grid-cols-12 gap-x-8 gap-y-8">
-        <div className="md:col-span-5">
-          <p className="font-display text-2xl tracking-tight">
-            Better for You by Food Pharmer
-          </p>
-          <p className="mt-3 text-sm text-[color:var(--ink-soft)] leading-relaxed max-w-sm">
-            A growing list of packaged foods we would actually buy ourselves.
-            Reviewed by Food Pharmer, with a team of nutrition experts and researchers.
-          </p>
-        </div>
-
-        <div className="md:col-span-3">
+        <div className="md:col-span-6">
           <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-[color:var(--ink)] mb-4">
             Site
           </p>
@@ -37,7 +27,7 @@ export default function SiteFooter() {
           </ul>
         </div>
 
-        <div className="md:col-span-4">
+        <div className="md:col-span-6">
           <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-[color:var(--ink)] mb-4">
             Get in touch
           </p>
@@ -52,16 +42,6 @@ export default function SiteFooter() {
               submit it for review
             </a>
             . If it meets our criteria, we will list it.
-          </p>
-          <p className="mt-5 text-sm">
-            <a
-              href="https://instagram.com/foodpharmer"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[color:var(--ink)] underline decoration-[color:var(--ink-mute)] underline-offset-2 hover:text-[color:var(--accent-deep)]"
-            >
-              @foodpharmer on Instagram →
-            </a>
           </p>
         </div>
       </div>
