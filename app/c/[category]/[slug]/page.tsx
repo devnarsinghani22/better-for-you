@@ -7,8 +7,7 @@ import SiteFooter from "@/components/SiteFooter";
 import FeedbackBlock from "@/components/FeedbackBlock";
 import NutritionCard from "@/components/NutritionCard";
 import WhatsAppShare from "@/components/WhatsAppShare";
-import StagingRibbon from "@/components/StagingRibbon";
-import { previewCategoriesEnabled } from "@/lib/categories/visibility";
+import NewRibbon from "@/components/NewRibbon";
 
 const SITE_URL = "https://foodpharmer.health";
 
@@ -68,9 +67,7 @@ export default async function ProductPage({
       <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-x-12 gap-y-8">
         {product.product_photo_url ? (
           <div className="relative lg:col-span-5 overflow-hidden h-80 sm:h-[440px] flex items-center justify-center">
-            {previewCategoriesEnabled() && product.status !== "Live" && (
-              <StagingRibbon />
-            )}
+            {product.is_new && <NewRibbon />}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={product.product_photo_url}
