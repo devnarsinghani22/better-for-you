@@ -6,7 +6,9 @@ export const alt =
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-// Older UA forces Google Fonts to return TTF (woff2 is not supported by satori).
+// Older UA forces Google Fonts to return a satori-compatible format. Google now
+// serves .woff (not .ttf) to this UA; satori supports ttf/otf/woff — but NOT
+// woff2 — so match any of those (the woff2 URL ends in `.woff2)` and is skipped).
 const FONT_UA =
   "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0 Safari/537.36";
 
@@ -14,7 +16,7 @@ async function loadGoogleFont(cssUrl: string): Promise<ArrayBuffer> {
   const css = await fetch(cssUrl, { headers: { "User-Agent": FONT_UA } }).then(
     (r) => r.text()
   );
-  const match = css.match(/url\((https:[^)]+\.ttf)\)/);
+  const match = css.match(/url\((https:[^)]+\.(?:ttf|otf|woff))\)/);
   if (!match) throw new Error("Font URL not found in CSS");
   const buf = await fetch(match[1]).then((r) => r.arrayBuffer());
   return buf;
