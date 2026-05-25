@@ -236,6 +236,8 @@ export type Database = {
           id: number
           message: string
           name: string | null
+          phone: string | null
+          phone_cc: string | null
           reason: string | null
           user_agent: string | null
         }
@@ -245,6 +247,8 @@ export type Database = {
           id?: number
           message: string
           name?: string | null
+          phone?: string | null
+          phone_cc?: string | null
           reason?: string | null
           user_agent?: string | null
         }
@@ -254,6 +258,8 @@ export type Database = {
           id?: number
           message?: string
           name?: string | null
+          phone?: string | null
+          phone_cc?: string | null
           reason?: string | null
           user_agent?: string | null
         }
