@@ -196,7 +196,7 @@ export default async function HomePage() {
                       ) : (
                         <div className="mt-6 pt-5 border-t rule flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
                           <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-[color:var(--ink-mute)] sm:order-first text-center sm:text-left">
-                            {picks} picks
+                            {picks} {picks === 1 ? "pick" : "picks"}
                           </span>
                           <Link
                             href={`/c/${c.slug}`}
