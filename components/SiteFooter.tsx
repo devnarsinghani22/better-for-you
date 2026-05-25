@@ -24,6 +24,11 @@ export default function SiteFooter() {
                 Criteria
               </Link>
             </li>
+            <li>
+              <Link href="/privacy" className="hover:text-[color:var(--accent-deep)]">
+                Privacy
+              </Link>
+            </li>
           </ul>
         </div>
 
@@ -42,6 +47,16 @@ export default function SiteFooter() {
               submit it for review
             </a>
             . If it meets our criteria, we will list it.
+          </p>
+          <p className="mt-4 text-sm text-[color:var(--ink-soft)] leading-relaxed max-w-sm">
+            For any other queries, contact us at{" "}
+            <a
+              href="mailto:betterforyou@foodpharmer.net"
+              className="text-[color:var(--ink)] underline decoration-[color:var(--ink-mute)] underline-offset-2 hover:text-[color:var(--accent-deep)]"
+            >
+              betterforyou@foodpharmer.net
+            </a>
+            .
           </p>
         </div>
       </div>
