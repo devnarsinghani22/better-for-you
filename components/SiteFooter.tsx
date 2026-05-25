@@ -49,7 +49,7 @@ export default function SiteFooter() {
           <p className="text-sm text-[color:var(--ink-soft)] leading-relaxed max-w-sm">
             If you have a brand,{" "}
             <a
-              href="https://forms.gle/JRKyV6UUn4x1CLtG6"
+              href="https://forms.gle/mSnD2hv6EymWoTTLA"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[color:var(--ink)] underline decoration-[color:var(--ink-mute)] underline-offset-2 hover:text-[color:var(--accent-deep)]"
