@@ -57,11 +57,6 @@ export default async function VerticalComingSoon({
             <h1 className="font-display font-medium leading-[0.86] tracking-[-0.03em] text-[clamp(2.75rem,14vw,9rem)] lg:text-[8.5vw] text-[color:var(--ink)] break-words">
               {v.label}
             </h1>
-            {v.tagline && (
-              <p className="mt-8 font-display italic text-2xl sm:text-4xl leading-[1.12] tracking-[-0.01em] text-[color:var(--ink)] max-w-2xl">
-                {v.tagline}
-              </p>
-            )}
           </div>
 
           {/* Right rail — the invite card */}
