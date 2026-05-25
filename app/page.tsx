@@ -10,9 +10,14 @@ export const revalidate = 60;
 // Compound categories: a parent card that nests sibling "<parent>-*" slugs as
 // rows. `hasOwnProducts` controls whether a "Regular" row linking to the parent
 // section is shown (paneer has plain paneer; bread is only a wrapper).
-const COMPOUNDS: { slug: string; hasOwnProducts: boolean }[] = [
+const COMPOUNDS: {
+  slug: string;
+  hasOwnProducts: boolean;
+  regularLabel?: string;
+}[] = [
   { slug: "paneer", hasOwnProducts: true },
   { slug: "bread", hasOwnProducts: false },
+  { slug: "chips", hasOwnProducts: true, regularLabel: "Normal" },
 ];
 
 export default async function HomePage() {
@@ -159,7 +164,7 @@ export default async function HomePage() {
                                 className="flex items-center justify-between gap-3 min-h-[52px] py-3 group/v"
                               >
                                 <span className="font-display text-lg sm:text-xl tracking-tight text-[color:var(--ink)] group-hover/v:text-[color:var(--accent-deep)] transition-colors whitespace-nowrap min-w-0">
-                                  Regular
+                                  {compound!.regularLabel ?? "Regular"}
                                 </span>
                                 <span className="inline-flex items-center justify-center bg-[color:var(--ink)] text-[color:var(--bg)] font-mono text-[11px] uppercase tracking-[0.22em] px-3 py-1.5 group-hover/v:bg-[color:var(--accent-deep)] transition-colors shrink-0 whitespace-nowrap">
                                   View section →
