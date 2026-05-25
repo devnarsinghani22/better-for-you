@@ -21,6 +21,7 @@
   --font-display: var(--font-display);
   --font-body: var(--font-body);
   --font-mono: var(--font-mono);
+  --font-hand: var(--font-hand);
   --radius-sm: 0px;
   --radius-md: 0px;
   --radius-lg: 0px;
@@ -52,6 +53,10 @@ body::before { content: none; }
 
 .font-mono {
   font-family: var(--font-mono), ui-monospace, monospace;
+}
+
+.font-hand {
+  font-family: var(--font-hand), "Segoe Script", cursive;
 }
 
 /* Marquee for the rules strip */

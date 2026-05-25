@@ -9,6 +9,7 @@ import {
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import CriteriaBlock from "@/components/CriteriaBlock";
+import CuratorNote from "@/components/CuratorNote";
 
 export const revalidate = 60;
 
@@ -26,7 +27,7 @@ export default async function CategoryPage({
   const sb = await createClient();
   const { data: cat } = await sb
     .from("categories")
-    .select("id, slug, name, blurb, active, display_order")
+    .select("id, slug, name, blurb, active, display_order, curator_note")
     .eq("slug", slug)
     .single();
   // Env-aware visibility: prod shows only active categories; staging also shows
@@ -98,6 +99,7 @@ export default async function CategoryPage({
 
       <div className="mt-8 sm:mt-10">
         <CriteriaBlock categoryId={cat.id} variant="compact" heading="Our criteria" />
+        <CuratorNote note={cat.curator_note} />
       </div>
 
       {(() => {

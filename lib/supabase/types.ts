@@ -145,6 +145,7 @@ export type Database = {
           active: boolean
           blurb: string | null
           created_at: string
+          curator_note: string | null
           display_order: number
           hero_image_url: string | null
           id: number
@@ -157,6 +158,7 @@ export type Database = {
           active?: boolean
           blurb?: string | null
           created_at?: string
+          curator_note?: string | null
           display_order?: number
           hero_image_url?: string | null
           id?: number
@@ -169,6 +171,7 @@ export type Database = {
           active?: boolean
           blurb?: string | null
           created_at?: string
+          curator_note?: string | null
           display_order?: number
           hero_image_url?: string | null
           id?: number
