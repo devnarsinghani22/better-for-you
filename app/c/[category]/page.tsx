@@ -89,7 +89,7 @@ export default async function CategoryPage({
           {cat.name}
         </h1>
         <div className="mt-6 font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-          {products.length} picks
+          {products.length} {products.length === 1 ? "pick" : "picks"}
         </div>
       </header>
 
@@ -186,7 +186,7 @@ export default async function CategoryPage({
                       {g.label}
                     </h2>
                     <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-5">
-                      {items.length} picks
+                      {items.length} {items.length === 1 ? "pick" : "picks"}
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                       {items.map(renderCard)}
@@ -200,7 +200,7 @@ export default async function CategoryPage({
                     Other
                   </h2>
                   <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-5">
-                    {ungrouped.length} picks
+                    {ungrouped.length} {ungrouped.length === 1 ? "pick" : "picks"}
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                     {ungrouped.map(renderCard)}
