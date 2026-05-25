@@ -52,12 +52,9 @@ export default async function VerticalComingSoon({
         </div>
 
         <div className="mt-12 sm:mt-20 grid grid-cols-1 lg:grid-cols-12 gap-x-14 gap-y-12">
-          {/* Hero — the section name IS the headline; "coming soon" is the kicker */}
+          {/* Hero — the section name IS the headline */}
           <div className="lg:col-span-7">
-            <p className="font-mono text-[11px] uppercase tracking-[0.32em] text-[color:var(--ink-mute)]">
-              Coming soon
-            </p>
-            <h1 className="mt-4 font-display font-medium leading-[0.86] tracking-[-0.03em] text-[clamp(2.75rem,14vw,9rem)] lg:text-[8.5vw] text-[color:var(--ink)] break-words">
+            <h1 className="font-display font-medium leading-[0.86] tracking-[-0.03em] text-[clamp(2.75rem,14vw,9rem)] lg:text-[8.5vw] text-[color:var(--ink)] break-words">
               {v.label}
             </h1>
             {v.tagline && (
@@ -67,16 +64,9 @@ export default async function VerticalComingSoon({
             )}
           </div>
 
-          {/* Right rail — context + the invite card */}
+          {/* Right rail — the invite card */}
           <div className="lg:col-span-5 lg:pt-2 flex flex-col">
-            {v.blurb && (
-              <p className="text-base sm:text-lg text-[color:var(--ink-soft)] leading-relaxed max-w-xl">
-                {v.blurb}
-              </p>
-            )}
-            <div className="mt-8">
-              <NotifyForm vertical={v.slug} label={v.label} />
-            </div>
+            <NotifyForm vertical={v.slug} label={v.label} />
           </div>
         </div>
       </main>
