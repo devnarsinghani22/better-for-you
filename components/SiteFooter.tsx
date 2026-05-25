@@ -21,17 +21,12 @@ export default function SiteFooter() {
           <ul className="space-y-2 text-sm">
             <li>
               <Link href="/" className="hover:text-[color:var(--accent-deep)]">
-                Foods
+                Packaged Food
               </Link>
             </li>
             <li>
               <Link href="/v/restaurants" className="hover:text-[color:var(--accent-deep)]">
                 Restaurants <span className="text-[color:var(--ink-mute)]">· soon</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="/v/skincare" className="hover:text-[color:var(--accent-deep)]">
-                Skincare <span className="text-[color:var(--ink-mute)]">· soon</span>
               </Link>
             </li>
             <li>

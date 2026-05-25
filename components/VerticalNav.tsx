@@ -12,7 +12,7 @@ function isActive(pathname: string, v: Vertical): boolean {
 
 function SoonTag() {
   return (
-    <span className="text-[8px] leading-none tracking-[0.18em] text-[color:var(--ink-mute)]/70 lowercase">
+    <span className="inline-flex items-center rounded-full border border-[color:var(--ink-mute)]/45 px-1.5 py-[2px] text-[8px] leading-none tracking-[0.14em] text-[color:var(--ink-mute)] uppercase">
       soon
     </span>
   );
@@ -32,7 +32,7 @@ export function VerticalNavDesktop() {
             key={v.slug}
             href={v.href}
             aria-current={active ? "page" : undefined}
-            className={`inline-flex items-baseline gap-1 transition-colors ${
+            className={`inline-flex items-center gap-1.5 transition-colors ${
               active
                 ? "text-[color:var(--ink)]"
                 : "hover:text-[color:var(--accent-deep)]"
