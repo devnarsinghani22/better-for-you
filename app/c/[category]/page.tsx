@@ -23,6 +23,8 @@ export default async function CategoryPage({
   // "bread" is a wrapper parent with no products of its own — send visitors to
   // the first variant section.
   if (slug === "bread") redirect("/c/bread-multigrain");
+  // "popcorn" is a wrapper parent with no products of its own.
+  if (slug === "popcorn") redirect("/c/popcorn-whole-kernels");
 
   const sb = await createClient();
   const { data: cat } = await sb
@@ -274,6 +276,17 @@ export default async function CategoryPage({
           className="mt-12 sm:mt-16 pt-10 border-t rule inline-flex items-center gap-2 font-display italic text-lg text-[color:var(--accent-deep)] underline decoration-[color:var(--accent)]/60 underline-offset-4 hover:decoration-[color:var(--accent-deep)]"
         >
           Watch Food Pharmer&rsquo;s full breakdown on common biscuit brands.
+          <span aria-hidden>→</span>
+        </a>
+      )}
+      {slug.startsWith("popcorn") && (
+        <a
+          href="https://youtu.be/1YqG6QczG9Y"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-12 sm:mt-16 pt-10 border-t rule inline-flex items-center gap-2 font-display italic text-lg text-[color:var(--accent-deep)] underline decoration-[color:var(--accent)]/60 underline-offset-4 hover:decoration-[color:var(--accent-deep)]"
+        >
+          Watch Food Pharmer&rsquo;s full breakdown on common popcorn brands.
           <span aria-hidden>→</span>
         </a>
       )}
