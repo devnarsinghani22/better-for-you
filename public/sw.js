@@ -1,5 +1,5 @@
 // public/sw.js
-const VERSION = "v1";
+const VERSION = "v2";
 const STATIC_CACHE = `bfy-static-${VERSION}`;
 const IMG_CACHE = `bfy-images-${VERSION}`;
 const PAGE_CACHE = `bfy-pages-${VERSION}`;
@@ -10,7 +10,9 @@ self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(STATIC_CACHE).then((c) => c.addAll(PRECACHE)).catch(() => {})
   );
-  // Intentionally no skipWaiting(): the new SW takes over on next launch.
+  // Activate immediately so a deployed fix reaches users on the next load,
+  // instead of waiting for every tab to close.
+  self.skipWaiting();
 });
 
 self.addEventListener("activate", (event) => {
@@ -68,20 +70,24 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // 3) HTML navigations — stale-while-revalidate, offline fallback
+  // 3) HTML navigations — network-first (always fresh when online), with a
+  // cached/offline fallback. Stale-while-revalidate was serving the old page
+  // first, so deploys didn't reach users until a second reload.
   if (req.mode === "navigate") {
     event.respondWith(
-      caches.open(PAGE_CACHE).then(async (cache) => {
-        const cached = await cache.match(req);
-        const network = fetch(req)
-          .then((res) => {
-            if (res.ok) cache.put(req, res.clone());
-            return res;
-          })
-          .catch(() => null);
-        event.waitUntil(network); // keep revalidation alive
-        return cached || (await network) || (await caches.match(OFFLINE_URL));
-      })
+      (async () => {
+        try {
+          const res = await fetch(req);
+          if (res.ok) {
+            const cache = await caches.open(PAGE_CACHE);
+            cache.put(req, res.clone());
+          }
+          return res;
+        } catch {
+          const cached = await caches.match(req);
+          return cached || (await caches.match(OFFLINE_URL));
+        }
+      })()
     );
     return;
   }
