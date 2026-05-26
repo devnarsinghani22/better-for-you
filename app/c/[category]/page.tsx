@@ -79,7 +79,7 @@ export default async function CategoryPage({
   return (
     <>
     <SiteHeader />
-    <main className="max-w-[1280px] mx-auto px-5 sm:px-10 py-10 sm:py-16 relative z-10">
+    <main className="w-full max-w-[1280px] mx-auto px-5 sm:px-10 py-10 sm:py-16 relative z-10">
       <Link
         href="/"
         className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink-mute)] hover:text-[color:var(--accent-deep)] transition-colors"
