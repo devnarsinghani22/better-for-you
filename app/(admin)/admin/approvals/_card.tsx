@@ -16,7 +16,6 @@ type Props = {
   labelImage: string | null;
   buyUrl: string | null;
   cert: string;
-  rating: string | null;
   preparedAt: string | null;
   priorNote: string | null;
   canDecide: boolean;
@@ -67,9 +66,8 @@ export default function ApprovalCard(p: Props) {
           </div>
         )}
 
-        <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
+        <div className="mt-5 grid grid-cols-2 gap-3 text-xs">
           <Fact label="Cert">{isLab ? 'Lab-tested ✓' : 'Label-tested'}</Fact>
-          <Fact label="Rating">{p.rating ?? '—'}</Fact>
           <Fact label="Prepared">{prepared}</Fact>
         </div>
 

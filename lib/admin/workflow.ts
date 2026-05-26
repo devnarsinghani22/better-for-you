@@ -8,7 +8,7 @@ type Status =
   | 'Draft'
   | 'PendingReview'
   | 'NeedsClarification'
-  | 'Approved'
+  | 'Vetted'
   | 'Rejected'
   | 'Live'
   | 'Retracted';
@@ -89,7 +89,7 @@ export async function approveProduct(productId: number, note?: string | null) {
   const { error } = await admin
     .from('products')
     .update({
-      status: 'Approved',
+      status: 'Vetted',
       reviewed_at: new Date().toISOString(),
       reviewed_by: userId,
       review_notes: note ?? null,
@@ -103,7 +103,7 @@ export async function approveProduct(productId: number, note?: string | null) {
     actorEmail: email,
     action: 'approve',
     fromStatus: from,
-    toStatus: 'Approved',
+    toStatus: 'Vetted',
     note,
   });
   revalidatePath('/admin/products');
@@ -177,7 +177,7 @@ export async function askClarification(productId: number, note: string) {
 export async function pushLive(productId: number) {
   const { email, userId } = await userInfo();
   const from = await getProductStatus(productId);
-  if (from !== 'Approved') throw new Error(`Cannot push live from status ${from}`);
+  if (from !== 'Vetted') throw new Error(`Cannot push live from status ${from}`);
 
   const now = new Date();
   const sixMonthsLater = new Date(now);

@@ -11,7 +11,7 @@ export default async function ApprovalsQueuePage() {
     .from('products')
     .select(
       `id, slug, name, variant_size, ingredients_raw, primary_buy_url,
-       product_photo_url, label_image_url, certification_method, rating,
+       product_photo_url, label_image_url, certification_method,
        prepared_at, review_notes,
        brand:brands(name, slug, is_excluded, exclusion_reason),
        category:categories(name, slug)`
@@ -60,7 +60,6 @@ export default async function ApprovalsQueuePage() {
               labelImage={p.label_image_url}
               buyUrl={p.primary_buy_url}
               cert={p.certification_method}
-              rating={p.rating}
               preparedAt={p.prepared_at}
               priorNote={p.review_notes}
               canDecide={role === 'reviewer'}

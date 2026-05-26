@@ -20,7 +20,7 @@ export default async function EditProductPage({
     .from('products')
     .select(
       `id, slug, name, brand_id, category_id, variant_size, status,
-       certification_method, rating, ingredients_raw, primary_buy_url,
+       certification_method, ingredients_raw, primary_buy_url,
        product_photo_url, label_image_url, last_verified_at, review_notes`
     )
     .eq('id', numId)
@@ -46,7 +46,7 @@ export default async function EditProductPage({
           className={`px-3 py-1 text-xs uppercase tracking-wider rounded ${
             product.status === 'Live'
               ? 'bg-green-100 text-green-800'
-              : product.status === 'Approved'
+              : product.status === 'Vetted'
               ? 'bg-blue-100 text-blue-800'
               : product.status === 'PendingReview'
               ? 'bg-amber-100 text-amber-800'

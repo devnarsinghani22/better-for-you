@@ -10,7 +10,6 @@ type ProductForForm = {
   variant_size?: string | null;
   status?: string | null;
   certification_method?: string | null;
-  rating?: string | null;
   ingredients_raw?: string | null;
   primary_buy_url?: string | null;
   product_photo_url?: string | null;
@@ -95,7 +94,7 @@ export default async function ProductForm({
         />
       </Field>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 gap-4">
         <Field label="Status">
           <select
             name="status"
@@ -103,7 +102,7 @@ export default async function ProductForm({
             defaultValue={product?.status ?? 'Draft'}
             className="w-full border rounded px-3 py-2 bg-white"
           >
-            {['Draft', 'PendingReview', 'NeedsClarification', 'Approved', 'Live', 'Rejected', 'Retracted'].map((s) => (
+            {['Draft', 'PendingReview', 'NeedsClarification', 'Vetted', 'Live', 'Rejected', 'Retracted'].map((s) => (
               <option key={s} value={s}>{s}</option>
             ))}
           </select>
@@ -119,19 +118,6 @@ export default async function ProductForm({
             <option value="label_tested">Label-tested</option>
             <option value="lab_tested">Lab-tested</option>
             <option value="both">Both</option>
-          </select>
-        </Field>
-
-        <Field label="Rating">
-          <select
-            name="rating"
-            defaultValue={product?.rating ?? ''}
-            className="w-full border rounded px-3 py-2 bg-white"
-          >
-            <option value="">—</option>
-            {['A+', 'A', 'B+', 'B', 'C', 'D'].map((r) => (
-              <option key={r} value={r}>{r}</option>
-            ))}
           </select>
         </Field>
       </div>
