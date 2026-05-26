@@ -1,10 +1,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getLiveProductBySlug } from "@/lib/products/queries";
-import { createClient } from "@/lib/supabase/server";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import FeedbackBlock from "@/components/FeedbackBlock";
 import NutritionCard from "@/components/NutritionCard";
 import WhatsAppShare from "@/components/WhatsAppShare";
 import NewRibbon from "@/components/NewRibbon";
@@ -27,12 +25,6 @@ export default async function ProductPage({
   const brand = Array.isArray(product.brand) ? product.brand[0] : product.brand;
   const cat = product.category;
 
-  const sb = await createClient();
-  const { data: counts } = await sb
-    .rpc("get_feedback_counts", { p_product_id: product.id })
-    .single<{ helpful_count: number; unhelpful_count: number; total_count: number }>();
-  const helpful = Number(counts?.helpful_count ?? 0);
-  const unhelpful = Number(counts?.unhelpful_count ?? 0);
   const isLab = product.certification_method === "lab_tested";
 
   // Nutrition display: every product shows its label IMAGE (the original
@@ -217,13 +209,6 @@ export default async function ProductPage({
           </div>
         </div>
       </section>
-
-      <FeedbackBlock
-        productId={product.id}
-        pathname={`/c/${category}/${slug}`}
-        initialHelpful={helpful}
-        initialUnhelpful={unhelpful}
-      />
 
       <CrossCategoryNav currentSlug={category} />
     </main>

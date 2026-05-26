@@ -33,7 +33,15 @@ export default async function CrossCategoryNav({
   const currentTop = tops.find(
     (t) => currentSlug === t.slug || currentSlug.startsWith(`${t.slug}-`),
   )?.slug;
-  const others = tops.filter((t) => t.slug !== currentTop);
+  // New categories first (so a freshly-added one always surfaces at the
+  // front), then the rest alphabetically.
+  const others = tops
+    .filter((t) => t.slug !== currentTop)
+    .sort(
+      (a, b) =>
+        Number(Boolean(b.is_new)) - Number(Boolean(a.is_new)) ||
+        a.name.localeCompare(b.name),
+    );
   if (others.length === 0) return null;
 
   return (
