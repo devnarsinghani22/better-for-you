@@ -1,8 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Newsreader, JetBrains_Mono, Caveat } from "next/font/google";
 import Script from "next/script";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 import "./globals.css";
 
@@ -84,8 +82,6 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col">
         {children}
         <ServiceWorkerRegister />
-        <Analytics />
-        <SpeedInsights />
         <Script id="ms-clarity" strategy="afterInteractive">
           {`(function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
