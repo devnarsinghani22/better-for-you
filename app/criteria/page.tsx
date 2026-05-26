@@ -48,7 +48,7 @@ export default async function CriteriaPage() {
           <h1 className="font-display text-3xl tracking-tight">Rules by category</h1>
           <p className="mt-2 text-[color:var(--ink-soft)] max-w-2xl">
             Every category has its own rules. A product has to pass the rules
-            for its category to be approved.
+            for its category to make the list.
           </p>
           <div className="mt-6 space-y-8">
             {(categories ?? []).map((c) => {

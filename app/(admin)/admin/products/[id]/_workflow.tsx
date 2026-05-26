@@ -46,7 +46,7 @@ export default function WorkflowActions({ productId, status, role }: Props) {
           </button>
         )}
 
-        {status === 'Approved' && (
+        {status === 'Vetted' && (
           <button
             disabled={pending}
             onClick={() => run(() => pushLive(productId))}

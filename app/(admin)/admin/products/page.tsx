@@ -6,7 +6,7 @@ type SP = { category?: string; status?: string };
 const STATUSES = [
   'Draft',
   'PendingReview',
-  'Approved',
+  'Vetted',
   'Live',
   'Rejected',
   'Retracted',
@@ -22,7 +22,7 @@ export default async function AdminProductsList({
   let q = sb
     .from('products')
     .select(
-      `id, slug, name, status, rating, certification_method, updated_at,
+      `id, slug, name, status, certification_method, updated_at,
        brand:brands(name, slug),
        category:categories(name, slug)`
     )
@@ -80,7 +80,6 @@ export default async function AdminProductsList({
               <th className="pr-4">Brand</th>
               <th className="pr-4">Category</th>
               <th className="pr-4">Status</th>
-              <th className="pr-4">Rating</th>
               <th className="pr-4">Cert</th>
               <th className="pr-4">Updated</th>
               <th></th>
@@ -96,7 +95,6 @@ export default async function AdminProductsList({
                   <td className="pr-4 text-stone-600">{b?.name}</td>
                   <td className="pr-4 text-stone-600">{c?.name}</td>
                   <td className="pr-4"><StatusPill status={p.status} /></td>
-                  <td className="pr-4">{p.rating ?? '—'}</td>
                   <td className="pr-4 text-xs">{p.certification_method.replace('_', ' ')}</td>
                   <td className="pr-4 text-xs text-stone-500">
                     {new Date(p.updated_at).toLocaleDateString()}
@@ -118,7 +116,7 @@ function StatusPill({ status }: { status: string }) {
   const tone =
     status === 'Live'
       ? 'bg-green-100 text-green-800'
-      : status === 'Approved'
+      : status === 'Vetted'
       ? 'bg-blue-100 text-blue-800'
       : status === 'PendingReview'
       ? 'bg-amber-100 text-amber-800'

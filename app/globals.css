@@ -73,7 +73,7 @@ body::before { content: none; }
   .marquee-track { animation: none; }
 }
 
-/* Stamp tilt for "approved" */
+/* Stamp tilt for the "Better for You" mark */
 .stamp {
   transform: rotate(-6deg);
 }

@@ -368,7 +368,6 @@ export type Database = {
           prepared_by: string | null
           primary_buy_url: string | null
           product_photo_url: string | null
-          rating: Database["public"]["Enums"]["product_rating"] | null
           retracted_at: string | null
           retraction_reason: string | null
           reverify_due_at: string | null
@@ -379,7 +378,6 @@ export type Database = {
           status: Database["public"]["Enums"]["product_status"]
           updated_at: string
           variant_size: string | null
-          verdict: string | null
         }
         Insert: {
           alt_buy_urls?: Json | null
@@ -403,7 +401,6 @@ export type Database = {
           prepared_by?: string | null
           primary_buy_url?: string | null
           product_photo_url?: string | null
-          rating?: Database["public"]["Enums"]["product_rating"] | null
           retracted_at?: string | null
           retraction_reason?: string | null
           reverify_due_at?: string | null
@@ -414,7 +411,6 @@ export type Database = {
           status?: Database["public"]["Enums"]["product_status"]
           updated_at?: string
           variant_size?: string | null
-          verdict?: string | null
         }
         Update: {
           alt_buy_urls?: Json | null
@@ -438,7 +434,6 @@ export type Database = {
           prepared_by?: string | null
           primary_buy_url?: string | null
           product_photo_url?: string | null
-          rating?: Database["public"]["Enums"]["product_rating"] | null
           retracted_at?: string | null
           retraction_reason?: string | null
           reverify_due_at?: string | null
@@ -449,7 +444,6 @@ export type Database = {
           status?: Database["public"]["Enums"]["product_status"]
           updated_at?: string
           variant_size?: string | null
-          verdict?: string | null
         }
         Relationships: [
           {
@@ -536,12 +530,11 @@ export type Database = {
     Enums: {
       admin_role: "preparer" | "reviewer"
       certification_method: "label_tested" | "lab_tested" | "both"
-      product_rating: "A+" | "A" | "B+" | "B" | "C" | "D"
       product_status:
         | "Draft"
         | "PendingReview"
         | "NeedsClarification"
-        | "Approved"
+        | "Vetted"
         | "Rejected"
         | "Live"
         | "Retracted"
@@ -677,12 +670,11 @@ export const Constants = {
     Enums: {
       admin_role: ["preparer", "reviewer"],
       certification_method: ["label_tested", "lab_tested", "both"],
-      product_rating: ["A+", "A", "B+", "B", "C", "D"],
       product_status: [
         "Draft",
         "PendingReview",
         "NeedsClarification",
-        "Approved",
+        "Vetted",
         "Rejected",
         "Live",
         "Retracted",

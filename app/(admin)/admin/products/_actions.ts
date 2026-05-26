@@ -20,9 +20,8 @@ type ProductPayload = {
   brand_id: number;
   category_id: number;
   variant_size: string | null;
-  status: 'Draft' | 'PendingReview' | 'NeedsClarification' | 'Approved' | 'Rejected' | 'Live' | 'Retracted';
+  status: 'Draft' | 'PendingReview' | 'NeedsClarification' | 'Vetted' | 'Rejected' | 'Live' | 'Retracted';
   certification_method: 'label_tested' | 'lab_tested' | 'both';
-  rating: 'A+' | 'A' | 'B+' | 'B' | 'C' | 'D' | null;
   ingredients_raw: string | null;
   primary_buy_url: string | null;
   product_photo_url: string | null;
@@ -56,7 +55,6 @@ function formToPayload(fd: FormData, preparedBy?: string): ProductPayload {
     variant_size: get('variant_size'),
     status: required('status') as ProductPayload['status'],
     certification_method: required('certification_method') as ProductPayload['certification_method'],
-    rating: (get('rating') as ProductPayload['rating']) ?? null,
     ingredients_raw: get('ingredients_raw'),
     primary_buy_url: get('primary_buy_url'),
     product_photo_url: get('product_photo_url'),
