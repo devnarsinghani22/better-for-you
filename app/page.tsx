@@ -6,7 +6,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import NewRibbon from "@/components/NewRibbon";
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 // Compound categories: a parent card that nests sibling "<parent>-*" slugs as
 // rows. `hasOwnProducts` controls whether a "Regular" row linking to the parent

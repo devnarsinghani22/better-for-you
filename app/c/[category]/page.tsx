@@ -11,7 +11,7 @@ import SiteFooter from "@/components/SiteFooter";
 import CriteriaBlock from "@/components/CriteriaBlock";
 import NewRibbon from "@/components/NewRibbon";
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 export default async function CategoryPage({
   params,
