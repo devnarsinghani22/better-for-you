@@ -9,6 +9,7 @@ import {
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import CriteriaBlock from "@/components/CriteriaBlock";
+import CrossCategoryNav from "@/components/CrossCategoryNav";
 import NewRibbon from "@/components/NewRibbon";
 
 export const revalidate = 3600;
@@ -290,6 +291,8 @@ export default async function CategoryPage({
           <span aria-hidden>→</span>
         </a>
       )}
+
+      <CrossCategoryNav currentSlug={slug} />
     </main>
     <SiteFooter />
     </>

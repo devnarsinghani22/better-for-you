@@ -8,6 +8,8 @@ import FeedbackBlock from "@/components/FeedbackBlock";
 import NutritionCard from "@/components/NutritionCard";
 import WhatsAppShare from "@/components/WhatsAppShare";
 import NewRibbon from "@/components/NewRibbon";
+import ZoomableImage from "@/components/ZoomableImage";
+import CrossCategoryNav from "@/components/CrossCategoryNav";
 
 const SITE_URL = "https://foodpharmer.health";
 
@@ -68,12 +70,10 @@ export default async function ProductPage({
         {product.product_photo_url ? (
           <div className="relative lg:col-span-5 overflow-hidden h-80 sm:h-[440px] flex items-center justify-center">
             {product.is_new && <NewRibbon />}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <ZoomableImage
               src={product.product_photo_url}
               alt={product.name}
-              decoding="async"
-              fetchPriority="high"
+              priority
               className="w-full h-full object-contain p-4 sm:p-6"
             />
           </div>
@@ -162,12 +162,9 @@ export default async function ProductPage({
             Cropped from the source page · {brand?.name}
           </p>
           <div className="mt-5 p-3 inline-block max-w-full">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <ZoomableImage
               src={product.label_image_url}
               alt={`${product.name} label`}
-              loading="lazy"
-              decoding="async"
               className="max-w-full h-auto"
             />
           </div>
@@ -227,6 +224,8 @@ export default async function ProductPage({
         initialHelpful={helpful}
         initialUnhelpful={unhelpful}
       />
+
+      <CrossCategoryNav currentSlug={category} />
     </main>
     <SiteFooter />
     </>
