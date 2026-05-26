@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/admin", "/api", "/login", "/auth"],
       },
     ],
-    sitemap: "https://foodpharmer-approved.vercel.app/sitemap.xml",
+    sitemap: "https://foodpharmer.health/sitemap.xml",
   };
 }
