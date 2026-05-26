@@ -57,6 +57,15 @@ export default async function CategoryPage({
       "pintola-high-protein-pb",
       "butternutco-natural-creamy-pb",
     ],
+    // Regular rolled oats — alphabetical by brand, Kellogg's pinned last.
+    oats: [
+      "pintola-rolled-oats",
+      "quaker-rolled-oats",
+      "saffola-rolled-oats",
+      "true-elements-rolled-oats",
+      "yoga-bar-rolled-oats",
+      "kelloggs-rolled-oats",
+    ],
   };
   const order = orderBySlug[slug];
   const products = order
