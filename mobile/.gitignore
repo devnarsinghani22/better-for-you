@@ -1,6 +1,12 @@
 # Dependencies
 node_modules/
 
+# Signing secrets — NEVER commit
+android/keystore.properties
+android/upload-keystore.jks
+*.keystore
+*.jks
+
 # Capacitor / native build artifacts (machine-specific or generated)
 android/local.properties
 android/.gradle/
