@@ -1,0 +1,4 @@
+# The Capacitor native app lives in mobile/ — it is NOT part of the Next.js web
+# build and its TypeScript imports (@capacitor/*) only exist in mobile/node_modules.
+# Keep it out of the Vercel build entirely.
+mobile
