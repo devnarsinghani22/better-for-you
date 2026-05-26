@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Newsreader, JetBrains_Mono, Caveat } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 import "./globals.css";
 
 const CLARITY_PROJECT_ID = "wv3da4qpra";
@@ -59,6 +60,15 @@ export const metadata: Metadata = {
     description:
       "We analyse ingredient lists and nutrition labels to shortlist products that are better for you. Not sponsored.",
   },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Better for You",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#000000",
 };
 
 export default function RootLayout({
@@ -73,6 +83,7 @@ export default function RootLayout({
     >
       <body className="min-h-screen flex flex-col">
         {children}
+        <ServiceWorkerRegister />
         <Analytics />
         <SpeedInsights />
         <Script id="ms-clarity" strategy="afterInteractive">
