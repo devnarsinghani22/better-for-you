@@ -7,7 +7,11 @@ import { getVertical, comingSoonVerticals } from "@/lib/verticals";
 export const dynamic = "force-static";
 
 export function generateStaticParams() {
-  return comingSoonVerticals.map((v) => ({ vertical: v.slug }));
+  // "restaurants" has its own dedicated page at /v/restaurants, so it is
+  // excluded here to avoid a duplicate-route conflict.
+  return comingSoonVerticals
+    .filter((v) => v.slug !== "restaurants")
+    .map((v) => ({ vertical: v.slug }));
 }
 
 export async function generateMetadata({
