@@ -8,6 +8,7 @@ import WhatsAppShare from "@/components/WhatsAppShare";
 import NewRibbon from "@/components/NewRibbon";
 import ZoomableImage from "@/components/ZoomableImage";
 import CrossCategoryNav from "@/components/CrossCategoryNav";
+import IngredientText from "@/components/IngredientText";
 
 const SITE_URL = "https://foodpharmer.health";
 
@@ -108,11 +109,15 @@ export default async function ProductPage({
           As printed on the pack · verbatim
         </p>
         {product.ingredients_raw ? (
-          <div className="mt-5 bg-[color:var(--bg-elev)] border rule rounded-sm p-6">
-            <p className="text-base sm:text-lg text-[color:var(--ink)] leading-relaxed">
-              {product.ingredients_raw}
-            </p>
-          </div>
+          <IngredientText
+            raw={product.ingredients_raw}
+            i18n={
+              (product.ingredients_i18n ?? null) as Record<
+                string,
+                string
+              > | null
+            }
+          />
         ) : (
           <div className="mt-5 bg-[color:var(--bg-elev)] border rule rounded-sm p-6">
             <p className="text-[color:var(--ink-soft)] leading-relaxed">
