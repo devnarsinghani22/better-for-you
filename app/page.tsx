@@ -5,6 +5,7 @@ import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import NewRibbon from "@/components/NewRibbon";
+import HomeScrollRestore from "@/components/HomeScrollRestore";
 
 export const revalidate = 3600;
 
@@ -75,6 +76,7 @@ export default async function HomePage() {
 
   return (
     <div className="relative z-10">
+      <HomeScrollRestore />
       <SiteHeader />
 
       {/* HERO */}
