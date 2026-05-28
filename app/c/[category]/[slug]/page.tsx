@@ -9,6 +9,7 @@ import NewRibbon from "@/components/NewRibbon";
 import ZoomableImage from "@/components/ZoomableImage";
 import CrossCategoryNav from "@/components/CrossCategoryNav";
 import IngredientText from "@/components/IngredientText";
+import BuyLink from "@/components/BuyLink";
 
 const SITE_URL = "https://foodpharmer.health";
 
@@ -49,8 +50,56 @@ export default async function ProductPage({
       })
     : null;
 
+  // schema.org/Product JSON-LD — gives Google enough structure to render
+  // rich-snippet image cards in search results. Only fields we have are
+  // emitted; brand / category / image fall through to nothing if absent.
+  const productLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    url: `${SITE_URL}/c/${category}/${slug}`,
+    ...(product.product_photo_url
+      ? { image: product.product_photo_url.startsWith("http")
+          ? product.product_photo_url
+          : `${SITE_URL}${product.product_photo_url}` }
+      : {}),
+    ...(brand?.name ? { brand: { "@type": "Brand", name: brand.name } } : {}),
+    ...(cat?.name ? { category: cat.name } : {}),
+    ...(product.ingredients_raw
+      ? { description: product.ingredients_raw.slice(0, 280) }
+      : {}),
+    additionalProperty: [
+      {
+        "@type": "PropertyValue",
+        name: "Reviewed by",
+        value: "Food Pharmer",
+      },
+      ...(isLab
+        ? [{
+            "@type": "PropertyValue",
+            name: "Verification",
+            value: "Lab tested",
+          }]
+        : []),
+    ],
+    ...(product.primary_buy_url
+      ? {
+          offers: {
+            "@type": "Offer",
+            url: product.primary_buy_url,
+            availability: "https://schema.org/InStock",
+            priceCurrency: "INR",
+          },
+        }
+      : {}),
+  };
+
   return (
     <>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }}
+    />
     <SiteHeader />
     <main className="w-full max-w-[1100px] mx-auto px-5 sm:px-10 py-10 sm:py-16 relative z-10">
       <nav className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
@@ -91,14 +140,13 @@ export default async function ProductPage({
             </span>
           </div>
           {product.primary_buy_url && (
-            <a
+            <BuyLink
+              slug={product.slug}
               href={product.primary_buy_url}
-              target="_blank"
-              rel="noopener noreferrer"
               className="mt-6 inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-[color:var(--ink)] text-[color:var(--bg)] px-6 py-4 sm:py-3 font-mono text-xs uppercase tracking-[0.22em] hover:bg-[color:var(--accent-deep)] transition-colors"
             >
               Product website →
-            </a>
+            </BuyLink>
           )}
         </header>
       </div>
@@ -126,14 +174,13 @@ export default async function ProductPage({
               own page.
             </p>
             {product.primary_buy_url && (
-              <a
+              <BuyLink
+                slug={product.slug}
                 href={product.primary_buy_url}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="mt-3 inline-block font-mono text-xs uppercase tracking-[0.22em] underline hover:text-[color:var(--accent-deep)]"
               >
                 Open the source page →
-              </a>
+              </BuyLink>
             )}
           </div>
         )}

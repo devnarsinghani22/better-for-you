@@ -85,8 +85,45 @@ export default async function CategoryPage({
     ? products.filter((p) => !groupedSlugs.has(p.slug))
     : [];
 
+  // schema.org/ItemList JSON-LD — Google can render image carousels and
+  // "Top results" cards from this. Items reference the product detail
+  // pages (which carry their own Product schema).
+  const SITE_URL = "https://foodpharmer.health";
+  const categoryLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: `${cat.name} — Better for You`,
+    description: cat.blurb || undefined,
+    url: `${SITE_URL}/c/${slug}`,
+    numberOfItems: products.length,
+    itemListElement: products.slice(0, 30).map((p, i) => {
+      const brandName = Array.isArray(p.brand)
+        ? p.brand[0]?.name
+        : p.brand?.name;
+      return {
+        "@type": "ListItem",
+        position: i + 1,
+        url: `${SITE_URL}/c/${slug}/${p.slug}`,
+        item: {
+          "@type": "Product",
+          name: p.name,
+          ...(brandName ? { brand: { "@type": "Brand", name: brandName } } : {}),
+          ...(p.product_photo_url
+            ? { image: p.product_photo_url.startsWith("http")
+                ? p.product_photo_url
+                : `${SITE_URL}${p.product_photo_url}` }
+            : {}),
+        },
+      };
+    }),
+  };
+
   return (
     <>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(categoryLd) }}
+    />
     <SiteHeader />
     <main className="w-full max-w-[1280px] mx-auto px-5 sm:px-10 py-10 sm:py-16 relative z-10">
       <Link
@@ -100,12 +137,23 @@ export default async function CategoryPage({
         <h1 className="font-display text-5xl sm:text-7xl tracking-[-0.02em] leading-[0.95]">
           {cat.name}
         </h1>
-        <div className="mt-6 font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-          {products.length} {products.length === 1 ? "pick" : "picks"}
+        <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+          <span>
+            {products.length} {products.length === 1 ? "pick" : "picks"}
+          </span>
+          {/* Subtle deep-link to the criteria block below — gives
+              SEO-driven first-time visitors a one-click affordance to
+              learn why these products made the list. */}
+          <a
+            href="#criteria"
+            className="hover:text-[color:var(--accent-deep)] underline decoration-[color:var(--ink-mute)] underline-offset-4 transition-colors"
+          >
+            How we picked these →
+          </a>
         </div>
       </header>
 
-      <div className="mt-8 sm:mt-10">
+      <div id="criteria" className="mt-8 sm:mt-10 scroll-mt-20">
         <CriteriaBlock
           categoryId={cat.id}
           variant="compact"
