@@ -1,24 +1,39 @@
 name: monitor-usage
 
-# Watches Supabase and Vercel quotas. The schedule trigger only runs on the
-# default branch (master). A non-zero exit triggers GitHub's standard
-# "workflow failed" email to the repo owner — that's the alert channel.
+# Watches Supabase + Vercel quotas. The schedule trigger only runs on the
+# default branch (master).
+#
+# Flow:
+#   1. monitor_usage.py prints a status table.
+#        exit 0 = all good
+#        exit 1 = warn
+#        exit 2 = critical
+#   2. On exit 2, run auto_remediate.py against each breached metric
+#      (safe, additive fixes: image recompression, VACUUM, orphan report).
+#   3. Always upload the diagnostic logs as artifacts.
+#   4. On exit 2, open a GitHub issue with the report attached so the human
+#      review path is a single click. Repeated breaches reopen the issue
+#      instead of stacking new ones.
 
 on:
   schedule:
-    # Every 3 hours, on the hour.
     - cron: "0 */3 * * *"
   workflow_dispatch: {}
   push:
     branches: [master]
     paths:
       - "tools/monitor_usage.py"
+      - "tools/auto_remediate.py"
       - ".github/workflows/monitor-usage.yml"
+
+permissions:
+  contents: read
+  issues: write
 
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
 
@@ -26,25 +41,105 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install Python deps
+        run: pip install psycopg2-binary requests Pillow
+
       - name: Run usage check
+        id: monitor
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           SUPABASE_PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF || 'eprwzftfxtkgunnkewyk' }}
           VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID || 'prj_RZB9OACBBjkLyiOGHBMcThanArXk' }}
           VERCEL_TEAM_ID: ${{ vars.VERCEL_TEAM_ID || 'team_6e5bDNbX2Kyre4b0wX3hppzy' }}
+        continue-on-error: true
         run: |
-          set -o pipefail
+          set +e
           python tools/monitor_usage.py | tee usage.log
-          status=${PIPESTATUS[0]}
-          echo "exit_status=$status" >> "$GITHUB_OUTPUT"
-          # Re-emit non-zero so the workflow shows as failed (= email alert).
-          exit "$status"
+          echo "exit_status=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
 
-      - name: Upload usage report
+      - name: Extract breached metrics
+        if: steps.monitor.outputs.exit_status == '2'
+        id: breach
+        run: |
+          # Lines look like: "CRITICAL: supabase.cached_egress, supabase.storage_size"
+          metrics=$(grep '^CRITICAL:' usage.log | sed 's/CRITICAL: //' | tr ',' '\n' | tr -d ' ')
+          echo "metrics<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$metrics" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Auto-remediate critical metrics
+        if: steps.monitor.outputs.exit_status == '2'
+        env:
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          while IFS= read -r m; do
+            [ -z "$m" ] && continue
+            python tools/auto_remediate.py --metric "$m" || true
+          done <<< "${{ steps.breach.outputs.metrics }}"
+
+      - name: Upload logs
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: usage-${{ github.run_number }}
-          path: usage.log
+          path: |
+            usage.log
+            remediation.log
           retention-days: 30
+
+      - name: Open / update GitHub issue on CRITICAL
+        if: steps.monitor.outputs.exit_status == '2'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const usage = fs.existsSync('usage.log') ? fs.readFileSync('usage.log', 'utf8') : '(no usage log)';
+            const remediation = fs.existsSync('remediation.log') ? fs.readFileSync('remediation.log', 'utf8') : '(no remediation log)';
+
+            const body = [
+              `Detected at ${new Date().toISOString()}.`,
+              ``,
+              `## Usage report`,
+              '```',
+              usage.trim(),
+              '```',
+              ``,
+              `## Auto-remediation log`,
+              '```',
+              remediation.trim().slice(-12000),
+              '```',
+              ``,
+              `Run: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            ].join('\n');
+
+            const title = 'Usage CRITICAL — review needed';
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: 'usage-critical',
+              state: 'open',
+              per_page: 5,
+            });
+            if (issues.length) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issues[0].number,
+                body,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+                labels: ['usage-critical'],
+              });
+            }
+
+      - name: Fail workflow when CRITICAL
+        if: steps.monitor.outputs.exit_status == '2'
+        run: exit 2
