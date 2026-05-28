@@ -7,7 +7,10 @@ export default function SiteHeader() {
       <div className="max-w-[1280px] mx-auto px-4 sm:px-10 py-3 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-8 text-[11px] sm:text-xs font-mono uppercase tracking-[0.18em]">
         <VerticalNavDesktop />
 
-        <div className="w-full sm:w-auto sm:ml-auto sm:max-w-[18rem] sm:flex-none">
+        {/* Wider on desktop so the search affordance reads as primary, not
+            a decoration. Clarity flagged 4.8% search usage on a 200+ SKU
+            catalogue — promoting the input. */}
+        <div className="w-full sm:w-auto sm:ml-auto sm:max-w-[26rem] sm:flex-1 sm:flex-none">
           <SearchBox />
         </div>
       </div>
