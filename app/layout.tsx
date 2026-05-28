@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Newsreader, JetBrains_Mono, Caveat } from "next/font/google";
 import Script from "next/script";
 import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
-import MobileSearchTrigger from "@/components/MobileSearchTrigger";
 import "./globals.css";
 
 const CLARITY_PROJECT_ID = "wv3da4qpra";
@@ -82,7 +81,6 @@ export default function RootLayout({
     >
       <body className="min-h-screen flex flex-col">
         {children}
-        <MobileSearchTrigger />
         <ServiceWorkerRegister />
         <Script id="ms-clarity" strategy="afterInteractive">
           {`(function(c,l,a,r,i,t,y){
