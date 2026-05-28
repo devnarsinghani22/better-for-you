@@ -1,8 +1,7 @@
-import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import NotifyForm from "@/components/NotifyForm";
-import NewRibbon from "@/components/NewRibbon";
+import RestaurantsExplorer from "@/components/RestaurantsExplorer";
 import { getVisibleRestaurants } from "@/lib/restaurants/queries";
 import { getVertical } from "@/lib/verticals";
 
@@ -13,9 +12,6 @@ export const metadata = {
   description:
     "Dishes worth ordering at restaurants across India — picked with the same label-first scrutiny we apply to packaged food.",
 };
-
-// Metros first, then anything else alphabetically.
-const CITY_ORDER = ["Mumbai", "Delhi", "Bengaluru", "Kolkata", "Hyderabad"];
 
 export default async function RestaurantsPage() {
   const restaurants = await getVisibleRestaurants();
@@ -53,17 +49,6 @@ export default async function RestaurantsPage() {
     );
   }
 
-  const byCity = new Map<string, typeof restaurants>();
-  for (const r of restaurants) {
-    if (!byCity.has(r.city)) byCity.set(r.city, []);
-    byCity.get(r.city)!.push(r);
-  }
-  const cities = [...byCity.keys()].sort((a, b) => {
-    const ia = CITY_ORDER.indexOf(a);
-    const ib = CITY_ORDER.indexOf(b);
-    return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib) || a.localeCompare(b);
-  });
-
   return (
     <div className="relative z-10">
       <SiteHeader />
@@ -83,53 +68,7 @@ export default async function RestaurantsPage() {
           </p>
         </header>
 
-        {cities.map((city) => {
-          const list = byCity.get(city)!;
-          return (
-            <section key={city} className="mt-14 sm:mt-20">
-              <div className="flex items-end justify-between mb-6 sm:mb-8 border-b rule pb-3">
-                <h2 className="font-display text-3xl sm:text-5xl tracking-[-0.02em] leading-none">
-                  {city}
-                </h2>
-                <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.26em] text-[color:var(--ink-mute)]">
-                  {list.length} {list.length === 1 ? "place" : "places"}
-                </span>
-              </div>
-
-              <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-                {list.map((r) => (
-                  <li key={r.id} className="group">
-                    <Link
-                      href={`/r/${r.slug}`}
-                      className="relative flex flex-col h-full bg-[color:var(--bg-elev)] border rule rounded-sm p-6 sm:p-7 transition-all duration-300 hover:border-[color:var(--accent-deep)] hover:shadow-[0_20px_50px_-24px_rgba(0,0,0,0.28)]"
-                    >
-                      {r.is_new && <NewRibbon />}
-                      {r.area && (
-                        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-                          {r.area}
-                        </span>
-                      )}
-                      <h3 className="mt-2 font-display text-2xl sm:text-3xl tracking-[-0.02em] leading-[1.02] text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors">
-                        {r.name}
-                      </h3>
-                      <div className="mt-auto pt-6 flex items-center justify-between">
-                        <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-                          {r.approvedCount} {r.approvedCount === 1 ? "dish" : "dishes"}
-                        </span>
-                        <span
-                          aria-hidden
-                          className="font-mono text-[13px] text-[color:var(--ink-mute)] group-hover:text-[color:var(--accent-deep)] transition-colors"
-                        >
-                          View →
-                        </span>
-                      </div>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          );
-        })}
+        <RestaurantsExplorer restaurants={restaurants} />
       </main>
       <SiteFooter />
     </div>

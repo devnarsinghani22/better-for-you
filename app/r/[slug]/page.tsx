@@ -3,6 +3,8 @@ import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import NewRibbon from "@/components/NewRibbon";
+import DishCard from "@/components/DishCard";
+import TagPills from "@/components/TagPills";
 import { getRestaurantBySlug } from "@/lib/restaurants/queries";
 
 export const revalidate = 3600;
@@ -17,8 +19,39 @@ export async function generateMetadata({
   if (!r) return {};
   return {
     title: `${r.name} — Better for You by Food Pharmer`,
-    description: `Dishes worth ordering at ${r.name}${r.city ? `, ${r.city}` : ""}.`,
+    description:
+      r.tagline ??
+      `Dishes worth ordering at ${r.name}${r.city ? `, ${r.city}` : ""}.`,
   };
+}
+
+// Small CTA button used for delivery / map / menu links.
+function CTA({
+  href,
+  label,
+  variant = "outline",
+}: {
+  href: string;
+  label: string;
+  variant?: "solid" | "outline";
+}) {
+  const base =
+    "inline-flex items-center justify-center gap-2 px-5 py-3 font-mono text-[11px] uppercase tracking-[0.22em] transition-colors whitespace-nowrap";
+  const styles =
+    variant === "solid"
+      ? "bg-[color:var(--ink)] text-[color:var(--bg)] hover:bg-[color:var(--accent-deep)]"
+      : "border rule text-[color:var(--ink)] hover:border-[color:var(--accent-deep)] hover:text-[color:var(--accent-deep)]";
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`${base} ${styles}`}
+    >
+      {label}
+      <span aria-hidden>→</span>
+    </a>
+  );
 }
 
 export default async function RestaurantPage({
@@ -30,81 +63,153 @@ export default async function RestaurantPage({
   const r = await getRestaurantBySlug(slug);
   if (!r) notFound();
 
+  const hasHero = !!r.hero_image_url;
+
   return (
     <>
       <SiteHeader />
-      <main className="w-full max-w-[1100px] mx-auto px-5 sm:px-10 py-10 sm:py-16 relative z-10">
-        <nav className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-          <Link
-            href="/v/restaurants"
-            className="hover:text-[color:var(--accent-deep)] transition-colors"
-          >
-            ← Restaurants
-          </Link>
-        </nav>
-
-        <header className="mt-8 relative">
-          {r.is_new && <NewRibbon />}
-          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-            {[r.city, r.area].filter(Boolean).join(" · ")}
-          </p>
-          <h1 className="mt-2 font-display text-5xl sm:text-6xl lg:text-7xl tracking-[-0.02em] leading-[0.95] text-[color:var(--ink)]">
-            {r.name}
-          </h1>
-          <div className="mt-6 inline-flex items-center gap-3">
-            <span className="bg-[color:var(--ink)] text-[color:var(--bg)] px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em]">
-              Better for You
-            </span>
-          </div>
-          {r.menu_url && (
-            <a
-              href={r.menu_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 ml-0 sm:ml-3 inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-[color:var(--ink)] text-[color:var(--bg)] px-6 py-4 sm:py-3 font-mono text-xs uppercase tracking-[0.22em] hover:bg-[color:var(--accent-deep)] transition-colors"
-            >
-              See the menu →
-            </a>
-          )}
-        </header>
-
-        <section className="mt-12 border-t rule pt-10">
-          <h2 className="font-display text-3xl tracking-tight">
-            Dishes worth ordering
-          </h2>
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mt-1">
-            {r.dishes.length} {r.dishes.length === 1 ? "pick" : "picks"} · our team would order these
-          </p>
-
-          {r.dishes.length > 0 ? (
-            <ul className="mt-6 border-t rule">
-              {r.dishes.map((d) => (
-                <li key={d.id} className="border-b rule py-5 flex items-start gap-4">
-                  <span
-                    aria-hidden
-                    className="mt-1 font-mono text-sm text-[color:var(--accent-deep)]"
+      <main className="relative z-10">
+        {/* Hero band — image-backed if available, else editorial typography. */}
+        <section className="relative w-full">
+          {hasHero ? (
+            <div className="relative h-[42vh] sm:h-[58vh] min-h-[300px] sm:min-h-[420px] w-full overflow-hidden">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={r.hero_image_url!}
+                alt={r.name}
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/70" />
+              <div className="absolute inset-0 flex flex-col justify-end">
+                <div className="w-full max-w-[1100px] mx-auto px-5 sm:px-10 pb-8 sm:pb-12 text-white">
+                  <Link
+                    href="/v/restaurants"
+                    className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/70 hover:text-white transition-colors"
                   >
-                    ✓
-                  </span>
-                  <div>
-                    <div className="font-display text-xl sm:text-2xl tracking-tight text-[color:var(--ink)]">
-                      {d.name}
-                    </div>
-                    {d.blurb && (
-                      <p className="mt-1 text-[color:var(--ink-soft)] leading-relaxed">
-                        {d.blurb}
-                      </p>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </ul>
+                    ← Restaurants
+                  </Link>
+                  <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.22em] text-white/80">
+                    {[r.city, r.area].filter(Boolean).join(" · ")}
+                  </p>
+                  <h1 className="mt-2 font-display text-5xl sm:text-7xl lg:text-8xl tracking-[-0.025em] leading-[0.95]">
+                    {r.name}
+                  </h1>
+                  {r.tagline && (
+                    <p className="mt-4 max-w-2xl text-base sm:text-lg text-white/85 leading-relaxed">
+                      {r.tagline}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
           ) : (
-            <p className="mt-6 text-[color:var(--ink-soft)]">
-              We are still curating the picks for this place.
-            </p>
+            <div className="w-full max-w-[1100px] mx-auto px-5 sm:px-10 pt-10 sm:pt-14">
+              <nav className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+                <Link
+                  href="/v/restaurants"
+                  className="hover:text-[color:var(--accent-deep)] transition-colors"
+                >
+                  ← Restaurants
+                </Link>
+              </nav>
+              <header className="mt-8 relative">
+                {r.is_new && <NewRibbon />}
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+                  {[r.city, r.area].filter(Boolean).join(" · ")}
+                </p>
+                <h1 className="mt-2 font-display text-5xl sm:text-7xl lg:text-8xl tracking-[-0.025em] leading-[0.95] text-[color:var(--ink)]">
+                  {r.name}
+                </h1>
+                {r.tagline && (
+                  <p className="mt-4 max-w-2xl text-base sm:text-lg text-[color:var(--ink-soft)] leading-relaxed">
+                    {r.tagline}
+                  </p>
+                )}
+              </header>
+            </div>
           )}
         </section>
+
+        <div className="w-full max-w-[1100px] mx-auto px-5 sm:px-10 py-10 sm:py-14">
+          {/* Meta strip — cuisine · price · approved seal */}
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-3 border-b rule pb-5 font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+            <span className="bg-[color:var(--ink)] text-[color:var(--bg)] px-3 py-1.5">
+              ✓ Better for You
+            </span>
+            {r.cuisine && <span>{r.cuisine}</span>}
+            {r.price_band && <span>{r.price_band}</span>}
+            {r.tags.length > 0 && <TagPills tags={r.tags} />}
+          </div>
+
+          {/* CTA cluster */}
+          <div className="mt-6 flex flex-wrap gap-3">
+            {r.menu_url && (
+              <CTA href={r.menu_url} label="See the menu" variant="solid" />
+            )}
+            {r.zomato_url && <CTA href={r.zomato_url} label="Order · Zomato" />}
+            {r.swiggy_url && <CTA href={r.swiggy_url} label="Order · Swiggy" />}
+            {r.google_maps_url && (
+              <CTA href={r.google_maps_url} label="Directions" />
+            )}
+            {r.instagram_handle && (
+              <CTA
+                href={`https://instagram.com/${r.instagram_handle.replace(/^@/, "")}`}
+                label="Instagram"
+              />
+            )}
+            {r.phone && <CTA href={`tel:${r.phone}`} label="Call" />}
+          </div>
+
+          {/* Editorial note */}
+          {r.editorial_note && (
+            <section className="mt-12 border-t rule pt-10">
+              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+                Why we like it
+              </p>
+              <div className="mt-4 max-w-3xl text-lg leading-relaxed text-[color:var(--ink)] whitespace-pre-wrap">
+                {r.editorial_note}
+              </div>
+            </section>
+          )}
+
+          {/* Address */}
+          {r.address && (
+            <section className="mt-10 border-t rule pt-6">
+              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+                Where
+              </p>
+              <p className="mt-2 text-base text-[color:var(--ink)] leading-relaxed">
+                {r.address}
+              </p>
+            </section>
+          )}
+
+          {/* Dishes */}
+          <section className="mt-14 sm:mt-20">
+            <div className="flex items-end justify-between border-b rule pb-4">
+              <h2 className="font-display text-3xl sm:text-5xl tracking-[-0.02em] leading-none">
+                Dishes worth ordering
+              </h2>
+              <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+                {r.dishes.length} {r.dishes.length === 1 ? "pick" : "picks"}
+              </span>
+            </div>
+
+            {r.dishes.length > 0 ? (
+              <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+                {r.dishes.map((d) => (
+                  <li key={d.id}>
+                    <DishCard dish={d} />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="mt-6 text-[color:var(--ink-soft)]">
+                We are still curating the picks for this place.
+              </p>
+            )}
+          </section>
+        </div>
       </main>
       <SiteFooter />
     </>
