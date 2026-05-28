@@ -20,6 +20,11 @@ export default function SiteFooter() {
               </Link>
             </li>
             <li>
+              <Link href="/b" className="hover:text-[color:var(--accent-deep)]">
+                Brands
+              </Link>
+            </li>
+            <li>
               <Link href="/criteria" className="hover:text-[color:var(--accent-deep)]">
                 Criteria
               </Link>
