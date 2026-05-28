@@ -46,7 +46,7 @@ export default function SearchBox() {
 
   useEffect(() => {
     const trimmed = q.trim();
-    if (trimmed.length < 2) {
+    if (trimmed.length < 1) {
       setProducts([]);
       setCategories([]);
       setLoading(false);
@@ -96,7 +96,7 @@ export default function SearchBox() {
   }, []);
 
   const trimmed = q.trim();
-  const showDropdown = open && trimmed.length >= 2;
+  const showDropdown = open && trimmed.length >= 1;
   const hasResults = products.length + categories.length > 0;
 
   return (
