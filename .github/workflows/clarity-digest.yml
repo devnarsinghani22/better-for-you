@@ -1,0 +1,65 @@
+name: clarity-digest
+
+# Daily Microsoft Clarity digest. Runs at 03:30 UTC (= 09:00 IST), pulls
+# yesterday's traffic, and posts a markdown report as a new GitHub issue.
+# Repo-owner GitHub notifications surface it as an email.
+#
+# Schedule triggers only run on the default branch (master).
+
+on:
+  schedule:
+    - cron: "30 3 * * *"
+  workflow_dispatch: {}
+  push:
+    branches: [master]
+    paths:
+      - "tools/clarity_digest.py"
+      - ".github/workflows/clarity-digest.yml"
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate digest
+        id: clarity
+        env:
+          CLARITY_API_TOKEN: ${{ secrets.CLARITY_API_TOKEN }}
+        run: |
+          python tools/clarity_digest.py > digest.md
+          echo "--- preview ---"
+          head -40 digest.md
+
+      - name: Upload digest artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: clarity-${{ github.run_number }}
+          path: digest.md
+          retention-days: 30
+
+      - name: Open daily Clarity issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync('digest.md', 'utf8');
+            const today = new Date().toISOString().slice(0, 10);
+            const title = `Clarity digest — ${today}`;
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title,
+              body,
+              labels: ['clarity-digest'],
+            });
