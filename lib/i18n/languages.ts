@@ -14,7 +14,6 @@ export const INGREDIENT_LANGUAGES = [
   { code: "ml", label: "മലയാളം" },
   { code: "pa", label: "ਪੰਜਾਬੀ" },
   { code: "or", label: "ଓଡ଼ିଆ" },
-  { code: "ur", label: "اردو" },
 ] as const;
 
 // The translatable subset (everything except the English source), used by the
