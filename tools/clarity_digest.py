@@ -178,9 +178,81 @@ def main() -> int:
             print(f"- {c}: **{hr(s)}**")
         print()
 
+    # 6) Outbound buy clicks per product (from our own click_events table,
+    # populated by <BuyLink> beacons + the /api/search miss logger).
+    db_section()
+
     print("---")
     print("_5 of ~10 daily Clarity API calls used by this report._")
     return 0
+
+
+def db_section() -> None:
+    """Top buy-clicked products + most common failed searches in the last 24h."""
+    db_pw = os.environ.get("SUPABASE_DB_PASSWORD")
+    if not db_pw:
+        envf = pathlib.Path(__file__).resolve().parents[1] / ".env.local"
+        if envf.exists():
+            for line in envf.read_text().splitlines():
+                if line.startswith("SUPABASE_DB_PASSWORD="):
+                    db_pw = line.split("=", 1)[1].strip().strip('"').strip("'")
+                    break
+    if not db_pw:
+        return
+    try:
+        import psycopg2
+    except ImportError:
+        return
+    try:
+        conn = psycopg2.connect(
+            host="aws-1-ap-south-1.pooler.supabase.com", port=5432,
+            user="postgres.eprwzftfxtkgunnkewyk", password=db_pw,
+            dbname="postgres", connect_timeout=10,
+        )
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT slug, COUNT(*) AS clicks
+            FROM click_events
+            WHERE type = 'outbound'
+              AND created_at >= NOW() - INTERVAL '24 hours'
+              AND slug IS NOT NULL
+            GROUP BY slug
+            ORDER BY clicks DESC
+            LIMIT 12
+        """)
+        outbound = cur.fetchall()
+        if outbound:
+            print("## Top buy-button clicks (last 24h)")
+            print()
+            print("| Product | Clicks |")
+            print("|---|---:|")
+            for slug, n in outbound:
+                print(f"| `{slug}` | {n} |")
+            print()
+        cur.execute("""
+            SELECT LOWER(query) AS q, COUNT(*) AS hits
+            FROM click_events
+            WHERE type = 'search_miss'
+              AND created_at >= NOW() - INTERVAL '24 hours'
+              AND query IS NOT NULL
+            GROUP BY LOWER(query)
+            ORDER BY hits DESC, q
+            LIMIT 15
+        """)
+        misses = cur.fetchall()
+        if misses:
+            print("## Failed searches (0 results)")
+            print()
+            for q, n in misses:
+                print(f"- `{q}` — {n}")
+            print()
+            print("_These are real demand signals — products to source or "
+                  "categories to launch next._")
+            print()
+        cur.close()
+        conn.close()
+    except Exception as e:
+        print(f"<!-- db_section error: {e} -->")
 
 if __name__ == "__main__":
     sys.exit(main())

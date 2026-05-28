@@ -41,8 +41,23 @@ export async function GET(req: Request) {
       .limit(6),
   ]);
 
-  return NextResponse.json({
-    products: productsRes.data ?? [],
-    categories: categoriesRes.data ?? [],
-  });
+  const products = productsRes.data ?? [];
+  const categories = categoriesRes.data ?? [];
+
+  // Log every search with a hit count (misses included). Fire-and-forget —
+  // never block the response. We only log when q.length >= 2 so we ignore
+  // single-character noise.
+  const result_count = products.length + categories.length;
+  void sb
+    .from("click_events")
+    .insert({
+      type: result_count === 0 ? "search_miss" : "search_hit",
+      query: q.slice(0, 200),
+      result_count,
+      user_agent: req.headers.get("user-agent")?.slice(0, 240) ?? null,
+      referer: req.headers.get("referer")?.slice(0, 500) ?? null,
+    })
+    .then(() => {}, () => {});
+
+  return NextResponse.json({ products, categories });
 }
