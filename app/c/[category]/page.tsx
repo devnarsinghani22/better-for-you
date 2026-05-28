@@ -97,9 +97,8 @@ export default async function CategoryPage({
     url: `${SITE_URL}/c/${slug}`,
     numberOfItems: products.length,
     itemListElement: products.slice(0, 30).map((p, i) => {
-      const brandName = Array.isArray(p.brand)
-        ? p.brand[0]?.name
-        : p.brand?.name;
+      const b = Array.isArray(p.brand) ? p.brand[0] : p.brand;
+      const brandName = b?.name as string | undefined;
       return {
         "@type": "ListItem",
         position: i + 1,
