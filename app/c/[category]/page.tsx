@@ -14,6 +14,39 @@ import NewRibbon from "@/components/NewRibbon";
 
 export const revalidate = 3600;
 
+const SITE_URL = "https://foodpharmer.health";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ category: string }>;
+}) {
+  const { category: slug } = await params;
+  const sb = await createClient();
+  const { data: cat } = await sb
+    .from("categories")
+    .select("name, blurb, active")
+    .eq("slug", slug)
+    .single();
+  if (!cat || !cat.active) return {};
+  const title = `${cat.name} — Better for You`;
+  const description =
+    cat.blurb ||
+    `Better-for-you ${cat.name.toLowerCase()} picks shortlisted by Food Pharmer's nutrition team. Label-checked, not sponsored.`;
+  return {
+    title,
+    description,
+    alternates: { canonical: `${SITE_URL}/c/${slug}` },
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      url: `${SITE_URL}/c/${slug}`,
+    },
+    twitter: { card: "summary_large_image", title, description },
+  };
+}
+
 export default async function CategoryPage({
   params,
 }: {
@@ -88,7 +121,6 @@ export default async function CategoryPage({
   // schema.org/ItemList JSON-LD — Google can render image carousels and
   // "Top results" cards from this. Items reference the product detail
   // pages (which carry their own Product schema).
-  const SITE_URL = "https://foodpharmer.health";
   const categoryLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -124,7 +156,7 @@ export default async function CategoryPage({
       dangerouslySetInnerHTML={{ __html: JSON.stringify(categoryLd) }}
     />
     <SiteHeader />
-    <main className="w-full max-w-[1280px] mx-auto px-5 sm:px-10 py-10 sm:py-16 relative z-10">
+    <main id="main" tabIndex={-1} className="outline-none w-full max-w-[1280px] mx-auto px-5 sm:px-10 py-10 sm:py-16 relative z-10">
       <Link
         href="/"
         className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink-mute)] hover:text-[color:var(--accent-deep)] transition-colors"

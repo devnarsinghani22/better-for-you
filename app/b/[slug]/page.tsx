@@ -119,7 +119,7 @@ export default async function BrandPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(listLd) }}
       />
       <SiteHeader />
-      <main className="w-full max-w-[1100px] mx-auto px-5 sm:px-10 py-10 sm:py-16 relative z-10">
+      <main id="main" tabIndex={-1} className="outline-none w-full max-w-[1100px] mx-auto px-5 sm:px-10 py-10 sm:py-16 relative z-10">
         <nav className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
           <Link
             href="/"
