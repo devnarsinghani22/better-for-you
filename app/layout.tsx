@@ -79,7 +79,23 @@ export default function RootLayout({
       lang="en"
       className={`${playfair.variable} ${newsreader.variable} ${mono.variable} ${caveat.variable}`}
     >
+      <head>
+        {/* Preconnect to third-party origins we actually hit at the start of
+            every visit. Clarity loads the analytics tag synchronously after
+            interactive, so warming the TLS handshake at HTML parse saves
+            ~150-250ms on Indian mobile. */}
+        <link rel="preconnect" href="https://www.clarity.ms" crossOrigin="" />
+        <link rel="dns-prefetch" href="https://www.clarity.ms" />
+      </head>
       <body className="min-h-screen flex flex-col">
+        {/* Skip-to-content for screen-reader + keyboard users. Visible only
+            on focus, so it doesn't affect the visual design. */}
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:bg-[color:var(--ink)] focus:text-[color:var(--bg)] focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:uppercase focus:tracking-[0.22em]"
+        >
+          Skip to content
+        </a>
         {children}
         <ServiceWorkerRegister />
         <Script id="ms-clarity" strategy="afterInteractive">

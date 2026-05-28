@@ -6,17 +6,23 @@ const BASE_URL = "https://foodpharmer.health";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const sb = await createClient();
 
-  const [{ data: cats }, { data: prods }] = await Promise.all([
+  const [{ data: cats }, { data: prods }, { data: brandsWithLive }] = await Promise.all([
     sb.from("categories").select("slug, created_at").eq("active", true),
     sb
       .from("products")
-      .select("slug, updated_at, category:categories(slug)")
+      .select("slug, updated_at, brand_id, category:categories(slug)")
       .eq("status", "Live"),
+    sb
+      .from("brands")
+      .select("slug, id, created_at")
+      .eq("is_excluded", false),
   ]);
 
   const staticPages: MetadataRoute.Sitemap = [
     "",
     "/criteria",
+    "/v/restaurants",
+    "/search",
   ].map((path) => ({
     url: `${BASE_URL}${path}`,
     lastModified: new Date(),
@@ -45,5 +51,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
     .filter((x): x is NonNullable<typeof x> => x !== null);
 
-  return [...staticPages, ...catPages, ...prodPages];
+  // Only include brands that have at least one Live product — empty brand
+  // pages 404 anyway, no point indexing them.
+  const liveBrandIds = new Set((prods ?? []).map((p) => p.brand_id).filter(Boolean));
+  const brandPages: MetadataRoute.Sitemap = (brandsWithLive ?? [])
+    .filter((b) => liveBrandIds.has(b.id))
+    .map((b) => ({
+      url: `${BASE_URL}/b/${b.slug}`,
+      lastModified: new Date(b.created_at),
+      changeFrequency: "weekly" as const,
+      priority: 0.5,
+    }));
+
+  return [...staticPages, ...catPages, ...prodPages, ...brandPages];
 }

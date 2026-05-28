@@ -60,3 +60,26 @@ off_*.json
 
 img_audit2/
 off_*.html
+
+# Throwaway tool scripts (one-off migrations, probes, image fixers). Anything
+# in tools/ that starts with an underscore is scratch and shouldn't bloat
+# `git status`. Keep checked-in tools (clarity_digest.py, monitor_usage.py,
+# auto_remediate.py, montage.py, upload_labels.py) un-underscored.
+tools/_*.py
+tools/_*.md
+tools/_*.json
+tools/_hero/
+tools/_labels/
+tools/.venv-rembg/
+
+# Local Playwright / scratch screenshots
+.tmp/
+docs/criteria-staging/_*
+
+# Mobile build artifacts
+mobile/ios/build/
+mobile/android/build/
+
+# Editor cruft
+.vscode/
+.idea/

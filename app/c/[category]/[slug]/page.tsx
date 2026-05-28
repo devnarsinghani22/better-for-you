@@ -50,6 +50,33 @@ export default async function ProductPage({
       })
     : null;
 
+  // schema.org/BreadcrumbList — renders the Home › Category › Product
+  // breadcrumb trail under the title in Google search results.
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Better for You",
+        item: SITE_URL,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: cat.name,
+        item: `${SITE_URL}/c/${category}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: product.name,
+        item: `${SITE_URL}/c/${category}/${slug}`,
+      },
+    ],
+  };
+
   // schema.org/Product JSON-LD — gives Google enough structure to render
   // rich-snippet image cards in search results. Only fields we have are
   // emitted; brand / category / image fall through to nothing if absent.
@@ -98,6 +125,10 @@ export default async function ProductPage({
     <>
     <script
       type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+    />
+    <script
+      type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }}
     />
     <SiteHeader />
@@ -128,9 +159,18 @@ export default async function ProductPage({
         )}
 
         <header className="lg:col-span-7 flex flex-col justify-center">
-          <p className="font-display text-3xl sm:text-4xl lg:text-5xl tracking-[-0.02em] leading-tight text-[color:var(--ink-soft)]">
-            {brand?.name}
-          </p>
+          {brand?.slug ? (
+            <Link
+              href={`/b/${brand.slug}`}
+              className="font-display text-3xl sm:text-4xl lg:text-5xl tracking-[-0.02em] leading-tight text-[color:var(--ink-soft)] hover:text-[color:var(--accent-deep)] transition-colors"
+            >
+              {brand?.name}
+            </Link>
+          ) : (
+            <p className="font-display text-3xl sm:text-4xl lg:text-5xl tracking-[-0.02em] leading-tight text-[color:var(--ink-soft)]">
+              {brand?.name}
+            </p>
+          )}
           <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl tracking-[-0.02em] leading-[0.95] mt-1 sm:mt-2 text-[color:var(--ink)]">
             {product.name}
           </h1>
