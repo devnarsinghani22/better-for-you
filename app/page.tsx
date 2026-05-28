@@ -73,8 +73,23 @@ export default async function HomePage() {
   const variantLabel = (name: string) =>
     name.includes(" · ") ? name.split(" · ").slice(1).join(" · ") : name;
 
+  // Preload the first visible category hero image so the LCP candidate is
+  // already in flight before the JS chunk parses. The homepage's LCP is the
+  // hero typography + the first card image; preloading the image shaves
+  // ~300-500ms on slow Indian mobile (Clarity reports LCP 2.84s).
+  const firstHero = indexEntries[0]?.hero_image_url;
+
   return (
     <div className="relative z-10">
+      {firstHero && (
+        <link
+          rel="preload"
+          as="image"
+          href={firstHero}
+          // @ts-expect-error - non-standard React attr
+          fetchpriority="high"
+        />
+      )}
       <HomeScrollRestore />
       <SiteHeader />
 
@@ -84,7 +99,10 @@ export default async function HomePage() {
           {/* Title + tagline */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-8 items-end">
             <div className="lg:col-span-8 rise rise-1">
-              <h1 className="font-display font-medium leading-[0.9] tracking-[-0.025em] text-[11.5vw] sm:text-[9.5vw] lg:text-[5.6vw] text-[color:var(--ink)]">
+              {/* select-none + cursor-default signals "not interactive" so
+                  visitors stop tapping the giant title (top dead-click zone
+                  on the homepage per Clarity). */}
+              <h1 className="font-display font-medium leading-[0.9] tracking-[-0.025em] text-[11.5vw] sm:text-[9.5vw] lg:text-[5.6vw] text-[color:var(--ink)] cursor-default select-none">
                 Better for You
                 <br />
                 <em className="italic font-light whitespace-nowrap">by Food Pharmer</em>
@@ -130,37 +148,48 @@ export default async function HomePage() {
                 ? compoundTotal(c, variants)
                 : counts.get(c.id) ?? 0;
 
+              // Card image + name block (shared by both compound and non-
+              // compound cards). Rendered as visual content; whether it's
+              // wrapped in a Link or sits inside one is decided below.
+              const cardHeader = (
+                <>
+                  <div className="relative aspect-[16/10] sm:aspect-[16/11] bg-[color:var(--photo-bg)] overflow-hidden">
+                    {c.is_new && <NewRibbon />}
+                    {c.hero_image_url && (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img
+                        src={c.hero_image_url}
+                        alt={c.name}
+                        loading={i === 0 ? "eager" : "lazy"}
+                        decoding="async"
+                        fetchPriority={i === 0 ? "high" : "auto"}
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] sm:group-hover:scale-[1.08]"
+                      />
+                    )}
+                  </div>
+                  <div className="p-5 sm:p-7 pb-0 sm:pb-0">
+                    <h3 className="font-display text-3xl sm:text-4xl tracking-[-0.02em] leading-[0.95] text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors">
+                      {c.name}
+                    </h3>
+                  </div>
+                </>
+              );
+
               return (
                 <li
                   key={c.id}
                   className={`group rise rise-${Math.min(i + 1, 5)} transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:hover:scale-[1.03] sm:hover:shadow-[0_24px_60px_-24px_rgba(0,0,0,0.28)]`}
                 >
-                  <article className="bg-[color:var(--bg-elev)] overflow-hidden h-full flex flex-col">
-                    <Link href={`/c/${c.slug}`} className="block">
-                      <div className="relative aspect-[16/10] sm:aspect-[16/11] bg-[color:var(--photo-bg)] overflow-hidden">
-                        {c.is_new && <NewRibbon />}
-                        {c.hero_image_url && (
-                          /* eslint-disable-next-line @next/next/no-img-element */
-                          <img
-                            src={c.hero_image_url}
-                            alt={c.name}
-                            loading={i === 0 ? "eager" : "lazy"}
-                            decoding="async"
-                            fetchPriority={i === 0 ? "high" : "auto"}
-                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] sm:group-hover:scale-[1.08]"
-                          />
-                        )}
-                      </div>
-                    </Link>
-
-                    <div className="p-5 sm:p-7 flex-1 flex flex-col">
-                      <Link href={`/c/${c.slug}`}>
-                        <h3 className="font-display text-3xl sm:text-4xl tracking-[-0.02em] leading-[0.95] text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors">
-                          {c.name}
-                        </h3>
+                  {/* Non-compound cards: the WHOLE card surface is one link
+                      so tapping anywhere navigates — kills the 47% homepage
+                      dead-click rate Clarity flagged. The CTA chip stays a
+                      styled <span> (HTML forbids nested anchors). */}
+                  {isCompound ? (
+                    <article className="bg-[color:var(--bg-elev)] overflow-hidden h-full flex flex-col">
+                      <Link href={`/c/${c.slug}`} className="block">
+                        {cardHeader}
                       </Link>
-
-                      {isCompound ? (
+                      <div className="px-5 sm:px-7 pb-5 sm:pb-7 flex-1 flex flex-col">
                         <ul className="mt-6 border-t rule">
                           {compound!.hasOwnProducts && (
                             <li className="border-b rule">
@@ -196,21 +225,28 @@ export default async function HomePage() {
                             </li>
                           ))}
                         </ul>
-                      ) : (
-                        <div className="mt-6 pt-5 border-t rule flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-                          <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-[color:var(--ink-mute)] sm:order-first text-center sm:text-left">
-                            {picks} {picks === 1 ? "pick" : "picks"}
-                          </span>
-                          <Link
-                            href={`/c/${c.slug}`}
-                            className="inline-flex items-center justify-center gap-2 bg-[color:var(--ink)] text-[color:var(--bg)] font-mono text-[13px] uppercase tracking-[0.22em] px-4 py-2.5 sm:py-2 w-full sm:w-auto hover:bg-[color:var(--accent-deep)] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[color:var(--ink)] transition-colors"
-                          >
-                            View section <span aria-hidden>→</span>
-                          </Link>
+                      </div>
+                    </article>
+                  ) : (
+                    <Link
+                      href={`/c/${c.slug}`}
+                      className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[color:var(--ink)]"
+                    >
+                      <article className="bg-[color:var(--bg-elev)] overflow-hidden h-full flex flex-col">
+                        {cardHeader}
+                        <div className="px-5 sm:px-7 pb-5 sm:pb-7 flex-1 flex flex-col">
+                          <div className="mt-6 pt-5 border-t rule flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                            <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-[color:var(--ink-mute)] sm:order-first text-center sm:text-left">
+                              {picks} {picks === 1 ? "pick" : "picks"}
+                            </span>
+                            <span className="inline-flex items-center justify-center gap-2 bg-[color:var(--ink)] text-[color:var(--bg)] font-mono text-[13px] uppercase tracking-[0.22em] px-4 py-2.5 sm:py-2 w-full sm:w-auto group-hover:bg-[color:var(--accent-deep)] transition-colors">
+                              View section <span aria-hidden>→</span>
+                            </span>
+                          </div>
                         </div>
-                      )}
-                    </div>
-                  </article>
+                      </article>
+                    </Link>
+                  )}
                 </li>
               );
             })}
