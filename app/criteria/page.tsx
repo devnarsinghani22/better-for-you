@@ -5,10 +5,13 @@ import SiteFooter from "@/components/SiteFooter";
 
 export const revalidate = 300;
 
+const SITE_URL = "https://foodpharmer.health";
+
 export const metadata = {
   title: "Criteria | Better for You by Food Pharmer",
   description:
     "The rules every product must pass to make it onto the list, broken down by category.",
+  alternates: { canonical: `${SITE_URL}/criteria` },
 };
 
 export default async function CriteriaPage() {
@@ -33,10 +36,40 @@ export default async function CriteriaPage() {
     }
   }
 
+  // schema.org/FAQPage — Google occasionally renders FAQ-style result
+  // expansions for pages that publish per-category Q&A like this. Each
+  // category becomes one question, the rule list becomes the answer.
+  const faqLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: (categories ?? [])
+      .map((c) => {
+        const catRules = byCat.get(c.id) ?? [];
+        if (catRules.length === 0) return null;
+        return {
+          "@type": "Question",
+          name: `How do you pick a ${c.name.toLowerCase()}?`,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: catRules.map((r) => `✓ ${r.description}`).join(" • "),
+          },
+        };
+      })
+      .filter((x): x is NonNullable<typeof x> => x !== null),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+      />
       <SiteHeader />
-      <main className="max-w-[1000px] mx-auto px-6 sm:px-10 py-16 relative z-10">
+      <main
+        id="main"
+        tabIndex={-1}
+        className="outline-none max-w-[1000px] mx-auto px-6 sm:px-10 py-16 relative z-10"
+      >
         <Link
           href="/"
           className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink-mute)] hover:text-[color:var(--accent-deep)]"
