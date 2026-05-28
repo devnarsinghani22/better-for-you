@@ -50,18 +50,25 @@ export default async function BrandPage({
   const { data: products } = await sb
     .from("products")
     .select(
-      "id, slug, name, product_photo_url, is_new, certification_method, " +
-        "category:categories(slug, name)"
+      "id, slug, name, product_photo_url, is_new, certification_method, category:categories(slug,name)"
     )
     .eq("brand_id", brand.id)
     .in("status", visibleProductStatuses() as string[])
     .order("name", { ascending: true });
 
-  const live = products ?? [];
+  type Prod = {
+    id: number;
+    slug: string;
+    name: string;
+    product_photo_url: string | null;
+    is_new: boolean;
+    certification_method: string;
+    category: { slug: string; name: string } | { slug: string; name: string }[] | null;
+  };
+  const live = (products ?? []) as unknown as Prod[];
 
   // Group by category so the brand page reads as "X has these biscuits, these
   // peanut butters, …" — much more useful than a flat list.
-  type Prod = (typeof live)[number];
   const byCategory = new Map<string, { catSlug: string; catName: string; items: Prod[] }>();
   for (const p of live) {
     const cat = Array.isArray(p.category) ? p.category[0] : p.category;
