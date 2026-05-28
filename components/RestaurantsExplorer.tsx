@@ -220,69 +220,75 @@ export default function RestaurantsExplorer({
               </div>
 
               <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-                {list.map((r) => (
-                  <li key={r.id} className="group">
-                    <Link
-                      href={`/r/${r.slug}`}
-                      className="relative flex flex-col h-full border rule rounded-sm overflow-hidden bg-[color:var(--bg-elev)] transition-all duration-300 hover:border-[color:var(--accent-deep)] hover:shadow-[0_22px_56px_-26px_rgba(0,0,0,0.32)]"
-                    >
-                      {r.is_new && <NewRibbon />}
-                      {/* Image / typography fallback */}
-                      <div className="relative w-full aspect-[5/3] bg-[color:var(--bg)] border-b rule overflow-hidden">
-                        {(r.card_image_url || r.hero_image_url) ? (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
-                            src={r.card_image_url ?? r.hero_image_url!}
-                            alt={r.name}
-                            loading="lazy"
-                            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                          />
-                        ) : (
-                          <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
-                            <span className="font-display text-3xl sm:text-4xl tracking-[-0.02em] leading-[1] text-[color:var(--ink-soft)]">
-                              {r.name}
-                            </span>
+                {list.map((r) => {
+                  const img = r.card_image_url ?? r.hero_image_url ?? null;
+                  return (
+                    <li key={r.id} className="group">
+                      <Link
+                        href={`/r/${r.slug}`}
+                        className="relative flex flex-col h-full border rule rounded-sm overflow-hidden bg-[color:var(--bg-elev)] transition-all duration-300 hover:border-[color:var(--accent-deep)] hover:shadow-[0_22px_56px_-26px_rgba(0,0,0,0.32)]"
+                      >
+                        {r.is_new && <NewRibbon />}
+                        {img && (
+                          <div className="relative w-full aspect-[5/3] bg-[color:var(--bg)] border-b rule overflow-hidden">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={img}
+                              alt={r.name}
+                              loading="lazy"
+                              className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                            />
+                            {r.cuisine && (
+                              <span className="absolute top-3 left-3 bg-[color:var(--ink)] text-[color:var(--bg)] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.22em]">
+                                {r.cuisine}
+                              </span>
+                            )}
                           </div>
                         )}
-                        {r.cuisine && (
-                          <span className="absolute top-3 left-3 bg-[color:var(--ink)] text-[color:var(--bg)] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.22em]">
-                            {r.cuisine}
-                          </span>
-                        )}
-                      </div>
 
-                      <div className="flex-1 p-5 sm:p-6 flex flex-col">
-                        {r.area && (
-                          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-                            {r.area}
-                          </span>
-                        )}
-                        <h3 className="mt-2 font-display text-2xl sm:text-3xl tracking-[-0.02em] leading-[1.02] text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors">
-                          {r.name}
-                        </h3>
-                        {r.tagline && (
-                          <p className="mt-2 text-sm leading-relaxed text-[color:var(--ink-soft)] line-clamp-2">
-                            {r.tagline}
-                          </p>
-                        )}
-
-                        <div className="mt-auto pt-5 flex items-center justify-between gap-3">
-                          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-                            {r.approvedCount}{" "}
-                            {r.approvedCount === 1 ? "dish" : "dishes"}
-                            {r.price_band ? ` · ${r.price_band}` : ""}
-                          </span>
-                          <span
-                            aria-hidden
-                            className="font-mono text-[13px] text-[color:var(--ink-mute)] group-hover:text-[color:var(--accent-deep)] transition-colors"
+                        <div className={`flex-1 flex flex-col ${img ? "p-5 sm:p-6" : "p-6 sm:p-8"}`}>
+                          {(r.area || (!img && r.cuisine)) && (
+                            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+                              {r.area && <span>{r.area}</span>}
+                              {!img && r.cuisine && (
+                                <>
+                                  {r.area && <span aria-hidden>·</span>}
+                                  <span>{r.cuisine}</span>
+                                </>
+                              )}
+                            </div>
+                          )}
+                          <h3
+                            className={`mt-2 font-display tracking-[-0.02em] leading-[1.02] text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors ${
+                              img ? "text-2xl sm:text-3xl" : "text-3xl sm:text-4xl"
+                            }`}
                           >
-                            View →
-                          </span>
+                            {r.name}
+                          </h3>
+                          {r.tagline && (
+                            <p className="mt-2 text-sm leading-relaxed text-[color:var(--ink-soft)] line-clamp-2">
+                              {r.tagline}
+                            </p>
+                          )}
+
+                          <div className="mt-auto pt-5 flex items-center justify-between gap-3">
+                            <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+                              {r.approvedCount}{" "}
+                              {r.approvedCount === 1 ? "dish" : "dishes"}
+                              {r.price_band ? ` · ${r.price_band}` : ""}
+                            </span>
+                            <span
+                              aria-hidden
+                              className="font-mono text-[13px] text-[color:var(--ink-mute)] group-hover:text-[color:var(--accent-deep)] transition-colors"
+                            >
+                              View →
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                  </li>
-                ))}
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             </section>
           );
