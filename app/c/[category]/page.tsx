@@ -136,23 +136,12 @@ export default async function CategoryPage({
         <h1 className="font-display text-5xl sm:text-7xl tracking-[-0.02em] leading-[0.95]">
           {cat.name}
         </h1>
-        <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-          <span>
-            {products.length} {products.length === 1 ? "pick" : "picks"}
-          </span>
-          {/* Subtle deep-link to the criteria block below — gives
-              SEO-driven first-time visitors a one-click affordance to
-              learn why these products made the list. */}
-          <a
-            href="#criteria"
-            className="hover:text-[color:var(--accent-deep)] underline decoration-[color:var(--ink-mute)] underline-offset-4 transition-colors"
-          >
-            How we picked these →
-          </a>
+        <div className="mt-6 font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+          {products.length} {products.length === 1 ? "pick" : "picks"}
         </div>
       </header>
 
-      <div id="criteria" className="mt-8 sm:mt-10 scroll-mt-20">
+      <div className="mt-8 sm:mt-10">
         <CriteriaBlock
           categoryId={cat.id}
           variant="compact"
