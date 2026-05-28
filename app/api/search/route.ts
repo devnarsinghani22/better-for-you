@@ -8,7 +8,7 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const q = (url.searchParams.get("q") ?? "").trim();
 
-  if (q.length < 2) {
+  if (q.length < 1) {
     return NextResponse.json({ products: [], categories: [] });
   }
 
@@ -45,19 +45,21 @@ export async function GET(req: Request) {
   const categories = categoriesRes.data ?? [];
 
   // Log every search with a hit count (misses included). Fire-and-forget —
-  // never block the response. We only log when q.length >= 2 so we ignore
-  // single-character noise.
+  // never block the response. Skip single-character noise from
+  // suggestion-as-you-type.
   const result_count = products.length + categories.length;
-  void sb
-    .from("click_events")
-    .insert({
-      type: result_count === 0 ? "search_miss" : "search_hit",
-      query: q.slice(0, 200),
-      result_count,
-      user_agent: req.headers.get("user-agent")?.slice(0, 240) ?? null,
-      referer: req.headers.get("referer")?.slice(0, 500) ?? null,
-    })
-    .then(() => {}, () => {});
+  if (q.length >= 2) {
+    void sb
+      .from("click_events")
+      .insert({
+        type: result_count === 0 ? "search_miss" : "search_hit",
+        query: q.slice(0, 200),
+        result_count,
+        user_agent: req.headers.get("user-agent")?.slice(0, 240) ?? null,
+        referer: req.headers.get("referer")?.slice(0, 500) ?? null,
+      })
+      .then(() => {}, () => {});
+  }
 
   return NextResponse.json({ products, categories });
 }
