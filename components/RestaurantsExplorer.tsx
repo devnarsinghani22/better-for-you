@@ -12,6 +12,7 @@ type Filter = {
   city: string | null; // null = all cities
   cuisine: string | null;
   veganOnly: boolean;
+  query: string;
 };
 
 function uniq<T>(xs: T[]): T[] {
@@ -71,6 +72,7 @@ export default function RestaurantsExplorer({
     city: null,
     cuisine: null,
     veganOnly: false,
+    query: "",
   });
 
   const allCities = useMemo(
@@ -86,6 +88,7 @@ export default function RestaurantsExplorer({
   );
 
   const filtered = useMemo(() => {
+    const q = filter.query.trim().toLowerCase();
     return restaurants.filter((r) => {
       if (filter.city && r.city !== filter.city) return false;
       if (filter.cuisine && r.cuisine !== filter.cuisine) return false;
@@ -93,6 +96,13 @@ export default function RestaurantsExplorer({
         const tags = r.tags.map((t) => t.toLowerCase());
         if (!tags.includes("vegan") && !tags.includes("vegan-friendly"))
           return false;
+      }
+      if (q) {
+        const hay = [r.name, r.city, r.area, r.cuisine, r.tagline]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+        if (!hay.includes(q)) return false;
       }
       return true;
     });
@@ -120,6 +130,35 @@ export default function RestaurantsExplorer({
       {/* Filter rail */}
       <div className="mt-8 sm:mt-12 border-t border-b rule py-4 sm:py-5">
         <div className="flex flex-col gap-3">
+          {/* Search */}
+          <div className="flex items-center gap-3 sm:gap-4">
+            <span className="hidden sm:inline shrink-0 font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+              Find
+            </span>
+            <div className="relative flex-1">
+              <input
+                type="search"
+                value={filter.query}
+                onChange={(e) =>
+                  setFilter((f) => ({ ...f, query: e.target.value }))
+                }
+                placeholder="Search by name, area, cuisine…"
+                aria-label="Search restaurants"
+                className="w-full bg-[color:var(--bg)] border rule px-4 py-2.5 font-mono text-[12px] tracking-[0.04em] text-[color:var(--ink)] placeholder:text-[color:var(--ink-mute)] placeholder:normal-case focus:outline-none focus:border-[color:var(--accent-deep)]"
+              />
+              {filter.query && (
+                <button
+                  type="button"
+                  onClick={() => setFilter((f) => ({ ...f, query: "" }))}
+                  aria-label="Clear search"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-[color:var(--ink-mute)] hover:text-[color:var(--accent-deep)]"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
+          </div>
+
           {/* Cities */}
           <div className="flex items-start gap-3 sm:gap-4">
             <span className="hidden sm:inline shrink-0 mt-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
@@ -208,16 +247,20 @@ export default function RestaurantsExplorer({
       ) : (
         visibleCities.map((city) => {
           const list = byCity.get(city)!;
+          // When filtered to a single city, skip the city heading (redundant).
+          const showCityHeading = !filter.city;
           return (
-            <section key={city} className="mt-12 sm:mt-16">
-              <div className="flex items-end justify-between mb-6 sm:mb-8 border-b rule pb-3">
-                <h2 className="font-display text-3xl sm:text-5xl tracking-[-0.02em] leading-none">
-                  {city}
-                </h2>
-                <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.26em] text-[color:var(--ink-mute)]">
-                  {list.length} {list.length === 1 ? "place" : "places"}
-                </span>
-              </div>
+            <section key={city} className={showCityHeading ? "mt-12 sm:mt-16" : "mt-8 sm:mt-12"}>
+              {showCityHeading && (
+                <div className="flex items-end justify-between mb-6 sm:mb-8 border-b rule pb-3">
+                  <h2 className="font-display text-3xl sm:text-5xl tracking-[-0.02em] leading-none">
+                    {city}
+                  </h2>
+                  <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.26em] text-[color:var(--ink-mute)]">
+                    {list.length} {list.length === 1 ? "place" : "places"}
+                  </span>
+                </div>
+              )}
 
               <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
                 {list.map((r) => {

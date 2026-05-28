@@ -1,15 +1,16 @@
 "use client";
 
-export default function WhatsAppShare({
-  productName,
-  brand,
-  url,
-}: {
-  productName: string;
-  brand: string;
-  url: string;
-}) {
-  const text = `${brand} ${productName} — featured on Better for You by Food Pharmer. ${url}`;
+// Universal WhatsApp share button.
+// - Original product use: pass productName + brand + url
+// - Generic use (restaurants, etc.): pass `text` directly
+type Props =
+  | { text: string; url?: never; productName?: never; brand?: never }
+  | { text?: undefined; url: string; productName: string; brand: string };
+
+export default function WhatsAppShare(props: Props) {
+  const text =
+    props.text ??
+    `${props.brand} ${props.productName} — featured on Better for You by Food Pharmer. ${props.url}`;
   const waUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
   return (
     <a

@@ -5,7 +5,13 @@ import SiteFooter from "@/components/SiteFooter";
 import NewRibbon from "@/components/NewRibbon";
 import DishCard from "@/components/DishCard";
 import TagPills from "@/components/TagPills";
+import WhatsAppShare from "@/components/WhatsAppShare";
 import { getRestaurantBySlug } from "@/lib/restaurants/queries";
+
+const SITE_ORIGIN =
+  process.env.VERCEL_ENV === "production"
+    ? "https://foodpharmer.health"
+    : "https://stg.foodpharmer.health";
 
 export const revalidate = 3600;
 
@@ -65,8 +71,60 @@ export default async function RestaurantPage({
 
   const hasHero = !!r.hero_image_url;
 
+  // schema.org/Restaurant JSON-LD for SEO. Only fields we have populated;
+  // address falls back to city when no street address.
+  const ld = {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    name: r.name,
+    url: `${SITE_ORIGIN}/r/${r.slug}`,
+    ...(r.hero_image_url ? { image: r.hero_image_url } : {}),
+    ...(r.cuisine ? { servesCuisine: r.cuisine } : {}),
+    ...(r.price_band ? { priceRange: r.price_band } : {}),
+    ...(r.menu_url ? { menu: r.menu_url } : {}),
+    ...(r.phone ? { telephone: r.phone } : {}),
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: r.city,
+      ...(r.address ? { streetAddress: r.address } : {}),
+      ...(r.area ? { addressRegion: r.area } : {}),
+      addressCountry: "IN",
+    },
+    ...(r.dishes.length > 0
+      ? {
+          hasMenu: {
+            "@type": "Menu",
+            name: "Better-for-you picks",
+            hasMenuSection: {
+              "@type": "MenuSection",
+              name: "Dishes worth ordering",
+              hasMenuItem: r.dishes.map((d) => ({
+                "@type": "MenuItem",
+                name: d.name,
+                ...(d.blurb ? { description: d.blurb } : {}),
+                ...(d.image_url ? { image: d.image_url } : {}),
+                ...(d.price != null
+                  ? {
+                      offers: {
+                        "@type": "Offer",
+                        price: Number(d.price),
+                        priceCurrency: "INR",
+                      },
+                    }
+                  : {}),
+              })),
+            },
+          },
+        }
+      : {}),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }}
+      />
       <SiteHeader />
       <main className="relative z-10">
         {/* Hero band — image-backed if available, else editorial typography. */}
@@ -158,6 +216,9 @@ export default async function RestaurantPage({
               />
             )}
             {r.phone && <CTA href={`tel:${r.phone}`} label="Call" />}
+            <WhatsAppShare
+              text={`${r.name}${r.city ? `, ${r.city}` : ""} — Better for You by Food Pharmer. ${SITE_ORIGIN}/r/${r.slug}`}
+            />
           </div>
 
           {/* Editorial note */}
