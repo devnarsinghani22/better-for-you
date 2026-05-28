@@ -1,0 +1,50 @@
+name: monitor-usage
+
+# Watches Supabase and Vercel quotas. The schedule trigger only runs on the
+# default branch (master). A non-zero exit triggers GitHub's standard
+# "workflow failed" email to the repo owner — that's the alert channel.
+
+on:
+  schedule:
+    # Every 3 hours, on the hour.
+    - cron: "0 */3 * * *"
+  workflow_dispatch: {}
+  push:
+    branches: [master]
+    paths:
+      - "tools/monitor_usage.py"
+      - ".github/workflows/monitor-usage.yml"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run usage check
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF || 'eprwzftfxtkgunnkewyk' }}
+          VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID || 'prj_RZB9OACBBjkLyiOGHBMcThanArXk' }}
+          VERCEL_TEAM_ID: ${{ vars.VERCEL_TEAM_ID || 'team_6e5bDNbX2Kyre4b0wX3hppzy' }}
+        run: |
+          set -o pipefail
+          python tools/monitor_usage.py | tee usage.log
+          status=${PIPESTATUS[0]}
+          echo "exit_status=$status" >> "$GITHUB_OUTPUT"
+          # Re-emit non-zero so the workflow shows as failed (= email alert).
+          exit "$status"
+
+      - name: Upload usage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: usage-${{ github.run_number }}
+          path: usage.log
+          retention-days: 30
