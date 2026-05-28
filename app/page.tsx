@@ -20,7 +20,6 @@ const COMPOUNDS: {
   { slug: "paneer", hasOwnProducts: true },
   { slug: "bread", hasOwnProducts: false },
   { slug: "chips", hasOwnProducts: true },
-  { slug: "oats", hasOwnProducts: true },
   { slug: "popcorn", hasOwnProducts: false },
 ];
 
