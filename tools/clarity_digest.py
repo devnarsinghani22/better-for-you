@@ -58,20 +58,37 @@ def metric_value(payload: list[dict], metric: str, field: str = "value") -> int 
     return None
 
 def metric_rows(payload: list[dict], metric: str, key_field: str, val_field: str = "totalSessionCount") -> list[tuple[str, int]]:
+    # Clarity is inconsistent about key casing — try the documented key, then
+    # the common case-variants. Strip rows where the key is None (those are
+    # aggregated/bot roll-ups that bypass the dimension).
+    candidates = [key_field, key_field.capitalize(), key_field.lower(), key_field.upper()]
     for m in payload or []:
         if m.get("metricName") != metric:
             continue
         rows: list[tuple[str, int]] = []
         for r in m.get("information") or []:
-            k = r.get(key_field) or "(unknown)"
+            k = None
+            for c in candidates:
+                if c in r and r[c] is not None:
+                    k = r[c]
+                    break
+            if k is None:
+                continue
             try:
                 v = int(r.get(val_field, 0))
             except (TypeError, ValueError):
                 v = 0
-            rows.append((k, v))
+            rows.append((str(k), v))
         rows.sort(key=lambda x: -x[1])
         return rows
     return []
+
+
+def short_url(u: str) -> str:
+    u = u.replace("https://foodpharmer.health", "").replace("http://foodpharmer.health", "")
+    if "?" in u:
+        u = u.split("?", 1)[0]  # strip query / utm params
+    return u[:70] or "/"
 
 def hr(n: int) -> str:
     return f"{n:,}"
@@ -104,15 +121,32 @@ def main() -> int:
         print(f"- **Dead clicks:** {int(dead)}")
     print()
 
-    # 2) Top pages
+    # 2) Top pages + per-page click breakdown (Traffic + Dead/Rage/QuickBack
+    # all come back in the same response, so one fetch covers all of it).
     url_data = fetch("numOfDays=1&dimension1=URL")
-    rows = metric_rows(url_data or [], "Traffic", "URL")
-    if rows:
-        print("## Top pages (sessions)")
-        for url, s in rows[:10]:
-            short = url.replace("https://foodpharmer.health", "")[:70]
-            print(f"- `{short}` — **{hr(s)}**")
+    page_rows = metric_rows(url_data or [], "Traffic", "Url")
+    dead_rows = dict(metric_rows(url_data or [], "DeadClickCount", "Url", val_field="subTotal"))
+    rage_rows = dict(metric_rows(url_data or [], "RageClickCount", "Url", val_field="subTotal"))
+    qb_rows = dict(metric_rows(url_data or [], "QuickbackClick", "Url", val_field="subTotal"))
+    if page_rows:
+        print("## Top pages")
         print()
+        print("| Page | Sessions | Dead clicks | Rage clicks | Quick-back |")
+        print("|---|---:|---:|---:|---:|")
+        for url, s in page_rows[:12]:
+            print(f"| `{short_url(url)}` | {hr(s)} | "
+                  f"{hr(dead_rows.get(url, 0))} | "
+                  f"{hr(rage_rows.get(url, 0))} | "
+                  f"{hr(qb_rows.get(url, 0))} |")
+        print()
+        # Highlight the worst per-page dead-click rate on pages with real volume
+        risky = [(u, s, dead_rows.get(u, 0)) for u, s in page_rows[:20] if s >= 100]
+        risky.sort(key=lambda x: -(x[2] / x[1]) if x[1] else 0)
+        if risky and risky[0][2] / max(risky[0][1], 1) > 0.3:
+            u, s, d = risky[0]
+            pct = d / s * 100 if s else 0
+            print(f"_Dead-click hotspot:_ `{short_url(u)}` — {hr(d)} dead clicks / {hr(s)} sessions = {pct:.0f}%")
+            print()
 
     # 3) Sources
     src_data = fetch("numOfDays=1&dimension1=Source")
