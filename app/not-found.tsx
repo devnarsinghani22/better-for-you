@@ -10,7 +10,7 @@ export default function NotFound() {
   return (
     <>
       <SiteHeader />
-      <main className="max-w-[800px] mx-auto px-6 sm:px-10 py-24 relative z-10">
+      <main id="main" tabIndex={-1} className="outline-none max-w-[800px] mx-auto px-6 sm:px-10 py-24 relative z-10">
         <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
           Page 404
         </p>

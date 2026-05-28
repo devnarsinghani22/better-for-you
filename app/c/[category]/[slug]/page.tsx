@@ -15,6 +15,55 @@ const SITE_URL = "https://foodpharmer.health";
 
 export const revalidate = 3600;
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ category: string; slug: string }>;
+}) {
+  const { category, slug } = await params;
+  const product = await getLiveProductBySlug(category, slug);
+  if (!product) return {};
+  const brand = Array.isArray(product.brand) ? product.brand[0] : product.brand;
+  const cat = product.category as { name?: string } | undefined;
+  const brandName = (brand as { name?: string } | undefined)?.name;
+  const title = brandName
+    ? `${brandName} ${product.name}`
+    : product.name;
+  // Compact natural-language description: ingredient first 140 chars (giving
+  // Google something substantive to surface), falling back to a generic
+  // "approved by Food Pharmer" line.
+  const ingredientHint = product.ingredients_raw
+    ? product.ingredients_raw.replace(/\s+/g, " ").slice(0, 140).trim() + "…"
+    : null;
+  const description = ingredientHint
+    ? `${brandName ?? ""} ${product.name} — approved by Food Pharmer's nutrition team. Ingredients: ${ingredientHint}`.trim()
+    : `${brandName ?? ""} ${product.name} is on our Better for You list — label-checked, not sponsored.`.trim();
+  const photoUrl = product.product_photo_url
+    ? (product.product_photo_url.startsWith("http")
+        ? product.product_photo_url
+        : `${SITE_URL}${product.product_photo_url}`)
+    : undefined;
+  return {
+    title,
+    description,
+    alternates: { canonical: `${SITE_URL}/c/${category}/${slug}` },
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      url: `${SITE_URL}/c/${category}/${slug}`,
+      ...(photoUrl ? { images: [{ url: photoUrl, alt: product.name }] } : {}),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      ...(photoUrl ? { images: [photoUrl] } : {}),
+    },
+    other: cat?.name ? { "article:section": cat.name } : undefined,
+  };
+}
+
 export default async function ProductPage({
   params,
 }: {
@@ -132,7 +181,7 @@ export default async function ProductPage({
       dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }}
     />
     <SiteHeader />
-    <main className="w-full max-w-[1100px] mx-auto px-5 sm:px-10 py-10 sm:py-16 relative z-10">
+    <main id="main" tabIndex={-1} className="outline-none w-full max-w-[1100px] mx-auto px-5 sm:px-10 py-10 sm:py-16 relative z-10">
       <nav className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
         <Link href={`/c/${category}`} className="hover:text-[color:var(--accent-deep)] transition-colors">
           ← {cat.name}

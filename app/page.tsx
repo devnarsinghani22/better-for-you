@@ -9,6 +9,12 @@ import HomeScrollRestore from "@/components/HomeScrollRestore";
 
 export const revalidate = 3600;
 
+const SITE_URL = "https://foodpharmer.health";
+
+export const metadata = {
+  alternates: { canonical: SITE_URL },
+};
+
 // Compound categories: a parent card that nests sibling "<parent>-*" slugs as
 // rows. `hasOwnProducts` controls whether a "Regular" row linking to the parent
 // section is shown (paneer has plain paneer; bread is only a wrapper).
@@ -135,6 +141,8 @@ export default async function HomePage() {
       )}
       <HomeScrollRestore />
       <SiteHeader />
+
+      <main id="main" tabIndex={-1} className="outline-none">
 
       {/* HERO */}
       <section>
@@ -296,6 +304,8 @@ export default async function HomePage() {
           </ol>
         </div>
       </section>
+
+      </main>
 
       <SiteFooter />
     </div>
