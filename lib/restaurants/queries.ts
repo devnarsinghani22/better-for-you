@@ -12,18 +12,66 @@ export type RestaurantCard = {
   name: string;
   city: string;
   area: string | null;
+  cuisine: string | null;
+  price_band: string | null;
   hero_image_url: string | null;
+  card_image_url: string | null;
+  tagline: string | null;
+  tags: string[];
   is_new: boolean;
   approvedCount: number;
 };
 
+export type DishRow = {
+  id: number;
+  slug: string;
+  name: string;
+  blurb: string | null;
+  our_take: string | null;
+  image_url: string | null;
+  tags: string[];
+  price: number | null;
+  display_order: number | null;
+};
+
+export type RestaurantDetail = {
+  id: number;
+  slug: string;
+  name: string;
+  city: string;
+  area: string | null;
+  cuisine: string | null;
+  price_band: string | null;
+  address: string | null;
+  google_maps_url: string | null;
+  menu_url: string | null;
+  zomato_url: string | null;
+  swiggy_url: string | null;
+  instagram_handle: string | null;
+  phone: string | null;
+  hero_image_url: string | null;
+  card_image_url: string | null;
+  tagline: string | null;
+  editorial_note: string | null;
+  tags: string[];
+  is_new: boolean;
+  status: string;
+  dishes: DishRow[];
+};
+
+const RESTAURANT_LIST_FIELDS =
+  'id, slug, name, city, area, cuisine, price_band, hero_image_url, card_image_url, tagline, tags, is_new, display_order, status';
+
+const RESTAURANT_DETAIL_FIELDS =
+  'id, slug, name, city, area, cuisine, price_band, address, google_maps_url, menu_url, zomato_url, swiggy_url, instagram_handle, phone, hero_image_url, card_image_url, tagline, editorial_note, tags, is_new, status';
+
 // Visible restaurants that have at least one approved dish, with their approved
-// dish count. Ordered by display_order; grouping by city happens in the page.
+// dish count. Ordered by display_order; grouping/filtering by city happens client-side.
 export async function getVisibleRestaurants(): Promise<RestaurantCard[]> {
   const sb = await createClient();
   const { data: rs } = await sb
     .from('restaurants')
-    .select('id, slug, name, city, area, hero_image_url, is_new, display_order, status')
+    .select(RESTAURANT_LIST_FIELDS)
     .in('status', visibleRestaurantStatuses() as string[])
     .order('display_order', { ascending: true });
   const restaurants = rs ?? [];
@@ -45,18 +93,23 @@ export async function getVisibleRestaurants(): Promise<RestaurantCard[]> {
       name: r.name,
       city: r.city,
       area: r.area,
+      cuisine: r.cuisine ?? null,
+      price_band: r.price_band ?? null,
       hero_image_url: r.hero_image_url,
+      card_image_url: r.card_image_url ?? null,
+      tagline: r.tagline ?? null,
+      tags: (r.tags as string[] | null) ?? [],
       is_new: r.is_new,
       approvedCount: counts.get(r.id) ?? 0,
     }))
     .filter((r) => r.approvedCount > 0);
 }
 
-export async function getRestaurantBySlug(slug: string) {
+export async function getRestaurantBySlug(slug: string): Promise<RestaurantDetail | null> {
   const sb = await createClient();
   const { data: r } = await sb
     .from('restaurants')
-    .select('id, slug, name, city, area, menu_url, hero_image_url, is_new, status')
+    .select(RESTAURANT_DETAIL_FIELDS)
     .eq('slug', slug)
     .in('status', visibleRestaurantStatuses() as string[])
     .single();
@@ -64,10 +117,17 @@ export async function getRestaurantBySlug(slug: string) {
 
   const { data: dishes } = await sb
     .from('dishes')
-    .select('id, name, slug, blurb, display_order')
+    .select('id, name, slug, blurb, our_take, image_url, tags, price, display_order')
     .eq('restaurant_id', r.id)
     .eq('approved', true)
     .order('display_order', { ascending: true });
 
-  return { ...r, dishes: dishes ?? [] };
+  return {
+    ...r,
+    tags: (r.tags as string[] | null) ?? [],
+    dishes: (dishes ?? []).map((d) => ({
+      ...d,
+      tags: (d.tags as string[] | null) ?? [],
+    })),
+  } as RestaurantDetail;
 }
