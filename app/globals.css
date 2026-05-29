@@ -81,13 +81,25 @@ body::before { content: none; }
 /* Hairline rule used liberally */
 .rule { border-color: var(--rule); }
 
-/* Page navigation cross-fade (via React <ViewTransition>). Subtle + quick so
-   it reads as editorial, not flashy. Honoured by the in-app WebView and modern
-   browsers; ignored where unsupported. */
-::view-transition-old(*),
+/* Page navigation cross-fade (via React <ViewTransition>).
+   Pure opacity, fast, and crucially NO container morph — the default view
+   transition animates the page box from the old size to the new size, which
+   looks slow and jittery when pages differ in height. Disabling the group
+   animation keeps it a clean, snappy fade. */
+::view-transition-group(*) {
+  animation: none;
+}
+::view-transition-old(*) {
+  animation: vt-page-out 90ms ease-in both;
+}
 ::view-transition-new(*) {
-  animation-duration: 220ms;
-  animation-timing-function: ease;
+  animation: vt-page-in 130ms ease-out both;
+}
+@keyframes vt-page-out {
+  to { opacity: 0; }
+}
+@keyframes vt-page-in {
+  from { opacity: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(*),
