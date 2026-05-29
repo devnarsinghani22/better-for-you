@@ -13,6 +13,25 @@ notifications** (do Part A first, confirm it runs, then Part B).
 
 ---
 
+## IMPORTANT: pull the latest before building
+
+If you cloned earlier, run `git pull` first. Recent fixes that the iOS build
+must include:
+- **Back button / `@capacitor/app` plugin** — already in `package.json`, so
+  `npm install` + `npx cap sync ios` pick it up automatically. (On iOS there's
+  no hardware back button; the handler is a harmless no-op. iOS uses the
+  WebView's swipe-back gesture.)
+- **Native-feel polish + page cross-fade transitions** — these are *web-side*
+  (already live on foodpharmer.health). Because the app loads the live site,
+  the iOS app gets them automatically on launch. No iOS code needed. The
+  `html.capacitor-native` class is set via `@capacitor/core` (present in every
+  build), so the tap-feedback/no-callout polish applies in the WKWebView too.
+- **Push** — still Part B below (needs the Firebase Messaging step).
+
+Net: just pull latest, `npm install`, `npx cap sync ios`, and everything except
+push works automatically. Don't add anything special for back button or
+animations on iOS.
+
 ## Prerequisites on the Mac
 - **Xcode** (latest from the App Store)
 - **CocoaPods**: `sudo gem install cocoapods` (or `brew install cocoapods`)
