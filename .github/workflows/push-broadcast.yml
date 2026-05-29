@@ -1,0 +1,48 @@
+name: push-broadcast
+
+# Manual push notification to all app users. Trigger from the Actions tab
+# (Run workflow) — type a title, body, and optional link. Dormant until the
+# GOOGLE_SERVICE_ACCOUNT_JSON secret is set.
+
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        description: "Notification title"
+        required: true
+      body:
+        description: "Notification body"
+        required: true
+      url:
+        description: "Link to open on tap (optional)"
+        required: false
+        default: "https://foodpharmer.health"
+      dry_run:
+        description: "Preview only (no send)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  broadcast:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install deps
+        run: pip install requests psycopg2-binary google-auth
+      - name: Send broadcast
+        env:
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          python tools/push_send.py \
+            --title "${{ github.event.inputs.title }}" \
+            --body "${{ github.event.inputs.body }}" \
+            --url "${{ github.event.inputs.url }}" \
+            ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
