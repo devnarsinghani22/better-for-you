@@ -1,0 +1,39 @@
+name: push-digest
+
+# Weekly push digest of new approved products. Runs Sunday 03:30 UTC
+# (= 09:00 IST). Sends nothing on weeks with no new Live products (the
+# script self-skips). Dormant until GOOGLE_SERVICE_ACCOUNT_JSON is set.
+#
+# Schedule triggers only run on the default branch (master).
+
+on:
+  schedule:
+    - cron: "30 3 * * 0"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Preview only (no send)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install deps
+        run: pip install requests psycopg2-binary google-auth
+      - name: Send weekly digest
+        env:
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          python tools/push_send.py --digest \
+            ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
