@@ -6,7 +6,12 @@ version is already live in testing; this is the iOS twin of the same app.
 **What the app is:** a Capacitor app that loads the live website
 `https://foodpharmer.health` in a fullscreen native WebView. There are no
 bundled web pages, so content updates with the website. Bundle ID:
-`health.foodpharmer.app`. Display name: **Better for You by Food Pharmer**.
+`app.foodpharmer.health` for iOS. Display name: **Better for You by Food Pharmer**.
+
+> NOTE: the iOS bundle ID is **`app.foodpharmer.health`**, which intentionally
+> DIFFERS from Android's `health.foodpharmer.app` (the original wasn't available
+> on Apple). That's fine — the stores are independent. Leave `capacitor.config.ts`
+> appId as `health.foodpharmer.app`; set the iOS bundle only in Xcode.
 
 Work top to bottom. **Part A gets the app onto TestFlight. Part B adds push
 notifications** (do Part A first, confirm it runs, then Part B).
@@ -47,7 +52,7 @@ be done from any machine, including Windows, before touching the Mac.
 ## Part 1 — Firebase iOS app (5 min, any machine)
 Push uses the same Firebase project as Android (`better-for-you-14669`).
 1. Firebase console -> project **better-for-you-14669** -> Add app -> **iOS**.
-2. Apple bundle ID: `health.foodpharmer.app` (exact). Nickname: "Better for You (iOS)".
+2. Apple bundle ID: `app.foodpharmer.health` (exact). Nickname: "Better for You (iOS)".
 3. Download **`GoogleService-Info.plist`**. Keep it for step A4.
 4. Skip the SDK/CocoaPods instructions Firebase shows — handled below.
 
@@ -94,7 +99,7 @@ repo) to fill `ios/App/App/Assets.xcassets`.
 ### A5. Signing
 - Select the **App** target -> **Signing & Capabilities**.
 - **Team**: select the Apple Developer team.
-- **Bundle Identifier**: `health.foodpharmer.app`.
+- **Bundle Identifier**: `app.foodpharmer.health` (iOS bundle — differs from Android on purpose).
 - **Automatically manage signing**: ON. Let it create the provisioning profile.
 
 ### A6. Version
@@ -109,7 +114,7 @@ repo) to fill `ios/App/App/Assets.xcassets`.
 ### A8. App Store Connect
 - appstoreconnect.apple.com -> **My Apps -> + -> New App**.
   - Platform iOS, Name **Better for You by Food Pharmer**, bundle
-    `health.foodpharmer.app`, primary language English (India), SKU
+    `app.foodpharmer.health`, primary language English (India), SKU
     `betterforyou-ios`.
 - The uploaded build appears under **TestFlight** after ~5-15 min of processing.
 - TestFlight -> add yourself / team as internal testers -> install the
