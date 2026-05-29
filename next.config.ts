@@ -15,6 +15,12 @@ const SEARCH_CC = "public, s-maxage=30, stale-while-revalidate=60";
 const SUPABASE_STORAGE_HOST = "eprwzftfxtkgunnkewyk.supabase.co";
 
 const nextConfig: NextConfig = {
+  // Enables React's <ViewTransition> so route changes cross-fade instead of
+  // hard-cutting (removes the white flash — the biggest "this is a web page"
+  // tell inside the app). Degrades gracefully where unsupported.
+  experimental: {
+    viewTransition: true,
+  },
   async headers() {
     return [
       { source: "/", headers: [{ key: "Cache-Control", value: PAGE_CC }] },

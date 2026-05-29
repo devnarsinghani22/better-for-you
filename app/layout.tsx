@@ -1,3 +1,4 @@
+import { ViewTransition } from "react";
 import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Newsreader, JetBrains_Mono, Caveat } from "next/font/google";
 import Script from "next/script";
@@ -99,7 +100,7 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        {children}
+        <ViewTransition>{children}</ViewTransition>
         <ServiceWorkerRegister />
         <PushRegistration />
         <BackButton />

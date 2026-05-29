@@ -81,6 +81,23 @@ body::before { content: none; }
 /* Hairline rule used liberally */
 .rule { border-color: var(--rule); }
 
+/* Page navigation cross-fade (via React <ViewTransition>). Subtle + quick so
+   it reads as editorial, not flashy. Honoured by the in-app WebView and modern
+   browsers; ignored where unsupported. */
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: 220ms;
+  animation-timing-function: ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
 /* ---- Native app polish (only inside the Capacitor WebView) ----
    Scoped to html.capacitor-native (added by NativeAppShell when running in the
    app), so the public website is completely unaffected. Strips the browser
