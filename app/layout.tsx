@@ -71,6 +71,9 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: "#000000",
+  // Let the WebView extend under the notch/status bar so we can pad with
+  // env(safe-area-inset-*) — without this the insets read as 0 in the app.
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
