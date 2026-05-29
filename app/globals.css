@@ -81,6 +81,19 @@ body::before { content: none; }
 /* Hairline rule used liberally */
 .rule { border-color: var(--rule); }
 
+/* iOS/Android safe areas — keep content clear of the status bar and home
+   indicator in the standalone app (and installed PWA). env() insets are 0 in
+   normal browser tabs, so the public website is unaffected. Pairs with
+   viewport-fit=cover set in the layout's viewport export.
+   The sticky site header gets top padding so its blurred bar fills the
+   status-bar strip and the search box sits below it. */
+header.sticky {
+  padding-top: env(safe-area-inset-top);
+}
+body {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
 /* Page navigation cross-fade (via React <ViewTransition>).
    Pure opacity, fast, and crucially NO container morph — the default view
    transition animates the page box from the old size to the new size, which
