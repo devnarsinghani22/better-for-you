@@ -12,6 +12,7 @@
     "db:types": "supabase gen types typescript --linked > lib/supabase/types.ts"
   },
   "dependencies": {
+    "@capacitor/app": "^8.1.0",
     "@capacitor/core": "^8.3.4",
     "@capacitor/push-notifications": "^8.1.1",
     "@microsoft/clarity": "^1.0.2",
