@@ -3,6 +3,7 @@ import { Playfair_Display, Newsreader, JetBrains_Mono, Caveat } from "next/font/
 import Script from "next/script";
 import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 import PushRegistration from "@/components/PushRegistration";
+import BackButton from "@/components/BackButton";
 import "./globals.css";
 
 const CLARITY_PROJECT_ID = "wv3da4qpra";
@@ -100,6 +101,7 @@ export default function RootLayout({
         {children}
         <ServiceWorkerRegister />
         <PushRegistration />
+        <BackButton />
         <Script id="ms-clarity" strategy="afterInteractive">
           {`(function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
