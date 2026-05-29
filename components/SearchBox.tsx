@@ -205,7 +205,7 @@ export default function SearchBox() {
           }
           placeholder={`Try '${PLACEHOLDER_CYCLE[placeholderIdx]}'…`}
           autoComplete="off"
-          className="w-full bg-[color:var(--bg-elev)] border border-[color:var(--ink-mute)] focus:border-[color:var(--ink)] rounded-sm pl-9 pr-3 py-2 text-[12px] sm:text-xs uppercase tracking-[0.16em] text-[color:var(--ink)] placeholder:text-[color:var(--ink-mute)] outline-none transition-colors min-h-[40px]"
+          className="w-full bg-[color:var(--bg-elev)] border border-[color:var(--ink-mute)] focus:border-[color:var(--ink)] rounded-sm pl-9 pr-3 py-2 text-[16px] sm:text-xs uppercase tracking-[0.16em] text-[color:var(--ink)] placeholder:text-[color:var(--ink-mute)] outline-none transition-colors min-h-[40px]"
         />
       </form>
 
