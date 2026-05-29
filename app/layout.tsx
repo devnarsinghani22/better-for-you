@@ -4,6 +4,7 @@ import Script from "next/script";
 import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 import PushRegistration from "@/components/PushRegistration";
 import BackButton from "@/components/BackButton";
+import NativeAppShell from "@/components/NativeAppShell";
 import "./globals.css";
 
 const CLARITY_PROJECT_ID = "wv3da4qpra";
@@ -102,6 +103,7 @@ export default function RootLayout({
         <ServiceWorkerRegister />
         <PushRegistration />
         <BackButton />
+        <NativeAppShell />
         <Script id="ms-clarity" strategy="afterInteractive">
           {`(function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
