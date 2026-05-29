@@ -80,3 +80,49 @@ body::before { content: none; }
 
 /* Hairline rule used liberally */
 .rule { border-color: var(--rule); }
+
+/* ---- Native app polish (only inside the Capacitor WebView) ----
+   Scoped to html.capacitor-native (added by NativeAppShell when running in the
+   app), so the public website is completely unaffected. Strips the browser
+   "tells" — tap-highlight rectangle, long-press callout/selection, overscroll
+   glow — and adds instant press feedback so taps feel physical, not web-like. */
+html.capacitor-native {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  overscroll-behavior: none;
+}
+html.capacitor-native,
+html.capacitor-native * {
+  -webkit-user-select: none;
+  user-select: none;
+}
+/* keep text entry usable */
+html.capacitor-native input,
+html.capacitor-native textarea {
+  -webkit-user-select: text;
+  user-select: text;
+}
+/* instant, physical press feedback on tappable things */
+html.capacitor-native a,
+html.capacitor-native button,
+html.capacitor-native [role="button"],
+html.capacitor-native [role="option"] {
+  transition: opacity 0.12s ease, transform 0.12s ease;
+}
+html.capacitor-native a:active,
+html.capacitor-native button:active,
+html.capacitor-native [role="button"]:active,
+html.capacitor-native [role="option"]:active {
+  opacity: 0.6;
+}
+/* product / category cards get a subtle scale-press */
+html.capacitor-native article:active {
+  transform: scale(0.985);
+}
+@media (prefers-reduced-motion: reduce) {
+  html.capacitor-native a,
+  html.capacitor-native button,
+  html.capacitor-native [role="button"],
+  html.capacitor-native [role="option"],
+  html.capacitor-native article { transition: none; }
+}
