@@ -18,6 +18,20 @@ const config: CapacitorConfig = {
   ios: {
     backgroundColor: "#ffffff",
   },
+  plugins: {
+    // Hold the brand splash for a beat so users see the logo, not a blank
+    // WebView, while the live site loads over the network. Auto-hides after
+    // the window below (a safety cap that also covers a slow/failed load).
+    SplashScreen: {
+      launchShowDuration: 2000,
+      launchAutoHide: true,
+      backgroundColor: "#ffffff",
+      androidScaleType: "CENTER_INSIDE",
+      showSpinner: false,
+      splashFullScreen: false,
+      splashImmersive: false,
+    },
+  },
 };
 
 export default config;
