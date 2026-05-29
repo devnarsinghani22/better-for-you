@@ -10,6 +10,9 @@ export const metadata = {
 
 const CONTACT_EMAIL = "betterforyou@foodpharmer.net";
 const UPDATED = "May 2026";
+// NOTE: the "Our mobile app & notifications" section below is required for the
+// Google Play / App Store data-safety disclosures. Keep it in sync with what
+// the app actually does (FCM/APNs push token + notification preference).
 
 export default function PrivacyPage() {
   return (
@@ -56,6 +59,22 @@ export default function PrivacyPage() {
               <strong>WhatsApp and email</strong>. That&rsquo;s it. We process
               this information on the basis of your consent, which you give by
               ticking the box and submitting the form.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-2xl tracking-tight text-[color:var(--ink)]">
+              Our mobile app &amp; notifications
+            </h2>
+            <p className="mt-3">
+              If you use the <em>Better for You</em> mobile app and allow
+              notifications, your device is issued a{" "}
+              <strong>push notification token</strong> by Google (Android) or
+              Apple (iOS). We store this token only so we can send you the
+              occasional update — for example, when we add a new approved
+              product. It is not linked to your name and is not used to track
+              you. You can turn notifications off at any time in your phone&rsquo;s
+              settings, and we delete tokens that are no longer valid.
             </p>
           </section>
 
