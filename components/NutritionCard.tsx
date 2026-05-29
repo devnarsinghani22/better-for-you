@@ -1,4 +1,11 @@
 type NutritionData = {
+  // Hard gate: this component renders an HTML nutrition TABLE, which we never
+  // ship — the source of truth is always the brand's printed label IMAGE
+  // (products.label_image_url). The product page only mounts this when
+  // nutrition.live === true. This `live` flag is the in-component backstop:
+  // if it isn't explicitly true, the component refuses to render. Do not
+  // remove without removing the table itself.
+  live?: boolean;
   serving?: string;
   per?: "100g" | "100ml" | "serving";
   rows?: Array<{
@@ -19,6 +26,11 @@ type NutritionData = {
 };
 
 export default function NutritionCard({ data, brand }: { data: NutritionData; brand?: string }) {
+  // Backstop the "never render a nutrition table" rule at the component level,
+  // not just at the call site. If a caller forgets the live gate, render
+  // nothing rather than a fabricated-looking table.
+  if (data?.live !== true) return null;
+
   const rows = data.rows ?? [];
   const perLabel =
     data.per === "100g"
