@@ -25,6 +25,17 @@ export default function PushRegistration() {
         );
         const platform = Capacitor.getPlatform(); // "android" | "ios"
 
+        // TEMP DEBUG (iOS push): trace how far the registration flow gets — each
+        // marker lands in push_debug so we can see exactly where it stops.
+        const dbg = (stage: string, extra: Record<string, unknown> = {}) =>
+          void fetch("/api/push/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ stage, platform, ...extra }),
+            keepalive: true,
+          }).catch(() => {});
+        dbg("mount");
+
         // Token arrives here once registration succeeds.
         const regHandle = await PushNotifications.addListener(
           "registration",
@@ -83,11 +94,20 @@ export default function PushRegistration() {
         if (receive === "prompt" || receive === "prompt-with-rationale") {
           receive = (await PushNotifications.requestPermissions()).receive;
         }
+        dbg("perm", { receive });
         if (receive === "granted") {
+          dbg("register-called");
           await PushNotifications.register();
+          dbg("register-returned");
         }
-      } catch {
-        // Never let push setup break the app shell.
+      } catch (e) {
+        // TEMP DEBUG (iOS push): surface any thrown error in the flow.
+        void fetch("/api/push/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ stage: "exception", error: String(e) }),
+          keepalive: true,
+        }).catch(() => {});
       }
     })();
 
