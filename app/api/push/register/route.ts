@@ -7,15 +7,26 @@ export const dynamic = "force-dynamic";
 // push_tokens has RLS on with no anon policies, so tokens are never readable
 // by the client. Upsert on token so re-registration just refreshes last_seen.
 export async function POST(req: Request) {
+  // TEMP DEBUG (iOS push): log the exact payload the native app sends, so we
+  // can see whether iOS posts a token at all and what shape it is.
+  const raw = await req.text();
+  console.log("[push/register] raw body:", raw);
+
   let body: { token?: string; platform?: string; appVersion?: string };
   try {
-    body = await req.json();
+    body = JSON.parse(raw);
   } catch {
     return NextResponse.json({ ok: false, error: "bad json" }, { status: 400 });
   }
 
   const token = (body.token ?? "").trim();
+  console.log(
+    "[push/register] platform=", body.platform,
+    "tokenLen=", token.length,
+    "tokenStart=", token.slice(0, 30),
+  );
   if (token.length < 20 || token.length > 4096) {
+    console.log("[push/register] REJECTED: bad token length", token.length);
     return NextResponse.json({ ok: false, error: "bad token" }, { status: 400 });
   }
   const platform =
@@ -41,7 +52,9 @@ export async function POST(req: Request) {
   );
 
   if (error) {
+    console.log("[push/register] insert error:", error.message);
     return NextResponse.json({ ok: false }, { status: 500 });
   }
+  console.log("[push/register] STORED platform=", platform, "tokenLen=", token.length);
   return NextResponse.json({ ok: true });
 }

@@ -40,7 +40,21 @@ export default function PushRegistration() {
 
         const errHandle = await PushNotifications.addListener(
           "registrationError",
-          () => {},
+          (err: unknown) => {
+            // TEMP DEBUG (iOS push): registration errors were swallowed here.
+            // Report them so they surface in the /api/push/register logs.
+            void fetch("/api/push/register", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                registrationError: String(
+                  (err as { error?: unknown })?.error ?? JSON.stringify(err),
+                ),
+                platform,
+              }),
+              keepalive: true,
+            }).catch(() => {});
+          },
         );
 
         // Deep-link when the user taps a notification carrying a url payload.
