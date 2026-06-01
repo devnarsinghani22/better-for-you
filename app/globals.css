@@ -148,8 +148,11 @@ html.capacitor-native textarea {
 html.capacitor-native a,
 html.capacitor-native button,
 html.capacitor-native [role="button"],
-html.capacitor-native [role="option"] {
-  transition: opacity 0.12s ease, transform 0.12s ease;
+html.capacitor-native [role="option"],
+html.capacitor-native article {
+  /* !important so a card's own `transition-all duration-500` (used for desktop
+     hover) can't slow the in-app press feedback to a laggy 500ms fade. */
+  transition: opacity 0.1s ease, transform 0.1s ease !important;
 }
 html.capacitor-native a:active,
 html.capacitor-native button:active,
