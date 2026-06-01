@@ -8,7 +8,6 @@ import BackButton from "@/components/BackButton";
 import NativeAppShell from "@/components/NativeAppShell";
 import HapticTaps from "@/components/HapticTaps";
 import StatusBarTheme from "@/components/StatusBarTheme";
-import SwipeBack from "@/components/SwipeBack";
 import "./globals.css";
 
 const CLARITY_PROJECT_ID = "wv3da4qpra";
@@ -113,7 +112,6 @@ export default function RootLayout({
         <NativeAppShell />
         <StatusBarTheme />
         <HapticTaps />
-        <SwipeBack />
         <Script id="ms-clarity" strategy="afterInteractive">
           {`(function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
