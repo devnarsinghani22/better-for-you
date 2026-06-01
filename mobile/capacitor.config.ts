@@ -31,6 +31,12 @@ const config: CapacitorConfig = {
       splashFullScreen: false,
       splashImmersive: false,
     },
+    // Native keyboard handling: focusing the search box resizes the view
+    // smoothly instead of the webby overlay covering content.
+    Keyboard: {
+      resize: "native",
+      resizeOnFullScreen: true,
+    },
   },
 };
 
