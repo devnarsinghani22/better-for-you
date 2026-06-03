@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { visibleProductStatuses } from "@/lib/products/visibility";
+import { expandQuery } from "@/lib/search/synonyms";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -18,6 +19,25 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
 
   const sb = await createClient();
 
+  // Map colloquial/regional terms (e.g. "curd" → yogurt) onto active categories
+  // and extra product-name terms before querying. See lib/search/synonyms.
+  const { terms: synTerms, slugs: synSlugs } = showResults
+    ? expandQuery(query)
+    : { terms: [], slugs: [] };
+
+  // Product OR-filter: the original query plus any synonym terms, each matched
+  // against name + ingredients.
+  const productOr = [query, ...synTerms]
+    .map((t) => `name.ilike.%${t}%,ingredients_raw.ilike.%${t}%`)
+    .join(",");
+
+  // Category OR-filter: name match plus a direct slug match for synonyms, so
+  // "curd" surfaces the Yogurt category even though its name has no "curd".
+  const categoryOr = [
+    `name.ilike.%${query}%`,
+    ...(synSlugs.length ? [`slug.in.(${synSlugs.join(",")})`] : []),
+  ].join(",");
+
   const [productsRes, categoriesRes] = showResults
     ? await Promise.all([
         sb
@@ -26,13 +46,13 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
             "id, slug, name, certification_method, product_photo_url, brand:brands(slug,name), category:categories(slug,name)"
           )
           .in("status", visibleProductStatuses() as string[])
-          .or(`name.ilike.%${query}%,ingredients_raw.ilike.%${query}%`)
+          .or(productOr)
           .limit(40),
         sb
           .from("categories")
           .select("slug, name, blurb")
           .eq("active", true)
-          .ilike("name", `%${query}%`),
+          .or(categoryOr),
       ])
     : [{ data: [] }, { data: [] }];
 
