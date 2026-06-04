@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import VegRibbon, { isPureVeg } from "@/components/VegRibbon";
+import VegRibbon from "@/components/VegRibbon";
 import DishCard from "@/components/DishCard";
 import TagPills from "@/components/TagPills";
 import WhatsAppShare from "@/components/WhatsAppShare";
@@ -172,7 +172,7 @@ export default async function RestaurantPage({
                 </Link>
               </nav>
               <header className="mt-8 relative">
-                {isPureVeg(r.tags) && <VegRibbon />}
+                {r.is_pure_veg && <VegRibbon />}
                 <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
                   {[r.city, r.area].filter(Boolean).join(" · ")}
                 </p>

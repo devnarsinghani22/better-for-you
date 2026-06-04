@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import VegRibbon, { isPureVeg } from "@/components/VegRibbon";
+import VegRibbon from "@/components/VegRibbon";
 import type { RestaurantCard } from "@/lib/restaurants/queries";
 
 // Metros first, then anything else alphabetically.
@@ -237,7 +237,7 @@ export default function RestaurantsExplorer({
                         href={`/r/${r.slug}`}
                         className="relative flex flex-col h-full border rule rounded-sm overflow-hidden bg-[color:var(--bg-elev)] transition-all duration-300 hover:border-[color:var(--accent-deep)] hover:shadow-[0_22px_56px_-26px_rgba(0,0,0,0.32)]"
                       >
-                        {isPureVeg(r.tags) && <VegRibbon />}
+                        {r.is_pure_veg && <VegRibbon />}
                         {img && (
                           <div className="relative w-full aspect-[5/3] bg-[color:var(--bg)] border-b rule overflow-hidden">
                             {/* eslint-disable-next-line @next/next/no-img-element */}

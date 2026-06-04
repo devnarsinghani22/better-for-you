@@ -1,12 +1,8 @@
 // Green corner "Pure Veg" ribbon for fully vegetarian restaurants.
+// Driven by restaurants.is_pure_veg, which mirrors the "Vegetarian" tab of
+// the team's Restaurant Shortlist sheet (the source of truth for this badge).
 // Same geometry as NewRibbon; parent must be `relative overflow-hidden`.
 // Green matches the veg-dot convention in TagPills (#16803c).
-
-const PURE_VEG_TAGS = ["vegetarian", "veg", "pure-veg", "vegan", "plant-based"];
-
-export function isPureVeg(tags: string[]): boolean {
-  return tags.some((t) => PURE_VEG_TAGS.includes(t.toLowerCase().trim()));
-}
 
 export default function VegRibbon() {
   return (

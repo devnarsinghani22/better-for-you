@@ -19,6 +19,7 @@ export type RestaurantCard = {
   tagline: string | null;
   tags: string[];
   is_new: boolean;
+  is_pure_veg: boolean;
   google_rating: number | null;
   approvedCount: number;
 };
@@ -56,16 +57,17 @@ export type RestaurantDetail = {
   editorial_note: string | null;
   tags: string[];
   is_new: boolean;
+  is_pure_veg: boolean;
   google_rating: number | null;
   status: string;
   dishes: DishRow[];
 };
 
 const RESTAURANT_LIST_FIELDS =
-  'id, slug, name, city, area, cuisine, price_band, hero_image_url, card_image_url, tagline, tags, is_new, google_rating, display_order, status';
+  'id, slug, name, city, area, cuisine, price_band, hero_image_url, card_image_url, tagline, tags, is_new, is_pure_veg, google_rating, display_order, status';
 
 const RESTAURANT_DETAIL_FIELDS =
-  'id, slug, name, city, area, cuisine, price_band, address, google_maps_url, menu_url, zomato_url, swiggy_url, instagram_handle, phone, hero_image_url, card_image_url, tagline, editorial_note, tags, is_new, google_rating, status';
+  'id, slug, name, city, area, cuisine, price_band, address, google_maps_url, menu_url, zomato_url, swiggy_url, instagram_handle, phone, hero_image_url, card_image_url, tagline, editorial_note, tags, is_new, is_pure_veg, google_rating, status';
 
 // Visible restaurants that have at least one approved dish, with their approved
 // dish count. Ordered by display_order; grouping/filtering by city happens client-side.
@@ -102,6 +104,7 @@ export async function getVisibleRestaurants(): Promise<RestaurantCard[]> {
       tagline: r.tagline ?? null,
       tags: (r.tags as string[] | null) ?? [],
       is_new: r.is_new,
+      is_pure_veg: r.is_pure_veg,
       // PostgREST returns numeric columns as strings — coerce.
       google_rating: r.google_rating == null ? null : Number(r.google_rating),
       approvedCount: counts.get(r.id) ?? 0,
