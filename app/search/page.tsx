@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { visibleProductStatuses } from "@/lib/products/visibility";
+import { visibleRestaurantStatuses } from "@/lib/restaurants/queries";
 import { expandQuery } from "@/lib/search/synonyms";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -38,7 +39,7 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
     ...(synSlugs.length ? [`slug.in.(${synSlugs.join(",")})`] : []),
   ].join(",");
 
-  const [productsRes, categoriesRes] = showResults
+  const [productsRes, categoriesRes, restaurantsRes] = showResults
     ? await Promise.all([
         sb
           .from("products")
@@ -53,8 +54,17 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
           .select("slug, name, blurb")
           .eq("active", true)
           .or(categoryOr),
+        // Restaurants vertical — empty on prod until rows go Live.
+        sb
+          .from("restaurants")
+          .select("slug, name, city, area, tagline")
+          .in("status", visibleRestaurantStatuses() as string[])
+          .or(
+            `name.ilike.%${query}%,city.ilike.%${query}%,area.ilike.%${query}%`
+          )
+          .limit(12),
       ])
-    : [{ data: [] }, { data: [] }];
+    : [{ data: [] }, { data: [] }, { data: [] }];
 
   // Also try matching by brand name (separate query — Supabase ilike across
   // joined tables needs a different approach)
@@ -72,7 +82,7 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
         .select(
           "id, slug, name, certification_method, product_photo_url, brand:brands(slug,name), category:categories(slug,name)"
         )
-        .eq("status", "Live")
+        .in("status", visibleProductStatuses() as string[])
         .in("brand_id", brandIds)
         .limit(20);
       brandHits = data ?? [];
@@ -92,8 +102,9 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
     );
   });
   const categories = categoriesRes.data ?? [];
+  const restaurants = restaurantsRes.data ?? [];
 
-  const totalHits = products.length + categories.length;
+  const totalHits = products.length + categories.length + restaurants.length;
 
   return (
     <>
@@ -147,6 +158,30 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
                 >
                   <h3 className="font-display text-2xl tracking-tight">
                     {c.name}
+                  </h3>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {showResults && restaurants.length > 0 && (
+          <section className="mt-8">
+            <h2 className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-3">
+              Restaurants
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {restaurants.map((r) => (
+                <Link
+                  key={r.slug}
+                  href={`/r/${r.slug}`}
+                  className="block bg-[color:var(--bg-elev)] border rule rounded-sm p-5 hover:border-[color:var(--ink)] transition-colors"
+                >
+                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+                    {[r.city, r.area].filter(Boolean).join(" · ")}
+                  </p>
+                  <h3 className="font-display text-2xl tracking-tight mt-1">
+                    {r.name}
                   </h3>
                 </Link>
               ))}
