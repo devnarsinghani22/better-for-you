@@ -2,6 +2,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import NotifyForm from "@/components/NotifyForm";
 import RestaurantsExplorer from "@/components/RestaurantsExplorer";
+import RestaurantDisclaimer from "@/components/RestaurantDisclaimer";
 import { getVisibleRestaurants } from "@/lib/restaurants/queries";
 import { getVertical } from "@/lib/verticals";
 
@@ -69,6 +70,10 @@ export default async function RestaurantsPage() {
         </header>
 
         <RestaurantsExplorer restaurants={restaurants} />
+
+        <div className="mt-14 sm:mt-20">
+          <RestaurantDisclaimer />
+        </div>
       </main>
       <SiteFooter />
     </div>
