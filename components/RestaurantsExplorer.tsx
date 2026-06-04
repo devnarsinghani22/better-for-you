@@ -230,12 +230,6 @@ export default function RestaurantsExplorer({
                           >
                             {r.name}
                           </h3>
-                          {r.tagline && (
-                            <p className="mt-2 text-sm leading-relaxed text-[color:var(--ink-soft)] line-clamp-2">
-                              {r.tagline}
-                            </p>
-                          )}
-
                           <div className="mt-auto pt-5 flex items-center justify-between gap-3">
                             <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
                               {r.google_rating != null && (
