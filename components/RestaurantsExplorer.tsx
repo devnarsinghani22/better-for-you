@@ -10,7 +10,6 @@ const CITY_ORDER = ["Mumbai", "Delhi", "Bengaluru", "Kolkata", "Hyderabad"];
 
 type Filter = {
   city: string | null; // null = all cities
-  cuisine: string | null;
   veganOnly: boolean;
   query: string;
 };
@@ -70,7 +69,6 @@ export default function RestaurantsExplorer({
 }) {
   const [filter, setFilter] = useState<Filter>({
     city: null,
-    cuisine: null,
     veganOnly: false,
     query: "",
   });
@@ -79,19 +77,10 @@ export default function RestaurantsExplorer({
     () => sortCities(uniq(restaurants.map((r) => r.city))),
     [restaurants]
   );
-  const allCuisines = useMemo(
-    () =>
-      uniq(
-        restaurants.map((r) => r.cuisine).filter((c): c is string => !!c)
-      ).sort(),
-    [restaurants]
-  );
-
   const filtered = useMemo(() => {
     const q = filter.query.trim().toLowerCase();
     return restaurants.filter((r) => {
       if (filter.city && r.city !== filter.city) return false;
-      if (filter.cuisine && r.cuisine !== filter.cuisine) return false;
       if (filter.veganOnly) {
         const tags = r.tags.map((t) => t.toLowerCase());
         if (!tags.includes("vegan") && !tags.includes("vegan-friendly"))
@@ -182,29 +171,6 @@ export default function RestaurantsExplorer({
               ))}
             </div>
           </div>
-
-          {allCuisines.length > 0 && (
-            <div className="flex items-start gap-3 sm:gap-4">
-              <span className="hidden sm:inline shrink-0 mt-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-                Cuisine
-              </span>
-              <div className="flex-1 flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                <FilterChip
-                  label="All cuisines"
-                  active={filter.cuisine === null}
-                  onClick={() => setFilter((f) => ({ ...f, cuisine: null }))}
-                />
-                {allCuisines.map((c) => (
-                  <FilterChip
-                    key={c}
-                    label={c}
-                    active={filter.cuisine === c}
-                    onClick={() => setFilter((f) => ({ ...f, cuisine: c }))}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
 
           <div className="flex items-center justify-between gap-3 pt-1">
             <button
