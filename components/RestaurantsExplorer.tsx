@@ -10,7 +10,6 @@ const CITY_ORDER = ["Mumbai", "Delhi", "Bengaluru", "Kolkata", "Hyderabad"];
 
 type Filter = {
   city: string | null; // null = all cities
-  veganOnly: boolean;
   query: string;
 };
 
@@ -69,7 +68,6 @@ export default function RestaurantsExplorer({
 }) {
   const [filter, setFilter] = useState<Filter>({
     city: null,
-    veganOnly: false,
     query: "",
   });
 
@@ -81,11 +79,6 @@ export default function RestaurantsExplorer({
     const q = filter.query.trim().toLowerCase();
     return restaurants.filter((r) => {
       if (filter.city && r.city !== filter.city) return false;
-      if (filter.veganOnly) {
-        const tags = r.tags.map((t) => t.toLowerCase());
-        if (!tags.includes("vegan") && !tags.includes("vegan-friendly"))
-          return false;
-      }
       if (q) {
         const hay = [r.name, r.city, r.area, r.cuisine, r.tagline]
           .filter(Boolean)
@@ -172,28 +165,7 @@ export default function RestaurantsExplorer({
             </div>
           </div>
 
-          <div className="flex items-center justify-between gap-3 pt-1">
-            <button
-              type="button"
-              onClick={() =>
-                setFilter((f) => ({ ...f, veganOnly: !f.veganOnly }))
-              }
-              aria-pressed={filter.veganOnly}
-              className={`inline-flex items-center gap-2 px-3 py-1.5 border rule font-mono text-[10px] uppercase tracking-[0.2em] transition-colors ${
-                filter.veganOnly
-                  ? "bg-[#16803c] text-white border-[#16803c]"
-                  : "bg-[color:var(--bg)] text-[color:var(--ink)] hover:border-[#16803c]"
-              }`}
-            >
-              <span
-                aria-hidden
-                className="inline-block h-2 w-2 rounded-full"
-                style={{
-                  backgroundColor: filter.veganOnly ? "#fff" : "#16803c",
-                }}
-              />
-              Vegan-friendly
-            </button>
+          <div className="flex items-center justify-end gap-3 pt-1">
             <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
               {filtered.length} {filtered.length === 1 ? "place" : "places"}
             </span>
