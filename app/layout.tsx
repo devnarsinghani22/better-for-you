@@ -43,6 +43,10 @@ const caveat = Caveat({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://foodpharmer.health"),
+  // robots.txt alone doesn't de-index already-crawled pages; belt and braces.
+  ...(process.env.VERCEL_ENV !== "production"
+    ? { robots: { index: false, follow: false } }
+    : {}),
   title: {
     default: "Better for You by Food Pharmer",
     template: "%s | Better for You by Food Pharmer",
