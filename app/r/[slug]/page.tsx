@@ -96,7 +96,7 @@ export default async function RestaurantPage({
             name: "Better-for-you picks",
             hasMenuSection: {
               "@type": "MenuSection",
-              name: "Dishes worth ordering",
+              name: "Better for You dishes",
               hasMenuItem: r.dishes.map((d) => ({
                 "@type": "MenuItem",
                 name: d.name,
@@ -234,7 +234,7 @@ export default async function RestaurantPage({
           <section className="mt-14 sm:mt-20">
             <div className="flex items-end justify-between border-b rule pb-4">
               <h2 className="font-display text-3xl sm:text-5xl tracking-[-0.02em] leading-none">
-                Dishes worth ordering
+                Better for You dishes
               </h2>
               <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
                 {r.dishes.length} {r.dishes.length === 1 ? "pick" : "picks"}
