@@ -247,26 +247,10 @@ export default function RestaurantsExplorer({
                               loading="lazy"
                               className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                             />
-                            {r.cuisine && (
-                              <span className="absolute top-3 left-3 bg-[color:var(--ink)] text-[color:var(--bg)] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.22em]">
-                                {r.cuisine}
-                              </span>
-                            )}
                           </div>
                         )}
 
                         <div className={`flex-1 flex flex-col ${img ? "p-5 sm:p-6" : "p-6 sm:p-8"}`}>
-                          {(r.area || (!img && r.cuisine)) && (
-                            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-                              {r.area && <span>{r.area}</span>}
-                              {!img && r.cuisine && (
-                                <>
-                                  {r.area && <span aria-hidden>·</span>}
-                                  <span>{r.cuisine}</span>
-                                </>
-                              )}
-                            </div>
-                          )}
                           <h3
                             className={`mt-2 font-display tracking-[-0.02em] leading-[1.02] text-[color:var(--ink)] group-hover:text-[color:var(--accent-deep)] transition-colors ${
                               img ? "text-2xl sm:text-3xl" : "text-3xl sm:text-4xl"
@@ -282,6 +266,14 @@ export default function RestaurantsExplorer({
 
                           <div className="mt-auto pt-5 flex items-center justify-between gap-3">
                             <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+                              {r.google_rating != null && (
+                                <span className="text-[color:var(--ink)]">
+                                  <span aria-hidden className="text-[#f59e0b]">
+                                    ★
+                                  </span>{" "}
+                                  {r.google_rating.toFixed(1)} ·{" "}
+                                </span>
+                              )}
                               {r.approvedCount}{" "}
                               {r.approvedCount === 1 ? "dish" : "dishes"}
                               {r.price_band ? ` · ${r.price_band}` : ""}
