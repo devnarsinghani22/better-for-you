@@ -63,7 +63,7 @@ export default async function RestaurantsPage() {
             Restaurants
           </h1>
           <p className="mt-4 max-w-2xl text-base sm:text-lg text-[color:var(--ink-soft)] leading-relaxed">
-            Dishes worth ordering — the same label-first scrutiny we give
+            Dishes worth ordering — the same Better for You scrutiny we give
             packaged food, applied to menus across India.
           </p>
         </header>
