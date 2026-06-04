@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import VegRibbon from "@/components/VegRibbon";
 import DishCard from "@/components/DishCard";
 import WhatsAppShare from "@/components/WhatsAppShare";
 import RestaurantDisclaimer from "@/components/RestaurantDisclaimer";
@@ -171,7 +170,6 @@ export default async function RestaurantPage({
                 </Link>
               </nav>
               <header className="mt-8 relative">
-                {r.is_pure_veg && <VegRibbon />}
                 <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
                   {[r.city, r.area].filter(Boolean).join(" · ")}
                 </p>
@@ -216,6 +214,10 @@ export default async function RestaurantPage({
             />
           </div>
 
+          <div className="mt-8 max-w-3xl">
+            <RestaurantDisclaimer />
+          </div>
+
           {/* Address */}
           {r.address && (
             <section className="mt-10 border-t rule pt-6">
@@ -253,10 +255,6 @@ export default async function RestaurantPage({
               </p>
             )}
           </section>
-
-          <div className="mt-14 sm:mt-20">
-            <RestaurantDisclaimer />
-          </div>
         </div>
       </main>
       <SiteFooter />

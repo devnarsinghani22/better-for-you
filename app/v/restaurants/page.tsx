@@ -69,11 +69,11 @@ export default async function RestaurantsPage() {
           </p>
         </header>
 
-        <RestaurantsExplorer restaurants={restaurants} />
-
-        <div className="mt-14 sm:mt-20">
+        <div className="mt-8 max-w-2xl">
           <RestaurantDisclaimer />
         </div>
+
+        <RestaurantsExplorer restaurants={restaurants} />
       </main>
       <SiteFooter />
     </div>
