@@ -22,11 +22,14 @@ export async function generateMetadata({
   const { slug } = await params;
   const r = await getRestaurantBySlug(slug);
   if (!r) return {};
+  const ogImage = r.hero_image_url ?? r.card_image_url;
   return {
     title: `${r.name} — Better for You by Food Pharmer`,
     description:
       r.tagline ??
-      `Dishes worth ordering at ${r.name}${r.city ? `, ${r.city}` : ""}.`,
+      `Better for You dishes at ${r.name}${r.city ? `, ${r.city}` : ""}.`,
+    // WhatsApp/OG preview card — the share CTA is the main distribution path.
+    ...(ogImage ? { openGraph: { images: [ogImage] } } : {}),
   };
 }
 
@@ -125,7 +128,7 @@ export default async function RestaurantPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }}
       />
       <SiteHeader />
-      <main className="relative z-10">
+      <main className="relative z-10 w-full">
         {/* Hero band — image-backed if available, else editorial typography. */}
         <section className="relative w-full">
           {hasHero ? (
