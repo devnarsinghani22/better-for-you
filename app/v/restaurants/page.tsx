@@ -63,10 +63,6 @@ export default async function RestaurantsPage() {
           <h1 className="font-display font-medium leading-[0.9] tracking-[-0.025em] text-[12vw] sm:text-[8vw] lg:text-[5.6vw] text-[color:var(--ink)]">
             Restaurants
           </h1>
-          <p className="mt-4 max-w-2xl text-base sm:text-lg text-[color:var(--ink-soft)] leading-relaxed">
-            Dishes worth ordering — the same Better for You scrutiny we give
-            packaged food, applied to menus across India.
-          </p>
         </header>
 
         <div className="mt-8 max-w-2xl">
