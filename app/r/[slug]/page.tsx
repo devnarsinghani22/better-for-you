@@ -154,11 +154,6 @@ export default async function RestaurantPage({
                   <h1 className="mt-2 font-display text-5xl sm:text-7xl lg:text-8xl tracking-[-0.025em] leading-[0.95]">
                     {r.name}
                   </h1>
-                  {r.tagline && (
-                    <p className="mt-4 max-w-2xl text-base sm:text-lg text-white/85 leading-relaxed">
-                      {r.tagline}
-                    </p>
-                  )}
                 </div>
               </div>
             </div>
@@ -179,11 +174,6 @@ export default async function RestaurantPage({
                 <h1 className="mt-2 font-display text-5xl sm:text-7xl lg:text-8xl tracking-[-0.025em] leading-[0.95] text-[color:var(--ink)]">
                   {r.name}
                 </h1>
-                {r.tagline && (
-                  <p className="mt-4 max-w-2xl text-base sm:text-lg text-[color:var(--ink-soft)] leading-relaxed">
-                    {r.tagline}
-                  </p>
-                )}
               </header>
             </div>
           )}
