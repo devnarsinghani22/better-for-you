@@ -1,4 +1,3 @@
-import TagPills from "@/components/TagPills";
 import type { DishRow } from "@/lib/restaurants/queries";
 
 // Editorial dish card: photo (or typography-only fallback) above name + tags + take.
@@ -46,7 +45,6 @@ export default function DishCard({ dish }: { dish: DishRow }) {
             </span>
           )}
         </div>
-        {dish.tags.length > 0 && <TagPills tags={dish.tags} />}
         {dish.our_take && (
           <p className="text-sm leading-relaxed text-[color:var(--ink)] italic border-l-2 border-[color:var(--accent-deep)] pl-3">
             “{dish.our_take}”
