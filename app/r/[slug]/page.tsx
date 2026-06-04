@@ -4,7 +4,6 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import VegRibbon from "@/components/VegRibbon";
 import DishCard from "@/components/DishCard";
-import TagPills from "@/components/TagPills";
 import WhatsAppShare from "@/components/WhatsAppShare";
 import RestaurantDisclaimer from "@/components/RestaurantDisclaimer";
 import { getRestaurantBySlug } from "@/lib/restaurants/queries";
@@ -202,7 +201,6 @@ export default async function RestaurantPage({
               </span>
             )}
             {r.price_band && <span>{r.price_band}</span>}
-            {r.tags.length > 0 && <TagPills tags={r.tags} />}
           </div>
 
           {/* CTA cluster */}
@@ -212,32 +210,11 @@ export default async function RestaurantPage({
             )}
             {r.zomato_url && <CTA href={r.zomato_url} label="Order · Zomato" />}
             {r.swiggy_url && <CTA href={r.swiggy_url} label="Order · Swiggy" />}
-            {r.google_maps_url && (
-              <CTA href={r.google_maps_url} label="Directions" />
-            )}
-            {r.instagram_handle && (
-              <CTA
-                href={`https://instagram.com/${r.instagram_handle.replace(/^@/, "")}`}
-                label="Instagram"
-              />
-            )}
             {r.phone && <CTA href={`tel:${r.phone}`} label="Call" />}
             <WhatsAppShare
               text={`${r.name}${r.city ? `, ${r.city}` : ""} — Better for You by Food Pharmer. ${SITE_ORIGIN}/r/${r.slug}`}
             />
           </div>
-
-          {/* Editorial note */}
-          {r.editorial_note && (
-            <section className="mt-12 border-t rule pt-10">
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-                Why we like it
-              </p>
-              <div className="mt-4 max-w-3xl text-lg leading-relaxed text-[color:var(--ink)] whitespace-pre-wrap">
-                {r.editorial_note}
-              </div>
-            </section>
-          )}
 
           {/* Address */}
           {r.address && (
