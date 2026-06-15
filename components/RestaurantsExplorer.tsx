@@ -232,14 +232,6 @@ export default function RestaurantsExplorer({
                           </h3>
                           <div className="mt-auto pt-5 flex items-center justify-between gap-3">
                             <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-                              {r.google_rating != null && (
-                                <span className="text-[color:var(--ink)]">
-                                  <span aria-hidden className="text-[#f59e0b]">
-                                    ★
-                                  </span>{" "}
-                                  {r.google_rating.toFixed(1)} ·{" "}
-                                </span>
-                              )}
                               {r.approvedCount}{" "}
                               {r.approvedCount === 1 ? "dish" : "dishes"}
                               {r.price_band ? ` · ${r.price_band}` : ""}

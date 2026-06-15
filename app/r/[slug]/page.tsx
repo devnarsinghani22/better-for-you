@@ -185,12 +185,6 @@ export default async function RestaurantPage({
             <span className="bg-[color:var(--ink)] text-[color:var(--bg)] px-3 py-1.5">
               ✓ Better for You
             </span>
-            {r.google_rating != null && (
-              <span className="inline-flex items-center gap-1.5 text-[color:var(--ink)]">
-                <span aria-hidden className="text-[#f59e0b]">★</span>
-                {r.google_rating.toFixed(1)} on Google
-              </span>
-            )}
             {r.price_band && <span>{r.price_band}</span>}
           </div>
 
