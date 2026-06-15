@@ -62,13 +62,10 @@ export default async function RestaurantsPage() {
           <h1 className="font-display font-medium leading-[0.9] tracking-[-0.025em] text-[12vw] sm:text-[8vw] lg:text-[5.6vw] text-[color:var(--ink)]">
             Restaurants
           </h1>
-        </header>
-
-        <div className="mt-8 max-w-2xl">
-          <p className="font-mono text-[12px] sm:text-[13px] uppercase tracking-[0.18em] text-[color:var(--ink-mute)]">
-            Restaurants and Dish recommendations that are Better For You
+          <p className="mt-4 sm:mt-5 max-w-3xl font-display italic font-light leading-[1.1] tracking-[-0.01em] text-2xl sm:text-3xl lg:text-[2.2vw] text-[color:var(--ink-mute)]">
+            Restaurants and dish recommendations that are Better for You
           </p>
-        </div>
+        </header>
 
         <RestaurantsExplorer restaurants={restaurants} />
       </main>
