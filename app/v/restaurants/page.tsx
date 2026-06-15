@@ -2,7 +2,6 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import NotifyForm from "@/components/NotifyForm";
 import RestaurantsExplorer from "@/components/RestaurantsExplorer";
-import RestaurantDisclaimer from "@/components/RestaurantDisclaimer";
 import { getVisibleRestaurants } from "@/lib/restaurants/queries";
 import { getVertical } from "@/lib/verticals";
 
@@ -66,7 +65,9 @@ export default async function RestaurantsPage() {
         </header>
 
         <div className="mt-8 max-w-2xl">
-          <RestaurantDisclaimer />
+          <p className="font-mono text-[12px] sm:text-[13px] uppercase tracking-[0.18em] text-[color:var(--ink-mute)]">
+            Restaurants and Dish recommendations that are Better For You
+          </p>
         </div>
 
         <RestaurantsExplorer restaurants={restaurants} />

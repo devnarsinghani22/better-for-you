@@ -3,8 +3,6 @@ import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import DishCard from "@/components/DishCard";
-import WhatsAppShare from "@/components/WhatsAppShare";
-import RestaurantDisclaimer from "@/components/RestaurantDisclaimer";
 import { getRestaurantBySlug } from "@/lib/restaurants/queries";
 
 const SITE_ORIGIN =
@@ -196,13 +194,6 @@ export default async function RestaurantPage({
             {r.zomato_url && <CTA href={r.zomato_url} label="Order · Zomato" />}
             {r.swiggy_url && <CTA href={r.swiggy_url} label="Order · Swiggy" />}
             {r.phone && <CTA href={`tel:${r.phone}`} label="Call" />}
-            <WhatsAppShare
-              text={`${r.name}${r.city ? `, ${r.city}` : ""} — Better for You by Food Pharmer. ${SITE_ORIGIN}/r/${r.slug}`}
-            />
-          </div>
-
-          <div className="mt-8 max-w-3xl">
-            <RestaurantDisclaimer />
           </div>
 
           {/* Address */}
