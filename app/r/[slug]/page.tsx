@@ -191,22 +191,18 @@ export default async function RestaurantPage({
             {r.menu_url && (
               <CTA href={r.menu_url} label="See the menu" variant="solid" />
             )}
-            {r.zomato_url && <CTA href={r.zomato_url} label="Order · Zomato" />}
-            {r.swiggy_url && <CTA href={r.swiggy_url} label="Order · Swiggy" />}
+            {(r.zomato_url || r.swiggy_url) && (
+              <div className="flex gap-3">
+                {r.zomato_url && (
+                  <CTA href={r.zomato_url} label="Order · Zomato" />
+                )}
+                {r.swiggy_url && (
+                  <CTA href={r.swiggy_url} label="Order · Swiggy" />
+                )}
+              </div>
+            )}
             {r.phone && <CTA href={`tel:${r.phone}`} label="Call" />}
           </div>
-
-          {/* Address */}
-          {r.address && (
-            <section className="mt-10 border-t rule pt-6">
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-                Where
-              </p>
-              <p className="mt-2 text-base text-[color:var(--ink)] leading-relaxed">
-                {r.address}
-              </p>
-            </section>
-          )}
 
           {/* Dishes */}
           <section className="mt-14 sm:mt-20">
@@ -233,6 +229,18 @@ export default async function RestaurantPage({
               </p>
             )}
           </section>
+
+          {/* Address — placed after the dishes so the picks lead. */}
+          {r.address && (
+            <section className="mt-14 sm:mt-20 border-t rule pt-6">
+              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+                Where
+              </p>
+              <p className="mt-2 text-base text-[color:var(--ink)] leading-relaxed">
+                {r.address}
+              </p>
+            </section>
+          )}
         </div>
       </main>
       <SiteFooter />
