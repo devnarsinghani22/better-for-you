@@ -4,6 +4,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import DishCard from "@/components/DishCard";
 import { getRestaurantBySlug } from "@/lib/restaurants/queries";
+import { citySlug } from "@/lib/restaurants/cities";
 
 const SITE_ORIGIN =
   process.env.VERCEL_ENV === "production"
@@ -70,6 +71,11 @@ export default async function RestaurantPage({
   if (!r) notFound();
 
   const hasHero = !!r.hero_image_url;
+
+  // Back link points to the restaurant's city page (one step back), not the
+  // Cities index, so "← <City>" returns where the user actually came from.
+  const backHref = r.city ? `/v/restaurants/${citySlug(r.city)}` : "/v/restaurants";
+  const backLabel = r.city ?? "Restaurants";
 
   // schema.org/Restaurant JSON-LD for SEO. Only fields we have populated;
   // address falls back to city when no street address.
@@ -141,10 +147,10 @@ export default async function RestaurantPage({
               <div className="absolute inset-0 flex flex-col justify-end">
                 <div className="w-full max-w-[1100px] mx-auto px-5 sm:px-10 pb-8 sm:pb-12 text-white">
                   <Link
-                    href="/v/restaurants"
+                    href={backHref}
                     className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/70 hover:text-white transition-colors"
                   >
-                    ← Restaurants
+                    ← {backLabel}
                   </Link>
                   <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.22em] text-white/80">
                     {[r.city, r.area].filter(Boolean).join(" · ")}
@@ -159,10 +165,10 @@ export default async function RestaurantPage({
             <div className="w-full max-w-[1100px] mx-auto px-5 sm:px-10 pt-10 sm:pt-14">
               <nav className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
                 <Link
-                  href="/v/restaurants"
+                  href={backHref}
                   className="hover:text-[color:var(--accent-deep)] transition-colors"
                 >
-                  ← Restaurants
+                  ← {backLabel}
                 </Link>
               </nav>
               <header className="mt-8 relative">
