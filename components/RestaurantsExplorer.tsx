@@ -231,16 +231,22 @@ export default function RestaurantsExplorer({
                             {r.name}
                           </h3>
                           <div className="mt-auto pt-5 flex items-center justify-between gap-3">
-                            <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-                              {r.approvedCount}{" "}
+                            {r.price_band ? (
+                              <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+                                {r.price_band}
+                              </span>
+                            ) : (
+                              <span />
+                            )}
+                            <span className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-soft)] group-hover:text-[color:var(--ink)] transition-colors">
+                              View {r.approvedCount}{" "}
                               {r.approvedCount === 1 ? "dish" : "dishes"}
-                              {r.price_band ? ` · ${r.price_band}` : ""}
-                            </span>
-                            <span
-                              aria-hidden
-                              className="font-mono text-[13px] text-[color:var(--ink-mute)] group-hover:text-[color:var(--accent-deep)] transition-colors"
-                            >
-                              View →
+                              <span
+                                aria-hidden
+                                className="transition-transform duration-300 group-hover:translate-x-0.5"
+                              >
+                                →
+                              </span>
                             </span>
                           </div>
                         </div>

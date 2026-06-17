@@ -79,7 +79,7 @@ export default async function RestaurantsPage() {
           <div className="bg-[color:var(--bg-elev)] border rule rounded-sm p-5">
             <ul className="space-y-2.5">
               {[
-                "Above 4.2 stars on Swiggy, Zomato, and Google",
+                "Above 4.2 stars on each of Swiggy, Zomato and Google",
                 "At least 100 reviews on each of Swiggy, Zomato, and Google",
                 "A surprise visit from the Food Pharmer team",
               ].map((c) => (
