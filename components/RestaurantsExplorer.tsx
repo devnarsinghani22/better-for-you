@@ -236,7 +236,7 @@ export default function RestaurantsExplorer({
                                 {r.price_band}
                               </div>
                             )}
-                            <span className="flex items-center justify-center gap-1.5 border rule px-4 py-3 font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink)] group-hover:bg-[color:var(--ink)] group-hover:text-[color:var(--bg)] transition-colors">
+                            <span className="flex items-center justify-center gap-1.5 bg-[color:var(--ink)] text-[color:var(--bg)] px-4 py-3 font-mono text-[11px] uppercase tracking-[0.22em] group-hover:bg-[color:var(--accent-deep)] transition-colors">
                               View {r.approvedCount}{" "}
                               {r.approvedCount === 1 ? "dish" : "dishes"}
                               <span
