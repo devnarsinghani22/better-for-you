@@ -230,15 +230,13 @@ export default function RestaurantsExplorer({
                           >
                             {r.name}
                           </h3>
-                          <div className="mt-auto pt-5 flex items-center justify-between gap-3">
-                            {r.price_band ? (
-                              <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+                          <div className="mt-auto pt-5">
+                            {r.price_band && (
+                              <div className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
                                 {r.price_band}
-                              </span>
-                            ) : (
-                              <span />
+                              </div>
                             )}
-                            <span className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-soft)] group-hover:text-[color:var(--ink)] transition-colors">
+                            <span className="flex items-center justify-center gap-1.5 border rule px-4 py-3 font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink)] group-hover:bg-[color:var(--ink)] group-hover:text-[color:var(--bg)] transition-colors">
                               View {r.approvedCount}{" "}
                               {r.approvedCount === 1 ? "dish" : "dishes"}
                               <span
