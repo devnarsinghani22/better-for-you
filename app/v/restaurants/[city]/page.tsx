@@ -3,6 +3,7 @@ import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import RestaurantCard from "@/components/RestaurantCard";
+import RestaurantCriteria from "@/components/RestaurantCriteria";
 import { getVisibleRestaurants } from "@/lib/restaurants/queries";
 import { cityMetaBySlug, citySlug } from "@/lib/restaurants/cities";
 
@@ -73,6 +74,8 @@ export default async function CityRestaurantsPage({
             </li>
           ))}
         </ul>
+
+        <RestaurantCriteria className="mt-14 sm:mt-20" />
       </main>
       <SiteFooter />
     </div>
