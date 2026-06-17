@@ -62,11 +62,11 @@ export default async function RestaurantsPage() {
           <h1 className="font-display font-medium leading-[0.9] tracking-[-0.025em] text-[12vw] sm:text-[8vw] lg:text-[5.6vw] text-[color:var(--ink)]">
             Restaurants
           </h1>
-          <div className="mt-4 sm:mt-5 max-w-xl space-y-1.5">
-            <p className="font-display leading-[1.2] tracking-[-0.01em] text-lg sm:text-xl text-[color:var(--ink-soft)]">
+          <div className="mt-5 sm:mt-6 max-w-xl">
+            <p className="font-medium leading-[1.2] tracking-[-0.01em] text-lg sm:text-xl text-[color:var(--ink-soft)]">
               Restaurants that are Better for You.
             </p>
-            <p className="font-display leading-[1.4] text-sm sm:text-base text-[color:var(--ink-mute)]">
+            <p className="mt-1.5 leading-[1.5] text-sm sm:text-base text-[color:var(--ink-mute)]">
               We have also shortlisted Better for You dishes for each restaurant.
             </p>
           </div>
