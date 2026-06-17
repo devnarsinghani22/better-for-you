@@ -74,10 +74,7 @@ export default async function RestaurantsPage() {
             Restaurants
           </h1>
           <div className="mt-5 sm:mt-6 max-w-xl border rule rounded-sm bg-[color:var(--bg-elev)] p-5 sm:p-6 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.3)]">
-            <p className="font-medium leading-[1.2] tracking-[-0.01em] text-lg sm:text-xl text-[color:var(--ink-soft)]">
-              Restaurants that are Better for You.
-            </p>
-            <p className="mt-1.5 leading-[1.5] text-sm sm:text-base text-[color:var(--ink-mute)]">
+            <p className="font-medium leading-[1.3] tracking-[-0.01em] text-lg sm:text-xl text-[color:var(--ink-soft)]">
               We have also shortlisted Better for You dishes for each restaurant.
             </p>
           </div>
