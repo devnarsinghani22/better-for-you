@@ -63,7 +63,8 @@ export default async function RestaurantsPage() {
             Restaurants
           </h1>
           <p className="mt-3 sm:mt-4 max-w-2xl font-display font-normal leading-[1.3] text-base sm:text-lg lg:text-xl text-[color:var(--ink-mute)]">
-            Restaurants and dish recommendations that are Better for You
+            Restaurants that are Better for You. We have also shortlisted
+            Better for You dishes for each restaurant.
           </p>
         </header>
 
