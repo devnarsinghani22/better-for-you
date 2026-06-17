@@ -36,6 +36,11 @@ export type DishRow = {
   display_order: number | null;
 };
 
+export type Outlet = {
+  label: string;
+  address: string;
+};
+
 export type RestaurantDetail = {
   id: number;
   slug: string;
@@ -45,6 +50,7 @@ export type RestaurantDetail = {
   cuisine: string | null;
   price_band: string | null;
   address: string | null;
+  outlets: Outlet[];
   google_maps_url: string | null;
   menu_url: string | null;
   zomato_url: string | null;
@@ -67,7 +73,7 @@ const RESTAURANT_LIST_FIELDS =
   'id, slug, name, city, area, cuisine, price_band, hero_image_url, card_image_url, tagline, tags, is_new, is_pure_veg, google_rating, display_order, status';
 
 const RESTAURANT_DETAIL_FIELDS =
-  'id, slug, name, city, area, cuisine, price_band, address, google_maps_url, menu_url, zomato_url, swiggy_url, instagram_handle, phone, hero_image_url, card_image_url, tagline, editorial_note, tags, is_new, is_pure_veg, google_rating, status';
+  'id, slug, name, city, area, cuisine, price_band, address, outlets, google_maps_url, menu_url, zomato_url, swiggy_url, instagram_handle, phone, hero_image_url, card_image_url, tagline, editorial_note, tags, is_new, is_pure_veg, google_rating, status';
 
 // Visible restaurants that have at least one approved dish, with their approved
 // dish count. Ordered by display_order; grouping/filtering by city happens client-side.
@@ -132,6 +138,7 @@ export async function getRestaurantBySlug(slug: string): Promise<RestaurantDetai
   return {
     ...r,
     tags: (r.tags as string[] | null) ?? [],
+    outlets: (r.outlets as Outlet[] | null) ?? [],
     google_rating: r.google_rating == null ? null : Number(r.google_rating),
     dishes: (dishes ?? []).map((d) => ({
       ...d,

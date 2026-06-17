@@ -230,15 +230,40 @@ export default async function RestaurantPage({
             )}
           </section>
 
-          {/* Address — placed after the dishes so the picks lead. */}
-          {r.address && (
+          {/* Where — outlets list (or single address) after the dishes. */}
+          {(r.outlets.length > 0 || r.address) && (
             <section className="mt-14 sm:mt-20 border-t rule pt-6">
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-                Where
-              </p>
-              <p className="mt-2 text-base text-[color:var(--ink)] leading-relaxed">
-                {r.address}
-              </p>
+              <div className="flex items-baseline gap-3">
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+                  Where
+                </p>
+                {r.outlets.length > 1 && (
+                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
+                    {r.outlets.length} outlets
+                  </span>
+                )}
+              </div>
+
+              {r.outlets.length > 0 ? (
+                <ul className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-6">
+                  {r.outlets.map((o, i) => (
+                    <li key={i} className="border-t rule pt-3">
+                      {o.label && (
+                        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-soft)]">
+                          {o.label}
+                        </p>
+                      )}
+                      <p className="mt-1.5 text-[15px] text-[color:var(--ink)] leading-relaxed">
+                        {o.address}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="mt-2 text-base text-[color:var(--ink)] leading-relaxed">
+                  {r.address}
+                </p>
+              )}
             </section>
           )}
         </div>
