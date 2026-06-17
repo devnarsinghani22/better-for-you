@@ -254,11 +254,22 @@ export default async function RestaurantPage({
                 <ul className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-6">
                   {r.outlets.map((o, i) => (
                     <li key={i} className="border-t rule pt-3">
-                      {o.label && (
-                        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-soft)]">
-                          {o.label}
-                        </p>
-                      )}
+                      <div className="flex flex-wrap items-center gap-2">
+                        {o.label && (
+                          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-soft)]">
+                            {o.label}
+                          </p>
+                        )}
+                        {o.service === "delivery" ? (
+                          <span className="font-mono text-[9px] uppercase tracking-[0.18em] bg-[color:var(--ink)] text-[color:var(--bg)] px-1.5 py-0.5">
+                            Delivery only
+                          </span>
+                        ) : o.service === "dine-in" ? (
+                          <span className="font-mono text-[9px] uppercase tracking-[0.18em] border rule px-1.5 py-0.5 text-[color:var(--ink-mute)]">
+                            Dine-in
+                          </span>
+                        ) : null}
+                      </div>
                       <p className="mt-1.5 text-[15px] text-[color:var(--ink)] leading-relaxed">
                         {o.address}
                       </p>

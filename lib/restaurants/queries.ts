@@ -39,6 +39,8 @@ export type DishRow = {
 export type Outlet = {
   label: string;
   address: string;
+  // "dine-in" | "delivery" (delivery/pickup only), from Google service options.
+  service?: string;
 };
 
 export type RestaurantDetail = {
