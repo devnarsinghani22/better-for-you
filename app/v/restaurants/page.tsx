@@ -69,12 +69,7 @@ export default async function RestaurantsPage() {
     <div className="relative z-10">
       <SiteHeader />
       <main className="w-full max-w-[1280px] mx-auto px-5 sm:px-10 pt-10 sm:pt-16 pb-20 sm:pb-28">
-        <div className="flex items-end justify-between border-b rule pb-4 font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.26em] text-[color:var(--ink-mute)]">
-          <span>Better for You · Restaurants</span>
-          <span>{restaurants.length} places</span>
-        </div>
-
-        <header className="mt-8 sm:mt-12">
+        <header>
           <h1 className="font-display font-medium leading-[0.9] tracking-[-0.025em] text-[12vw] sm:text-[8vw] lg:text-[5.6vw] text-[color:var(--ink)]">
             Restaurants
           </h1>
