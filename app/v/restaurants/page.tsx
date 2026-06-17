@@ -5,7 +5,7 @@ import NotifyForm from "@/components/NotifyForm";
 import { getVisibleRestaurants } from "@/lib/restaurants/queries";
 import { getVertical } from "@/lib/verticals";
 import RestaurantCriteria from "@/components/RestaurantCriteria";
-import { citySlug, cityMetaByName, cityRank } from "@/lib/restaurants/cities";
+import { citySlug, cityMetaByName } from "@/lib/restaurants/cities";
 
 export const revalidate = 3600;
 
@@ -51,7 +51,7 @@ export default async function RestaurantsPage() {
     );
   }
 
-  // Group restaurants into cities, metros first (cityRank), extras alphabetical.
+  // Group restaurants into cities, arranged alphabetically.
   const counts = new Map<string, number>();
   for (const r of restaurants) counts.set(r.city, (counts.get(r.city) ?? 0) + 1);
   const cities = [...counts.keys()]
@@ -61,9 +61,7 @@ export default async function RestaurantsPage() {
       count: counts.get(name)!,
       meta: cityMetaByName(name),
     }))
-    .sort(
-      (a, b) => cityRank(a.name) - cityRank(b.name) || a.name.localeCompare(b.name)
-    );
+    .sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <div className="relative z-10">

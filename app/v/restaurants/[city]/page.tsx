@@ -30,7 +30,9 @@ export default async function CityRestaurantsPage({
 }) {
   const { city } = await params;
   const all = await getVisibleRestaurants();
-  const list = all.filter((r) => citySlug(r.city) === city);
+  const list = all
+    .filter((r) => citySlug(r.city) === city)
+    .sort((a, b) => a.name.localeCompare(b.name));
   if (list.length === 0) notFound();
 
   const meta = cityMetaBySlug(city);
