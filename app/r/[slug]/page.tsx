@@ -251,31 +251,41 @@ export default async function RestaurantPage({
               </div>
 
               {r.outlets.length > 0 ? (
-                <ul className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-6">
+                <ol className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-7">
                   {r.outlets.map((o, i) => (
-                    <li key={i} className="border-t rule pt-3">
-                      <div className="flex flex-wrap items-center gap-2">
-                        {o.label && (
-                          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-soft)]">
-                            {o.label}
-                          </p>
-                        )}
-                        {o.service === "delivery" ? (
-                          <span className="font-mono text-[9px] uppercase tracking-[0.18em] bg-[color:var(--ink)] text-[color:var(--bg)] px-1.5 py-0.5">
-                            Delivery only
-                          </span>
-                        ) : o.service === "dine-in" ? (
-                          <span className="font-mono text-[9px] uppercase tracking-[0.18em] border rule px-1.5 py-0.5 text-[color:var(--ink-mute)]">
-                            Dine-in
-                          </span>
-                        ) : null}
+                    <li key={i} className="flex gap-4 border-t rule pt-4">
+                      {r.outlets.length > 1 && (
+                        <span
+                          aria-hidden
+                          className="font-display text-2xl leading-none text-[color:var(--ink-mute)] tabular-nums shrink-0 pt-0.5"
+                        >
+                          {i + 1}.
+                        </span>
+                      )}
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-2">
+                          {o.label && (
+                            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-soft)]">
+                              {o.label}
+                            </p>
+                          )}
+                          {o.service === "delivery" ? (
+                            <span className="font-mono text-[9px] uppercase tracking-[0.18em] bg-[color:var(--ink)] text-[color:var(--bg)] px-1.5 py-0.5">
+                              Delivery only
+                            </span>
+                          ) : o.service === "dine-in" ? (
+                            <span className="font-mono text-[9px] uppercase tracking-[0.18em] border rule px-1.5 py-0.5 text-[color:var(--ink-mute)]">
+                              Dine-in
+                            </span>
+                          ) : null}
+                        </div>
+                        <p className="mt-1.5 text-[15px] text-[color:var(--ink)] leading-relaxed">
+                          {o.address}
+                        </p>
                       </div>
-                      <p className="mt-1.5 text-[15px] text-[color:var(--ink)] leading-relaxed">
-                        {o.address}
-                      </p>
                     </li>
                   ))}
-                </ul>
+                </ol>
               ) : (
                 <p className="mt-2 text-base text-[color:var(--ink)] leading-relaxed">
                   {r.address}
