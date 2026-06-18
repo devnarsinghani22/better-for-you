@@ -251,40 +251,76 @@ export default async function RestaurantPage({
               </div>
 
               {r.outlets.length > 0 ? (
-                <ol className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-7">
-                  {r.outlets.map((o, i) => (
-                    <li key={i} className="flex gap-4 border-t rule pt-4">
-                      {r.outlets.length > 1 && (
+                <ol className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-x-12">
+                  {r.outlets.map((o, i) => {
+                    const isDineIn = o.service === "dine-in";
+                    // Dine-in outlets link to Google Maps; cloud kitchens have no
+                    // address worth navigating to, so they stay non-clickable.
+                    const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                      `${r.name}, ${o.address}`
+                    )}`;
+                    const head = (
+                      <span className="font-display text-lg sm:text-xl leading-tight tracking-[-0.01em] text-[color:var(--ink)]">
+                        {r.outlets.length > 1 && (
+                          <span className="text-[color:var(--ink-mute)]">{i + 1}.&nbsp;</span>
+                        )}
                         <span
-                          aria-hidden
-                          className="font-display text-2xl leading-none text-[color:var(--ink-mute)] tabular-nums shrink-0 pt-0.5"
+                          className={
+                            isDineIn
+                              ? "underline decoration-[color:var(--rule)] underline-offset-[5px] group-hover:decoration-[color:var(--ink)] transition-colors"
+                              : ""
+                          }
                         >
-                          {i + 1}.
+                          {o.label || r.name}
                         </span>
-                      )}
-                      <div className="min-w-0">
-                        <div className="flex flex-wrap items-center gap-2">
-                          {o.label && (
-                            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-soft)]">
-                              {o.label}
-                            </p>
-                          )}
-                          {o.service === "delivery" ? (
-                            <span className="font-mono text-[9px] uppercase tracking-[0.18em] bg-[color:var(--ink)] text-[color:var(--bg)] px-1.5 py-0.5">
-                              Delivery only
-                            </span>
-                          ) : o.service === "dine-in" ? (
-                            <span className="font-mono text-[9px] uppercase tracking-[0.18em] border rule px-1.5 py-0.5 text-[color:var(--ink-mute)]">
-                              Dine-in
-                            </span>
-                          ) : null}
+                        {isDineIn && (
+                          <span
+                            aria-hidden
+                            className="ml-1.5 text-[0.7em] text-[color:var(--ink-mute)] group-hover:text-[color:var(--ink)] transition-colors"
+                          >
+                            ↗
+                          </span>
+                        )}
+                      </span>
+                    );
+                    const badge =
+                      o.service === "delivery" ? (
+                        <span className="font-mono text-[9px] uppercase tracking-[0.18em] bg-[color:var(--ink)] text-[color:var(--bg)] px-1.5 py-0.5">
+                          Delivery only
+                        </span>
+                      ) : isDineIn ? (
+                        <span className="font-mono text-[9px] uppercase tracking-[0.18em] border rule px-1.5 py-0.5 text-[color:var(--ink-mute)]">
+                          Dine-in
+                        </span>
+                      ) : null;
+                    const body = (
+                      <>
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                          {head}
+                          {badge}
                         </div>
-                        <p className="mt-1.5 text-[15px] text-[color:var(--ink)] leading-relaxed">
+                        <p className="mt-2 text-sm text-[color:var(--ink-soft)] leading-snug">
                           {o.address}
                         </p>
-                      </div>
-                    </li>
-                  ))}
+                      </>
+                    );
+                    return (
+                      <li key={i} className="border-t rule">
+                        {isDineIn ? (
+                          <a
+                            href={mapsHref}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group block py-4 sm:py-5"
+                          >
+                            {body}
+                          </a>
+                        ) : (
+                          <div className="py-4 sm:py-5">{body}</div>
+                        )}
+                      </li>
+                    );
+                  })}
                 </ol>
               ) : (
                 <p className="mt-2 text-base text-[color:var(--ink)] leading-relaxed">
