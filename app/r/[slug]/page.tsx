@@ -173,7 +173,7 @@ export default async function RestaurantPage({
               </nav>
               <header className="mt-8 relative">
                 <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
-                  {[r.city, r.area].filter(Boolean).join(" · ")}
+                  {r.city}
                 </p>
                 <h1 className="mt-2 font-display text-5xl sm:text-7xl lg:text-8xl tracking-[-0.025em] leading-[0.95] text-[color:var(--ink)]">
                   {r.name}
