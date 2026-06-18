@@ -8,7 +8,9 @@ export const revalidate = 300;
 const SITE_URL = "https://foodpharmer.health";
 
 export const metadata = {
-  title: "Criteria | Better for You by Food Pharmer",
+  // Bare page name only — the layout template appends
+  // "| Better for You by Food Pharmer" (don't repeat it here).
+  title: "Our Criteria — How Products Get Approved",
   description:
     "The rules every product must pass to make it onto the list, broken down by category.",
   alternates: { canonical: `${SITE_URL}/criteria` },

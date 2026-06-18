@@ -158,16 +158,11 @@ export default async function ProductPage({
           }]
         : []),
     ],
-    ...(product.primary_buy_url
-      ? {
-          offers: {
-            "@type": "Offer",
-            url: product.primary_buy_url,
-            availability: "https://schema.org/InStock",
-            priceCurrency: "INR",
-          },
-        }
-      : {}),
+    // NOTE: no `offers` block. Google rejects an Offer without a `price`, which
+    // is what made 100% of products "ineligible for rich results" in Search
+    // Console. We don't store prices (they vary by retailer), so emitting a
+    // price-less Offer is invalid — better to omit it and keep the Product
+    // markup valid for image/name cards.
   };
 
   return (

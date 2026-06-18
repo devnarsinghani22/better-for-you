@@ -12,6 +12,14 @@ export const revalidate = 3600;
 const SITE_URL = "https://foodpharmer.health";
 
 export const metadata = {
+  // Lead with the brand name (wins "food pharmer" brand search) and carry
+  // generic keywords ("healthier / cleaner packaged foods in India").
+  title: {
+    absolute:
+      "Food Pharmer — Healthier, Cleaner Packaged Foods & Drinks in India",
+  },
+  description:
+    "Food Pharmer reads the ingredient list and nutrition label so you don't have to — a free directory of the healthier, cleaner packaged food and drink brands in India. Never sponsored.",
   alternates: { canonical: SITE_URL },
 };
 
