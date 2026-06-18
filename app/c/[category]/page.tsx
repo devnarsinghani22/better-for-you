@@ -126,30 +126,48 @@ export default async function CategoryPage({
   // pages (which carry their own Product schema).
   const categoryLd = {
     "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: `${cat.name} — Better for You`,
-    description: cat.blurb || undefined,
-    url: `${SITE_URL}/c/${slug}`,
-    numberOfItems: products.length,
-    itemListElement: products.slice(0, 30).map((p, i) => {
-      const b = Array.isArray(p.brand) ? p.brand[0] : p.brand;
-      const brandName = b?.name as string | undefined;
-      return {
-        "@type": "ListItem",
-        position: i + 1,
-        url: `${SITE_URL}/c/${slug}/${p.slug}`,
-        item: {
-          "@type": "Product",
-          name: p.name,
-          ...(brandName ? { brand: { "@type": "Brand", name: brandName } } : {}),
-          ...(p.product_photo_url
-            ? { image: p.product_photo_url.startsWith("http")
-                ? p.product_photo_url
-                : `${SITE_URL}${p.product_photo_url}` }
-            : {}),
-        },
-      };
-    }),
+    "@graph": [
+      // Breadcrumb: Home › Category — earns the breadcrumb trail in search
+      // results and reinforces site hierarchy for crawlers.
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: cat.name,
+            item: `${SITE_URL}/c/${slug}`,
+          },
+        ],
+      },
+      {
+        "@type": "ItemList",
+        name: `${cat.name} — Better for You`,
+        description: cat.blurb || undefined,
+        url: `${SITE_URL}/c/${slug}`,
+        numberOfItems: products.length,
+        itemListElement: products.slice(0, 30).map((p, i) => {
+          const b = Array.isArray(p.brand) ? p.brand[0] : p.brand;
+          const brandName = b?.name as string | undefined;
+          return {
+            "@type": "ListItem",
+            position: i + 1,
+            url: `${SITE_URL}/c/${slug}/${p.slug}`,
+            item: {
+              "@type": "Product",
+              name: p.name,
+              ...(brandName ? { brand: { "@type": "Brand", name: brandName } } : {}),
+              ...(p.product_photo_url
+                ? { image: p.product_photo_url.startsWith("http")
+                    ? p.product_photo_url
+                    : `${SITE_URL}${p.product_photo_url}` }
+                : {}),
+            },
+          };
+        }),
+      },
+    ],
   };
 
   return (

@@ -95,10 +95,14 @@ const BRAND_LD = {
       name: "Food Pharmer",
       alternateName: "Better for You by Food Pharmer",
       url: "https://foodpharmer.health",
-      logo: "https://foodpharmer.health/opengraph-image",
+      logo: "https://foodpharmer.health/icons/icon-512.png",
+      founder: { "@type": "Person", name: "Revant Himatsingka" },
+      description:
+        "We analyse ingredient lists and nutrition labels to shortlist packaged food products that are better for you. Not sponsored.",
       sameAs: [
         "https://www.instagram.com/foodpharmer",
         "https://www.youtube.com/@foodpharmer",
+        "https://www.linkedin.com/in/revant-himatsingka",
         "https://onlywhatsneeded.in",
       ],
     },
@@ -108,6 +112,17 @@ const BRAND_LD = {
       name: "Food Pharmer",
       url: "https://foodpharmer.health",
       publisher: { "@id": "https://foodpharmer.health/#org" },
+      // Sitelinks Search Box — lets Google surface a search field under the
+      // brand result. Targets the real /search?q= route.
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate:
+            "https://foodpharmer.health/search?q={search_term_string}",
+        },
+        "query-input": "required name=search_term_string",
+      },
     },
   ],
 };

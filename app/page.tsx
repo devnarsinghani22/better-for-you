@@ -93,51 +93,11 @@ export default async function HomePage() {
   // ~300-500ms on slow Indian mobile (Clarity reports LCP 2.84s).
   const firstHero = indexEntries[0]?.hero_image_url;
 
-  // schema.org graph for the brand: Organization (knowledge panel signal)
-  // + WebSite (enables the site search box rendering in Google results).
-  const homeLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://foodpharmer.health/#org",
-        name: "Better for You by Food Pharmer",
-        alternateName: "Food Pharmer",
-        url: "https://foodpharmer.health",
-        logo: "https://foodpharmer.health/icons/icon-512.png",
-        sameAs: [
-          "https://instagram.com/foodpharmer",
-          "https://www.linkedin.com/in/revant-himatsingka",
-        ],
-        founder: { "@type": "Person", name: "Revant Himatsingka" },
-        description:
-          "We analyse ingredient lists and nutrition labels to shortlist packaged food products that are better for you. Not sponsored.",
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://foodpharmer.health/#website",
-        url: "https://foodpharmer.health",
-        name: "Better for You by Food Pharmer",
-        publisher: { "@id": "https://foodpharmer.health/#org" },
-        potentialAction: {
-          "@type": "SearchAction",
-          target: {
-            "@type": "EntryPoint",
-            urlTemplate:
-              "https://foodpharmer.health/search?q={search_term_string}",
-          },
-          "query-input": "required name=search_term_string",
-        },
-      },
-    ],
-  };
+  // Brand Organization + WebSite (+ SearchAction) JSON-LD is emitted site-wide
+  // from the root layout (BRAND_LD), so the homepage no longer repeats it.
 
   return (
     <div className="relative z-10">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeLd) }}
-      />
       {firstHero && (
         <link
           rel="preload"
