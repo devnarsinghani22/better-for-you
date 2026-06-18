@@ -65,16 +65,6 @@ export default function SiteFooter() {
           </p>
         </div>
       </div>
-
-      <div className="border-t rule">
-        <div className="max-w-[1280px] mx-auto px-6 sm:px-10 py-5">
-          <p className="text-xs leading-relaxed text-[color:var(--ink-mute)] max-w-2xl">
-            As an Amazon Associate, foodpharmer.health earns from qualifying
-            purchases. We only link to products that meet our criteria — the
-            commission never influences what we list.
-          </p>
-        </div>
-      </div>
     </footer>
   );
 }
