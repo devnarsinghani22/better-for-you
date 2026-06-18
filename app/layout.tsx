@@ -82,6 +82,36 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
+// Brand-entity JSON-LD, emitted site-wide. Tells Google foodpharmer.health is
+// the official "Food Pharmer" site and ties it to the Instagram / YouTube / OWN
+// properties via sameAs — consolidates brand authority for "food pharmer"
+// search and makes the site eligible for sitelinks.
+const BRAND_LD = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://foodpharmer.health/#org",
+      name: "Food Pharmer",
+      alternateName: "Better for You by Food Pharmer",
+      url: "https://foodpharmer.health",
+      logo: "https://foodpharmer.health/opengraph-image",
+      sameAs: [
+        "https://www.instagram.com/foodpharmer",
+        "https://www.youtube.com/@foodpharmer",
+        "https://onlywhatsneeded.in",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://foodpharmer.health/#website",
+      name: "Food Pharmer",
+      url: "https://foodpharmer.health",
+      publisher: { "@id": "https://foodpharmer.health/#org" },
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -99,6 +129,10 @@ export default function RootLayout({
             ~150-250ms on Indian mobile. */}
         <link rel="preconnect" href="https://www.clarity.ms" crossOrigin="" />
         <link rel="dns-prefetch" href="https://www.clarity.ms" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(BRAND_LD) }}
+        />
       </head>
       <body className="min-h-screen flex flex-col">
         {/* Skip-to-content for screen-reader + keyboard users. Visible only

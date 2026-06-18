@@ -29,10 +29,13 @@ export async function generateMetadata({
     .eq("slug", slug)
     .single();
   if (!cat || !cat.active) return {};
-  const title = `${cat.name} — Better for You`;
+  // Title/description target generic "healthier / clean / best <category> in
+  // India" search intent — not just brand search. The template appends
+  // "| Better for You by Food Pharmer".
+  const title = `Healthier ${cat.name} in India — Clean-Label Picks`;
   const description =
     cat.blurb ||
-    `Better-for-you ${cat.name.toLowerCase()} picks shortlisted by Food Pharmer's nutrition team. Label-checked, not sponsored.`;
+    `The healthier, cleaner ${cat.name.toLowerCase()} brands in India — shortlisted by Food Pharmer after reading every ingredient list and nutrition label. Free, and never sponsored.`;
   return {
     title,
     description,
