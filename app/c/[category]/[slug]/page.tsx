@@ -74,6 +74,8 @@ export default async function ProductPage({
   if (!product) notFound();
 
   const brand = Array.isArray(product.brand) ? product.brand[0] : product.brand;
+  const brandUrl = (brand as { website_url?: string } | null | undefined)
+    ?.website_url;
   const cat = product.category;
 
   const isLab = product.certification_method === "lab_tested";
@@ -108,7 +110,7 @@ export default async function ProductPage({
       {
         "@type": "ListItem",
         position: 1,
-        name: "Better for You",
+        name: "Food Pharmer",
         item: SITE_URL,
       },
       {
@@ -134,12 +136,26 @@ export default async function ProductPage({
     "@type": "Product",
     name: product.name,
     url: `${SITE_URL}/c/${category}/${slug}`,
+    // Tie this product page into the site entity graph (#website defined in the
+    // root layout) so Google associates it with the Food Pharmer brand entity.
+    isPartOf: { "@id": `${SITE_URL}/#website` },
+    mainEntityOfPage: `${SITE_URL}/c/${category}/${slug}`,
     ...(product.product_photo_url
       ? { image: product.product_photo_url.startsWith("http")
           ? product.product_photo_url
           : `${SITE_URL}${product.product_photo_url}` }
       : {}),
-    ...(brand?.name ? { brand: { "@type": "Brand", name: brand.name } } : {}),
+    ...(brand?.name
+      ? {
+          brand: {
+            "@type": "Brand",
+            name: brand.name,
+            ...(brandUrl && /^https?:\/\//.test(brandUrl)
+              ? { url: brandUrl }
+              : {}),
+          },
+        }
+      : {}),
     ...(cat?.name ? { category: cat.name } : {}),
     ...(product.ingredients_raw
       ? { description: product.ingredients_raw.slice(0, 280) }
@@ -189,7 +205,7 @@ export default async function ProductPage({
             {product.is_new && <NewRibbon />}
             <ZoomableImage
               src={product.product_photo_url}
-              alt={product.name}
+              alt={brand?.name ? `${brand.name} ${product.name}` : product.name}
               priority
               className="w-full h-full object-contain p-4 sm:p-6"
             />

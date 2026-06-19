@@ -17,9 +17,15 @@ export async function generateMetadata({
   const { city } = await params;
   const meta = cityMetaBySlug(city);
   const name = meta?.name ?? city;
+  const title = `${name} — Better for You Restaurants by Food Pharmer`;
+  const description = `Restaurants in ${name} worth ordering from — picked with the same label-first scrutiny we apply to packaged food.`;
+  const canonical = `https://foodpharmer.health/v/restaurants/${city}`;
   return {
-    title: `${name} — Better for You Restaurants by Food Pharmer`,
-    description: `Restaurants in ${name} worth ordering from — picked with the same label-first scrutiny we apply to packaged food.`,
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: { title, description, type: "website", url: canonical },
+    twitter: { card: "summary_large_image", title, description },
   };
 }
 

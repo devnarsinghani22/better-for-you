@@ -13,7 +13,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/admin", "/api", "/login", "/auth"],
+        disallow: ["/admin", "/api", "/login", "/auth", "/export"],
       },
     ],
     sitemap: "https://foodpharmer.health/sitemap.xml",

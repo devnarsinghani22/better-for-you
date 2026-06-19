@@ -6,6 +6,9 @@ export const metadata = {
   title: "Privacy Policy — Better for You by Food Pharmer",
   description:
     "How Better for You by Food Pharmer collects, uses, and protects the details you share with us.",
+  // Self-canonical (resolved against metadataBase) — collapses any
+  // tracking-param variants of this footer-linked page.
+  alternates: { canonical: "/privacy" },
 };
 
 const CONTACT_EMAIL = "betterforyou@foodpharmer.net";

@@ -23,12 +23,15 @@ export async function generateMetadata({
     .eq("slug", slug)
     .single();
   if (!brand || brand.is_excluded) return {};
+  const title = `${brand.name} — Better for You picks`;
+  const description = `Every ${brand.name} product currently on our better-for-you list, with the criteria we used to pick them.`;
+  const url = `${SITE_URL}/b/${slug}`;
   return {
-    title: `${brand.name} — Better for You picks`,
-    description: `Every ${brand.name} product currently on our better-for-you list, with the criteria we used to pick them.`,
-    alternates: {
-      canonical: `${SITE_URL}/b/${slug}`,
-    },
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: { title, description, type: "website", url },
+    twitter: { card: "summary_large_image", title, description },
   };
 }
 
@@ -79,6 +82,23 @@ export default async function BrandPage({
   }
   const groups = [...byCategory.values()].sort((a, b) => a.catName.localeCompare(b.catName));
 
+  // schema.org/BreadcrumbList — Home › Brands › <Brand>. (No visible
+  // breadcrumb UI required; this just earns the trail in search results.)
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Food Pharmer", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Brands", item: `${SITE_URL}/b` },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: brand.name,
+        item: `${SITE_URL}/b/${slug}`,
+      },
+    ],
+  };
+
   // schema.org/Brand JSON-LD + ItemList of all approved products.
   const brandLd = {
     "@context": "https://schema.org",
@@ -87,24 +107,30 @@ export default async function BrandPage({
     name: brand.name,
     ...(brand.website_url ? { url: brand.website_url } : {}),
   };
+  // Only products with a resolvable category page belong in the list (every
+  // product has a category in practice; this guards against ever emitting a
+  // /c/_/… URL that would 404 inside structured data). Brand name is inlined
+  // rather than referenced by @id for robustness across validators.
+  const listProducts = live.filter((p) => {
+    const cat = Array.isArray(p.category) ? p.category[0] : p.category;
+    return !!cat?.slug;
+  });
   const listLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: `${brand.name} — Better for You picks`,
     url: `${SITE_URL}/b/${slug}`,
-    numberOfItems: live.length,
-    itemListElement: live.slice(0, 30).map((p, i) => {
+    numberOfItems: listProducts.length,
+    itemListElement: listProducts.slice(0, 30).map((p, i) => {
       const cat = Array.isArray(p.category) ? p.category[0] : p.category;
       return {
         "@type": "ListItem",
         position: i + 1,
-        url: cat?.slug
-          ? `${SITE_URL}/c/${cat.slug}/${p.slug}`
-          : `${SITE_URL}/c/_/${p.slug}`,
+        url: `${SITE_URL}/c/${cat!.slug}/${p.slug}`,
         item: {
           "@type": "Product",
           name: p.name,
-          brand: { "@id": `${SITE_URL}/b/${slug}#brand` },
+          brand: { "@type": "Brand", name: brand.name },
           ...(p.product_photo_url
             ? { image: p.product_photo_url.startsWith("http")
                 ? p.product_photo_url
@@ -117,6 +143,10 @@ export default async function BrandPage({
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(brandLd) }}
@@ -196,7 +226,7 @@ export default async function BrandPage({
                           /* eslint-disable-next-line @next/next/no-img-element */
                           <img
                             src={p.product_photo_url}
-                            alt={p.name}
+                            alt={`${brand.name} ${p.name}`}
                             loading="lazy"
                             decoding="async"
                             className="w-full h-full object-contain p-3"

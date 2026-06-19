@@ -132,7 +132,7 @@ export default async function CategoryPage({
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+          { "@type": "ListItem", position: 1, name: "Food Pharmer", item: SITE_URL },
           {
             "@type": "ListItem",
             position: 2,
@@ -146,6 +146,7 @@ export default async function CategoryPage({
         name: `${cat.name} — Better for You`,
         description: cat.blurb || undefined,
         url: `${SITE_URL}/c/${slug}`,
+        isPartOf: { "@id": `${SITE_URL}/#website` },
         numberOfItems: products.length,
         itemListElement: products.slice(0, 30).map((p, i) => {
           const b = Array.isArray(p.brand) ? p.brand[0] : p.brand;
@@ -219,7 +220,7 @@ export default async function CategoryPage({
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={p.product_photo_url}
-                    alt={p.name}
+                    alt={brand?.name ? `${brand.name} ${p.name}` : p.name}
                     loading="lazy"
                     decoding="async"
                     className="w-full h-full object-contain p-3 sm:group-hover:scale-[1.05] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"

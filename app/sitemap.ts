@@ -1,5 +1,7 @@
 import { MetadataRoute } from "next";
 import { createClient } from "@/lib/supabase/server";
+import { getVisibleRestaurants } from "@/lib/restaurants/queries";
+import { citySlug } from "@/lib/restaurants/cities";
 
 const BASE_URL = "https://foodpharmer.health";
 
@@ -18,15 +20,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       .eq("is_excluded", false),
   ]);
 
+  // /search is intentionally omitted — it's noindexed (thin/infinite ?q=).
+  // No lastModified on these rarely-changing static pages: a fresh `now()` on
+  // every sitemap fetch trains Google to distrust the lastmod signal entirely.
   const staticPages: MetadataRoute.Sitemap = [
     "",
     "/criteria",
     "/v/restaurants",
-    "/search",
     "/b",
   ].map((path) => ({
     url: `${BASE_URL}${path}`,
-    lastModified: new Date(),
     changeFrequency: "weekly",
     priority: path === "" ? 1 : 0.7,
   }));
@@ -64,5 +67,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.5,
     }));
 
-  return [...staticPages, ...catPages, ...prodPages, ...brandPages];
+  // Restaurant detail + city hub pages. getVisibleRestaurants() returns only
+  // Live restaurants that have an approved dish (empty on prod until the
+  // vertical launches), so these self-populate at launch and never emit a URL
+  // that would 404.
+  const rests = await getVisibleRestaurants();
+  const restPages: MetadataRoute.Sitemap = rests.map((r) => ({
+    url: `${BASE_URL}/r/${r.slug}`,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+  const cityPages: MetadataRoute.Sitemap = [
+    ...new Set(rests.map((r) => citySlug(r.city))),
+  ].map((c) => ({
+    url: `${BASE_URL}/v/restaurants/${c}`,
+    changeFrequency: "weekly",
+    priority: 0.7,
+  }));
+
+  return [
+    ...staticPages,
+    ...catPages,
+    ...prodPages,
+    ...brandPages,
+    ...cityPages,
+    ...restPages,
+  ];
 }

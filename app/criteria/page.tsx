@@ -38,33 +38,29 @@ export default async function CriteriaPage() {
     }
   }
 
-  // schema.org/FAQPage — Google occasionally renders FAQ-style result
-  // expansions for pages that publish per-category Q&A like this. Each
-  // category becomes one question, the rule list becomes the answer.
-  const faqLd = {
+  // schema.org/BreadcrumbList — Home › Our Criteria. (Replaces a former
+  // FAQPage block whose questions only ever existed in the JSON-LD and were
+  // never rendered on the page — Google's FAQ policy requires the Q&A to be
+  // visible, so that markup was a spam-policy risk and is removed.)
+  const breadcrumbLd = {
     "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: (categories ?? [])
-      .map((c) => {
-        const catRules = byCat.get(c.id) ?? [];
-        if (catRules.length === 0) return null;
-        return {
-          "@type": "Question",
-          name: `How do you pick a ${c.name.toLowerCase()}?`,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: catRules.map((r) => `✓ ${r.description}`).join(" • "),
-          },
-        };
-      })
-      .filter((x): x is NonNullable<typeof x> => x !== null),
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Food Pharmer", item: SITE_URL },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Our Criteria",
+        item: `${SITE_URL}/criteria`,
+      },
+    ],
   };
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
       <SiteHeader />
       <main

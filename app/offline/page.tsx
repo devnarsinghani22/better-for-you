@@ -1,7 +1,12 @@
 // app/offline/page.tsx
 export const dynamic = "force-static";
 
-export const metadata = { title: "Offline" };
+// noindex: this is a service-worker offline fallback, not a content page —
+// keep it out of the index (no search intent, near-duplicate utility shell).
+export const metadata = {
+  title: "Offline",
+  robots: { index: false, follow: false },
+};
 
 export default function OfflinePage() {
   return (

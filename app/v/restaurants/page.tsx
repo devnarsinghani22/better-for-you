@@ -9,10 +9,24 @@ import { citySlug, cityMetaByName } from "@/lib/restaurants/cities";
 
 export const revalidate = 3600;
 
+const RESTAURANTS_DESC =
+  "Dishes worth ordering at restaurants across India — picked with the same label-first scrutiny we apply to packaged food.";
+
 export const metadata = {
   title: "Restaurants — Better for You by Food Pharmer",
-  description:
-    "Dishes worth ordering at restaurants across India — picked with the same label-first scrutiny we apply to packaged food.",
+  description: RESTAURANTS_DESC,
+  alternates: { canonical: "https://foodpharmer.health/v/restaurants" },
+  openGraph: {
+    title: "Restaurants — Better for You by Food Pharmer",
+    description: RESTAURANTS_DESC,
+    type: "website",
+    url: "https://foodpharmer.health/v/restaurants",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Restaurants — Better for You by Food Pharmer",
+    description: RESTAURANTS_DESC,
+  },
 };
 
 export default async function RestaurantsPage() {

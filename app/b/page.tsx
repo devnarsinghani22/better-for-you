@@ -8,11 +8,24 @@ const SITE_URL = "https://foodpharmer.health";
 
 export const revalidate = 3600;
 
+const BRANDS_DESC =
+  "Every brand currently on Food Pharmer's Better for You list — alphabetical index of label-checked, non-sponsored picks.";
+
 export const metadata = {
   title: "Brands on the Better for You list",
-  description:
-    "Every brand currently on Food Pharmer's Better for You list — alphabetical index of label-checked, non-sponsored picks.",
+  description: BRANDS_DESC,
   alternates: { canonical: `${SITE_URL}/b` },
+  openGraph: {
+    title: "Brands on the Better for You list",
+    description: BRANDS_DESC,
+    type: "website",
+    url: `${SITE_URL}/b`,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Brands on the Better for You list",
+    description: BRANDS_DESC,
+  },
 };
 
 type Row = {
@@ -69,11 +82,20 @@ export default async function BrandsIndexPage() {
     "@type": "CollectionPage",
     name: "Brands on the Better for You list",
     url: `${SITE_URL}/b`,
-    hasPart: rows.slice(0, 50).map((r) => ({
-      "@type": "Brand",
-      name: r.name,
-      url: `${SITE_URL}/b/${r.slug}`,
-    })),
+    isPartOf: { "@id": "https://foodpharmer.health/#website" },
+    // An ItemList of brand-page links is the crawl-useful shape (ordered set of
+    // internal links Google can read) — declares the true count even though the
+    // rendered list is capped.
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: rows.length,
+      itemListElement: rows.slice(0, 50).map((r, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: `${SITE_URL}/b/${r.slug}`,
+        name: r.name,
+      })),
+    },
   };
 
   return (

@@ -22,13 +22,31 @@ export async function generateMetadata({
   const r = await getRestaurantBySlug(slug);
   if (!r) return {};
   const ogImage = r.hero_image_url ?? r.card_image_url;
+  const title = `${r.name} — Better for You by Food Pharmer`;
+  const description =
+    r.tagline ??
+    `Better for You dishes at ${r.name}${r.city ? `, ${r.city}` : ""}.`;
+  // Canonical always points at prod (matches the rest of the site); staging is
+  // noindexed anyway.
+  const canonical = `https://foodpharmer.health/r/${r.slug}`;
   return {
-    title: `${r.name} — Better for You by Food Pharmer`,
-    description:
-      r.tagline ??
-      `Better for You dishes at ${r.name}${r.city ? `, ${r.city}` : ""}.`,
+    title,
+    description,
+    alternates: { canonical },
     // WhatsApp/OG preview card — the share CTA is the main distribution path.
-    ...(ogImage ? { openGraph: { images: [ogImage] } } : {}),
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      url: canonical,
+      ...(ogImage ? { images: [ogImage] } : {}),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      ...(ogImage ? { images: [ogImage] } : {}),
+    },
   };
 }
 
@@ -125,8 +143,43 @@ export default async function RestaurantPage({
       : {}),
   };
 
+  // schema.org/BreadcrumbList — Home › Restaurants › City › <Restaurant>.
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Food Pharmer", item: SITE_ORIGIN },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Restaurants",
+        item: `${SITE_ORIGIN}/v/restaurants`,
+      },
+      ...(r.city
+        ? [
+            {
+              "@type": "ListItem",
+              position: 3,
+              name: r.city,
+              item: `${SITE_ORIGIN}/v/restaurants/${citySlug(r.city)}`,
+            },
+          ]
+        : []),
+      {
+        "@type": "ListItem",
+        position: r.city ? 4 : 3,
+        name: r.name,
+        item: `${SITE_ORIGIN}/r/${r.slug}`,
+      },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }}

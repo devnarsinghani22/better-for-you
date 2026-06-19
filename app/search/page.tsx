@@ -9,6 +9,11 @@ import SiteFooter from "@/components/SiteFooter";
 export const metadata = {
   title: "Search",
   description: "Search Better for You by Food Pharmer by product, brand, or category.",
+  // Internal site-search is thin + effectively infinite (one URL per ?q=).
+  // Keep it out of the index but let Google follow through to real pages.
+  // noindex applies to the bare /search AND every /search?q=... variant.
+  alternates: { canonical: "https://foodpharmer.health/search" },
+  robots: { index: false, follow: true },
 };
 
 type SP = Promise<{ q?: string }>;
@@ -211,7 +216,7 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
                           src={p.product_photo_url}
-                          alt={p.name}
+                          alt={brand?.name ? `${brand.name} ${p.name}` : p.name}
                           className="w-full h-full object-contain p-3 sm:group-hover:scale-105 transition-transform duration-500"
                         />
                       ) : (
