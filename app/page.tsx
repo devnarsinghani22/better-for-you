@@ -110,7 +110,7 @@ export default async function HomePage() {
       <HomeScrollRestore />
       <SiteHeader />
 
-      <main id="main" tabIndex={-1} className="outline-none">
+      <main id="main" tabIndex={-1} className="outline-none w-full">
 
       {/* HERO */}
       <section>
@@ -124,7 +124,7 @@ export default async function HomePage() {
               <h1 className="font-display font-medium leading-[0.9] tracking-[-0.025em] text-[11.5vw] sm:text-[9.5vw] lg:text-[5.6vw] text-[color:var(--ink)] cursor-default select-none">
                 Better for You
                 <br />
-                <em className="italic font-light whitespace-nowrap">by Food Pharmer</em>
+                <em className="italic font-light">by Food Pharmer</em>
               </h1>
             </div>
 

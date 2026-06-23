@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { visibleProductStatuses } from "@/lib/products/visibility";
 import { visibleRestaurantStatuses } from "@/lib/restaurants/queries";
 import { expandQuery } from "@/lib/search/synonyms";
+import RequestProductForm from "@/components/RequestProductForm";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -110,6 +111,19 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
   const restaurants = restaurantsRes.data ?? [];
 
   const totalHits = products.length + categories.length + restaurants.length;
+
+  // Zero-result recovery: a browse fallback so a missed search is never a dead
+  // end. Only queried on an actual miss.
+  let browseCategories: { slug: string; name: string }[] = [];
+  if (showResults && totalHits === 0) {
+    const { data } = await sb
+      .from("categories")
+      .select("slug, name")
+      .eq("active", true)
+      .order("display_order", { ascending: true, nullsFirst: false })
+      .limit(12);
+    browseCategories = data ?? [];
+  }
 
   return (
     <>
@@ -248,11 +262,43 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
         )}
 
         {showResults && totalHits === 0 && (
-          <div className="mt-10 bg-[color:var(--bg-elev)] border rule rounded-sm p-8">
-            <p className="text-lg text-[color:var(--ink-soft)]">
-              No matches found for{" "}
-              <span className="text-[color:var(--ink)]">&ldquo;{query}&rdquo;</span>.
-            </p>
+          <div className="mt-10">
+            <div className="bg-[color:var(--bg-elev)] border rule rounded-sm p-8">
+              <p className="text-lg text-[color:var(--ink-soft)]">
+                No matches yet for{" "}
+                <span className="text-[color:var(--ink)]">&ldquo;{query}&rdquo;</span>.
+              </p>
+              <p className="mt-2 text-sm text-[color:var(--ink-mute)]">
+                We only list products our team has reviewed, so it may not be on
+                the list yet. Browse a category below, or ask us to look into it.
+              </p>
+            </div>
+
+            {browseCategories.length > 0 && (
+              <section className="mt-8">
+                <h2 className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-3">
+                  Browse categories
+                </h2>
+                <div className="flex flex-wrap gap-2">
+                  {browseCategories.map((c) => (
+                    <Link
+                      key={c.slug}
+                      href={`/c/${c.slug}`}
+                      className="inline-flex items-center bg-[color:var(--bg-elev)] border rule rounded-sm px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-[color:var(--ink-soft)] hover:border-[color:var(--ink)] hover:text-[color:var(--ink)] transition-colors"
+                    >
+                      {c.name}
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            <section className="mt-8">
+              <h2 className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] mb-3">
+                Want us to add it?
+              </h2>
+              <RequestProductForm query={query} />
+            </section>
           </div>
         )}
 
