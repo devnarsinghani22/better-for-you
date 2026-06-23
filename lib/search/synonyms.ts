@@ -18,12 +18,17 @@ type Alias = {
 };
 
 const ALIASES: Record<string, Alias> = {
-  // Yogurt / curd — the headline gap from Clarity.
-  curd: { slugs: ["yogurt"], terms: ["yogurt"] },
-  dahi: { slugs: ["yogurt"], terms: ["yogurt"] },
-  dahee: { slugs: ["yogurt"], terms: ["yogurt"] },
-  yoghurt: { slugs: ["yogurt"], terms: ["yogurt"] },
-  yoghourt: { slugs: ["yogurt"], terms: ["yogurt"] },
+  // Yogurt / curd — the headline gap from analytics. Indian "curd"/"dahi" ==
+  // yoghurt; both the US ("yogurt") and UK/India ("yoghurt") spellings map to
+  // the active Yoghurt category (slug "yogurt"). The live product NAMES are
+  // spelled "Yoghurt", so the name term must be "yoghurt" to actually match them
+  // (a "yogurt" term would surface only the category, not the products).
+  curd: { slugs: ["yogurt"], terms: ["yoghurt"] },
+  dahi: { slugs: ["yogurt"], terms: ["yoghurt"] },
+  dahee: { slugs: ["yogurt"], terms: ["yoghurt"] },
+  yogurt: { slugs: ["yogurt"], terms: ["yoghurt"] },
+  yoghurt: { slugs: ["yogurt"], terms: ["yoghurt"] },
+  yoghourt: { slugs: ["yogurt"], terms: ["yoghurt"] },
 
   // Biscuits
   cookie: { slugs: ["biscuits"], terms: ["biscuit"] },
