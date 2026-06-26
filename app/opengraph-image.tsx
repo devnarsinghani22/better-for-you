@@ -109,7 +109,7 @@ export default async function OGImage() {
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "flex-end",
             alignItems: "flex-end",
             fontSize: 18,
             letterSpacing: 3,
@@ -117,9 +117,6 @@ export default async function OGImage() {
             color: "#555555",
           }}
         >
-          <span>
-            Not sponsored
-          </span>
           <span style={{ color: "#000000" }}>foodpharmer.health →</span>
         </div>
       </div>
