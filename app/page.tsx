@@ -12,9 +12,10 @@ export const revalidate = 3600;
 const SITE_URL = "https://foodpharmer.health";
 
 export const metadata = {
-  // Title + description inherit the site defaults from app/layout.tsx
-  // ("Better for You by Food Pharmer"). Brand framing only — never use
-  // health-claim words ("healthier"/"cleaner") in user-visible copy.
+  // Brand framing only — never use health-claim words ("healthier"/"cleaner")
+  // and never claim we read every label. Approved, accurate messaging only.
+  description:
+    "Transparent recommendations of better-for-you packaged food and drink brands, based on clear criteria. By Food Pharmer. Not sponsored.",
   alternates: { canonical: SITE_URL },
 };
 
