@@ -29,24 +29,19 @@ export async function generateMetadata({
     .eq("slug", slug)
     .single();
   if (!cat || !cat.active) return {};
-  // Title/description target generic "healthier / clean / best <category> in
-  // India" search intent — not just brand search. The template appends
-  // "| Better for You by Food Pharmer".
-  const title = `Healthier ${cat.name} in India — Clean-Label Picks`;
-  const description =
-    cat.blurb ||
-    `The healthier, cleaner ${cat.name.toLowerCase()} brands in India — shortlisted by Food Pharmer after reading every ingredient list and nutrition label. Free, and never sponsored.`;
+  // Title is just the category name; the layout template appends
+  // "| Better for You by Food Pharmer". No per-category description, and never
+  // any health-claim words ("healthier"/"cleaner") in user-visible copy.
+  const title = cat.name;
   return {
     title,
-    description,
     alternates: { canonical: `${SITE_URL}/c/${slug}` },
     openGraph: {
       title,
-      description,
       type: "website",
       url: `${SITE_URL}/c/${slug}`,
     },
-    twitter: { card: "summary_large_image", title, description },
+    twitter: { card: "summary_large_image", title },
   };
 }
 
@@ -144,7 +139,6 @@ export default async function CategoryPage({
       {
         "@type": "ItemList",
         name: `${cat.name} — Better for You`,
-        description: cat.blurb || undefined,
         url: `${SITE_URL}/c/${slug}`,
         isPartOf: { "@id": `${SITE_URL}/#website` },
         numberOfItems: products.length,
