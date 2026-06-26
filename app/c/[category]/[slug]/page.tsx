@@ -37,7 +37,7 @@ export async function generateMetadata({
     : null;
   const description = ingredientHint
     ? `${brandName ?? ""} ${product.name} — approved by Food Pharmer's nutrition team. Ingredients: ${ingredientHint}`.trim()
-    : `${brandName ?? ""} ${product.name} is on our Better for You list — label-checked, not sponsored.`.trim();
+    : `${brandName ?? ""} ${product.name} is on our Better for You list.`.trim();
   const photoUrl = product.product_photo_url
     ? (product.product_photo_url.startsWith("http")
         ? product.product_photo_url

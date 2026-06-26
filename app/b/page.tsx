@@ -11,7 +11,7 @@ export const revalidate = 3600;
 export const metadata = {
   title: "Brands on the Better for You list",
   description:
-    "Every brand currently on Food Pharmer's Better for You list — alphabetical index of label-checked, non-sponsored picks.",
+    "Every brand currently on Food Pharmer's Better for You list — an alphabetical index.",
   alternates: { canonical: `${SITE_URL}/b` },
 };
 
@@ -107,7 +107,7 @@ export default async function BrandsIndexPage() {
           <p className="mt-4 max-w-2xl text-base sm:text-lg text-[color:var(--ink-soft)] leading-relaxed">
             {rows.length} brand{rows.length === 1 ? "" : "s"} currently meet
             our criteria across {[...new Set(prods?.map((p) => p.brand_id))].length}{" "}
-            products. Not sponsored. Label-checked.
+            products.
           </p>
         </header>
 
