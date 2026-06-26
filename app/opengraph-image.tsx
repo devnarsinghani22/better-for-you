@@ -118,7 +118,7 @@ export default async function OGImage() {
           }}
         >
           <span>
-            We read the labels so you don&rsquo;t have to · Not sponsored
+            Not sponsored
           </span>
           <span style={{ color: "#000000" }}>foodpharmer.health →</span>
         </div>
