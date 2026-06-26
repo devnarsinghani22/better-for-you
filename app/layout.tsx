@@ -47,12 +47,10 @@ export const metadata: Metadata = {
     default: "Better for You by Food Pharmer",
     template: "%s | Better for You by Food Pharmer",
   },
-  description:
-    "We analyse ingredient lists and nutrition labels to shortlist products that are better for you. Not sponsored.",
+  // No site description — we don't claim to read every label or that products
+  // are "healthier"/"cleaner". Brand name only.
   openGraph: {
     title: "Better for You by Food Pharmer",
-    description:
-      "We analyse ingredient lists and nutrition labels to shortlist products that are better for you. Not sponsored.",
     type: "website",
     locale: "en_IN",
     url: "https://foodpharmer.health",
@@ -61,8 +59,6 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Better for You by Food Pharmer",
-    description:
-      "We analyse ingredient lists and nutrition labels to shortlist products that are better for you. Not sponsored.",
   },
   appleWebApp: {
     capable: true,

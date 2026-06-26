@@ -29,24 +29,19 @@ export async function generateMetadata({
     .eq("slug", slug)
     .single();
   if (!cat || !cat.active) return {};
-  // Title/description target generic "healthier / clean / best <category> in
-  // India" search intent — not just brand search. The template appends
-  // "| Better for You by Food Pharmer".
-  const title = `Healthier ${cat.name} in India — Clean-Label Picks`;
-  const description =
-    cat.blurb ||
-    `The healthier, cleaner ${cat.name.toLowerCase()} brands in India — shortlisted by Food Pharmer after reading every ingredient list and nutrition label. Free, and never sponsored.`;
+  // Title is just the category name; the layout template appends
+  // "| Better for You by Food Pharmer". No per-category description, and never
+  // any health-claim words ("healthier"/"cleaner") in user-visible copy.
+  const title = cat.name;
   return {
     title,
-    description,
     alternates: { canonical: `${SITE_URL}/c/${slug}` },
     openGraph: {
       title,
-      description,
       type: "website",
       url: `${SITE_URL}/c/${slug}`,
     },
-    twitter: { card: "summary_large_image", title, description },
+    twitter: { card: "summary_large_image", title },
   };
 }
 
@@ -128,7 +123,6 @@ export default async function CategoryPage({
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: `${cat.name} — Better for You`,
-    description: cat.blurb || undefined,
     url: `${SITE_URL}/c/${slug}`,
     numberOfItems: products.length,
     itemListElement: products.slice(0, 30).map((p, i) => {
@@ -169,15 +163,8 @@ export default async function CategoryPage({
 
       <header className="mt-6 sm:mt-8 pb-8 sm:pb-10 border-b rule">
         <h1 className="font-display text-5xl sm:text-7xl tracking-[-0.02em] leading-[0.95]">
-          Healthier {cat.name}
+          {cat.name}
         </h1>
-        {/* Editorial intro — gives the page real, unique, keyword-relevant body
-            text (category pages were ~177 words; Google has little to rank a
-            thin page on). Falls back to a templated line when no blurb. */}
-        <p className="mt-5 max-w-2xl text-lg sm:text-xl leading-relaxed text-[color:var(--ink-soft)]">
-          {cat.blurb ||
-            `Looking for a healthier ${cat.name.toLowerCase()}? We read the ingredient list and nutrition label on every option and shortlisted the ${cat.name.toLowerCase()} brands in India worth buying — the cleaner picks, with the junk called out. Free, and never sponsored.`}
-        </p>
         <div className="mt-6 font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)]">
           {products.length} {products.length === 1 ? "pick" : "picks"}
         </div>

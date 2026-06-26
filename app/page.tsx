@@ -12,14 +12,9 @@ export const revalidate = 3600;
 const SITE_URL = "https://foodpharmer.health";
 
 export const metadata = {
-  // Lead with the brand name (wins "food pharmer" brand search) and carry
-  // generic keywords ("healthier / cleaner packaged foods in India").
-  title: {
-    absolute:
-      "Food Pharmer — Healthier, Cleaner Packaged Foods & Drinks in India",
-  },
-  description:
-    "Food Pharmer reads the ingredient list and nutrition label so you don't have to — a free directory of the healthier, cleaner packaged food and drink brands in India. Never sponsored.",
+  // Title + description inherit the site defaults from app/layout.tsx
+  // ("Better for You by Food Pharmer"). Brand framing only — never use
+  // health-claim words ("healthier"/"cleaner") in user-visible copy.
   alternates: { canonical: SITE_URL },
 };
 
@@ -110,8 +105,6 @@ export default async function HomePage() {
           "https://www.linkedin.com/in/revant-himatsingka",
         ],
         founder: { "@type": "Person", name: "Revant Himatsingka" },
-        description:
-          "We analyse ingredient lists and nutrition labels to shortlist packaged food products that are better for you. Not sponsored.",
       },
       {
         "@type": "WebSite",
