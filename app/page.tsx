@@ -15,7 +15,7 @@ export const metadata = {
   // Brand framing only — never use health-claim words ("healthier"/"cleaner")
   // and never claim we read every label. Approved, accurate messaging only.
   description:
-    "Transparent recommendations of better-for-you packaged food and drink brands, based on clear criteria. By Food Pharmer. Not sponsored.",
+    "Transparent recommendations of better-for-you packaged food and drink brands, based on clear criteria. By Food Pharmer.",
   alternates: { canonical: SITE_URL },
 };
 
