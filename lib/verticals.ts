@@ -27,7 +27,7 @@ export const VERTICALS: Vertical[] = [
     status: "soon",
     tagline: "Places that cook with ingredients worth trusting.",
     blurb:
-      "We are extending the same label-first scrutiny to restaurants and cloud kitchens — what they cook with, not just what they claim. Leave your details and we will tell you the moment it is live.",
+      "We are extending the same label-first scrutiny to restaurants and cloud kitchens, looking at what they cook with, not just what they claim. Leave your details and we will tell you the moment it is live.",
   },
 ];
 

@@ -54,7 +54,7 @@ export default function NutritionCard({ data, brand }: { data: NutritionData; br
           className="py-2.5 px-5 text-right text-[color:var(--ink-mute)] tabular-nums"
           aria-label="not declared"
         >
-          —
+          –
         </td>
       );
     }

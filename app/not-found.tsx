@@ -25,7 +25,7 @@ export default function NotFound() {
         </h1>
         <p className="mt-6 text-lg text-[color:var(--ink-soft)] leading-relaxed max-w-lg">
           That page doesn&rsquo;t exist, or the product was retracted. Try
-          searching — most of the time the page just moved.
+          searching. Most of the time the page just moved.
         </p>
 
         {/* Recovery surface — the cheapest way to keep a dead-link visit

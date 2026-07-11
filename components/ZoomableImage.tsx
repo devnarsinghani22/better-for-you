@@ -132,7 +132,7 @@ export default function ZoomableImage({ src, alt, className, priority }: Props) 
         <div
           role="dialog"
           aria-modal="true"
-          aria-label={`${alt} — zoomed`}
+          aria-label={`${alt}, zoomed`}
           className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center touch-none select-none"
           onClick={(e) => {
             // tap the dark backdrop (not the image) to close, when not zoomed

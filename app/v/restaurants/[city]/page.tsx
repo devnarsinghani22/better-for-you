@@ -17,8 +17,8 @@ export async function generateMetadata({
   const { city } = await params;
   const meta = cityMetaBySlug(city);
   const name = meta?.name ?? city;
-  const title = `${name} — Better for You Restaurants by Food Pharmer`;
-  const description = `Restaurants in ${name} worth ordering from — picked with the same label-first scrutiny we apply to packaged food.`;
+  const title = `${name}: Better for You Restaurants by Food Pharmer`;
+  const description = `Restaurants in ${name} worth ordering from, picked with the same label-first scrutiny we apply to packaged food.`;
   const canonical = `https://foodpharmer.health/v/restaurants/${city}`;
   return {
     title,
@@ -60,7 +60,7 @@ export default async function CityRestaurantsPage({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={meta.image}
-              alt={`${name} — ${meta.landmark}`}
+              alt={`${name}: ${meta.landmark}`}
               className="absolute inset-0 w-full h-full object-cover"
             />
           </div>

@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 export const alt =
-  "Better for You by Food Pharmer — packaged foods we'd actually buy.";
+  "Better for You by Food Pharmer. Packaged foods we'd actually buy.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -109,7 +109,7 @@ export default async function OGImage() {
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "flex-end",
             alignItems: "flex-end",
             fontSize: 18,
             letterSpacing: 3,
@@ -117,9 +117,6 @@ export default async function OGImage() {
             color: "#555555",
           }}
         >
-          <span>
-            Not sponsored
-          </span>
           <span style={{ color: "#000000" }}>foodpharmer.health →</span>
         </div>
       </div>

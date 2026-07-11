@@ -10,7 +10,7 @@ type Props =
 export default function WhatsAppShare(props: Props) {
   const text =
     props.text ??
-    `${props.brand} ${props.productName} — featured on Better for You by Food Pharmer. ${props.url}`;
+    `${props.brand} ${props.productName}, featured on Better for You by Food Pharmer. ${props.url}`;
   const waUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
   return (
     <a

@@ -138,7 +138,7 @@ export default async function CategoryPage({
       },
       {
         "@type": "ItemList",
-        name: `${cat.name} — Better for You`,
+        name: `${cat.name}: Better for You`,
         url: `${SITE_URL}/c/${slug}`,
         isPartOf: { "@id": `${SITE_URL}/#website` },
         numberOfItems: products.length,

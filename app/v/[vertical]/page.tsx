@@ -23,8 +23,8 @@ export async function generateMetadata({
   const v = getVertical(vertical);
   if (!v) return {};
   return {
-    title: `${v.label} — coming soon`,
-    description: `Better for You ${v.label} by Food Pharmer — ${v.tagline ?? "coming soon."}`,
+    title: `${v.label}: coming soon`,
+    description: `Better for You ${v.label} by Food Pharmer. ${v.tagline ?? "Coming soon."}`,
   };
 }
 

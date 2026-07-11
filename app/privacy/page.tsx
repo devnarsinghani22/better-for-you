@@ -3,7 +3,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
 export const metadata = {
-  title: "Privacy Policy — Better for You by Food Pharmer",
+  title: "Privacy Policy: Better for You by Food Pharmer",
   description:
     "How Better for You by Food Pharmer collects, uses, and protects the details you share with us.",
   // Self-canonical (resolved against metadataBase) — collapses any
@@ -58,7 +58,7 @@ export default function PrivacyPage() {
             </h2>
             <p className="mt-3">
               Only to tell you when the thing you signed up for goes live, and
-              to send occasional updates about it — over{" "}
+              to send occasional updates about it, over{" "}
               <strong>WhatsApp and email</strong>. That&rsquo;s it. We process
               this information on the basis of your consent, which you give by
               ticking the box and submitting the form.
@@ -74,7 +74,7 @@ export default function PrivacyPage() {
               notifications, your device is issued a{" "}
               <strong>push notification token</strong> by Google (Android) or
               Apple (iOS). We store this token only so we can send you the
-              occasional update — for example, when we add a new approved
+              occasional update, for example, when we add a new approved
               product. It is not linked to your name and is not used to track
               you. You can turn notifications off at any time in your phone&rsquo;s
               settings, and we delete tokens that are no longer valid.
@@ -111,7 +111,7 @@ export default function PrivacyPage() {
               Under India&rsquo;s Digital Personal Data Protection Act, 2023,
               you can ask us to access, correct, or delete your details, and you
               can withdraw your consent at any time. To do any of these, just
-              email us — we&rsquo;ll act on it promptly.
+              email us and we&rsquo;ll act on it promptly.
             </p>
           </section>
 

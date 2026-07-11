@@ -10,21 +10,21 @@ import { citySlug, cityMetaByName } from "@/lib/restaurants/cities";
 export const revalidate = 3600;
 
 const RESTAURANTS_DESC =
-  "Dishes worth ordering at restaurants across India — picked with the same label-first scrutiny we apply to packaged food.";
+  "Dishes worth ordering at restaurants across India, picked with the same label-first scrutiny we apply to packaged food.";
 
 export const metadata = {
-  title: "Restaurants — Better for You by Food Pharmer",
+  title: "Restaurants: Better for You by Food Pharmer",
   description: RESTAURANTS_DESC,
   alternates: { canonical: "https://foodpharmer.health/v/restaurants" },
   openGraph: {
-    title: "Restaurants — Better for You by Food Pharmer",
+    title: "Restaurants: Better for You by Food Pharmer",
     description: RESTAURANTS_DESC,
     type: "website",
     url: "https://foodpharmer.health/v/restaurants",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Restaurants — Better for You by Food Pharmer",
+    title: "Restaurants: Better for You by Food Pharmer",
     description: RESTAURANTS_DESC,
   },
 };
@@ -121,7 +121,7 @@ export default async function RestaurantsPage() {
                         /* eslint-disable-next-line @next/next/no-img-element */
                         <img
                           src={city.meta.image}
-                          alt={`${city.name} — ${city.meta.landmark}`}
+                          alt={`${city.name}: ${city.meta.landmark}`}
                           loading={i === 0 ? "eager" : "lazy"}
                           decoding="async"
                           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] sm:group-hover:scale-[1.08]"

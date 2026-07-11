@@ -22,7 +22,7 @@ export async function generateMetadata({
   const r = await getRestaurantBySlug(slug);
   if (!r) return {};
   const ogImage = r.hero_image_url ?? r.card_image_url;
-  const title = `${r.name} — Better for You by Food Pharmer`;
+  const title = `${r.name}: Better for You by Food Pharmer`;
   const description =
     r.tagline ??
     `Better for You dishes at ${r.name}${r.city ? `, ${r.city}` : ""}.`;

@@ -23,7 +23,7 @@ export async function generateMetadata({
     .eq("slug", slug)
     .single();
   if (!brand || brand.is_excluded) return {};
-  const title = `${brand.name} — Better for You picks`;
+  const title = `${brand.name}: Better for You picks`;
   const description = `Every ${brand.name} product currently on our better-for-you list, with the criteria we used to pick them.`;
   const url = `${SITE_URL}/b/${slug}`;
   return {
@@ -118,7 +118,7 @@ export default async function BrandPage({
   const listLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: `${brand.name} — Better for You picks`,
+    name: `${brand.name}: Better for You picks`,
     url: `${SITE_URL}/b/${slug}`,
     numberOfItems: listProducts.length,
     itemListElement: listProducts.slice(0, 30).map((p, i) => {

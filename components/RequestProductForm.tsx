@@ -14,7 +14,7 @@ export default function RequestProductForm({ query }: { query: string }) {
   if (done) {
     return (
       <p className="text-sm text-[color:var(--ink-soft)]">
-        Thanks — we&rsquo;ve noted you&rsquo;re looking for{" "}
+        Thanks, we&rsquo;ve noted you&rsquo;re looking for{" "}
         <span className="text-[color:var(--ink)]">&ldquo;{query}&rdquo;</span>.
         {email ? " We&rsquo;ll email you if it makes the list." : ""}
       </p>
@@ -40,7 +40,7 @@ export default function RequestProductForm({ query }: { query: string }) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           aria-label="Email (optional)"
-          placeholder="Email (optional — to hear when we add it)"
+          placeholder="Email (optional, to hear when we add it)"
           className="flex-1 bg-[color:var(--bg-elev)] border-2 border-[color:var(--ink-mute)] focus:border-[color:var(--ink)] rounded-sm px-4 py-3 text-base text-[color:var(--ink)] placeholder:text-[color:var(--ink-mute)] outline-none transition-colors"
         />
         <button

@@ -6,7 +6,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Better for You by Food Pharmer",
     short_name: "Better for You",
     description:
-      "Packaged foods we'd actually buy — label-checked by Food Pharmer.",
+      "Packaged foods we'd actually buy, reviewed by Food Pharmer.",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",

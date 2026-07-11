@@ -293,7 +293,7 @@ export default function SearchBox() {
                     </div>
                     <div className="min-w-0 flex-1">
                       <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-mute)] truncate">
-                        {brand?.name ?? "—"} · {cat.name}
+                        {brand?.name ?? "–"} · {cat.name}
                       </p>
                       <h3 className="font-display text-base tracking-tight leading-tight truncate text-[color:var(--ink)]">
                         {p.name}
