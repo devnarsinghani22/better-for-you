@@ -150,10 +150,6 @@ export default async function HomePage() {
               <h2 className="font-display text-2xl sm:text-4xl tracking-[-0.02em] leading-[0.95] text-[color:var(--ink)]">
                 The Oil Board
               </h2>
-              <p className="mt-2 text-sm sm:text-base text-[color:var(--ink-soft)] leading-relaxed">
-                See how much oil is hiding in everyday foods, from a samosa to
-                a packet of biscuits. Free PDF, emailed to your inbox.
-              </p>
             </div>
             <Link
               href="/oil-board"

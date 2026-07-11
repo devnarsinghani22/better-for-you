@@ -37,11 +37,7 @@ export default function OilBoardPage() {
             <h1 className="font-display text-4xl sm:text-5xl tracking-tight leading-[1.05]">
               The Oil Board
             </h1>
-            <p className="mt-5 text-lg text-[color:var(--ink-soft)] leading-relaxed max-w-md">
-              How much oil is really in a samosa, a packet of biscuits, your
-              everyday snacks? The Oil Board shows you, at a glance.
-            </p>
-            <p className="mt-4 text-[color:var(--ink-soft)] leading-relaxed max-w-md">
+            <p className="mt-5 text-[color:var(--ink-soft)] leading-relaxed max-w-md">
               Drop your email and we&rsquo;ll send you the PDF. No download
               link, no fuss. It lands straight in your inbox.
             </p>
