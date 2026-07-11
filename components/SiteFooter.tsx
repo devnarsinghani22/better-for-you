@@ -30,6 +30,11 @@ export default function SiteFooter() {
               </Link>
             </li>
             <li>
+              <Link href="/oil-board" className="hover:text-[color:var(--accent-deep)]">
+                Oil Board
+              </Link>
+            </li>
+            <li>
               <Link href="/privacy" className="hover:text-[color:var(--accent-deep)]">
                 Privacy
               </Link>

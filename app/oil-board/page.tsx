@@ -1,0 +1,50 @@
+import Link from "next/link";
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
+import OilBoardsForm from "./OilBoardsForm";
+
+export const revalidate = 3600;
+
+const SITE_URL = "https://foodpharmer.health";
+
+export const metadata = {
+  // Bare page name only — the layout template appends
+  // "| Better for You by Food Pharmer" (don't repeat it here).
+  title: "Oil Board: Free PDF",
+  description:
+    "See how much oil is really in everyday foods like samosa and biscuits. A free PDF from Food Pharmer, emailed to your inbox.",
+  alternates: { canonical: `${SITE_URL}/oil-board` },
+};
+
+export default function OilBoardPage() {
+  return (
+    <>
+      <SiteHeader />
+      <main
+        id="main"
+        tabIndex={-1}
+        className="outline-none max-w-[1000px] mx-auto px-6 sm:px-10 py-16 relative z-10"
+      >
+        <Link
+          href="/"
+          className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ink-mute)] hover:text-[color:var(--accent-deep)]"
+        >
+          ← Home
+        </Link>
+
+        <div className="mt-14 grid gap-12 md:grid-cols-2 md:gap-16 md:items-start">
+          <section>
+            <h1 className="font-display text-4xl sm:text-5xl tracking-tight leading-[1.05]">
+              Oil Board
+            </h1>
+          </section>
+
+          <section className="md:pt-2">
+            <OilBoardsForm />
+          </section>
+        </div>
+      </main>
+      <SiteFooter />
+    </>
+  );
+}

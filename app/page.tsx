@@ -180,6 +180,26 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* OIL BOARD — free-resource band. Email-gated PDF; the CTA routes to
+          /oil-board where the address is captured (no download link here). */}
+      <section className="border-t rule bg-[color:var(--bg-elev)]/40">
+        <div className="max-w-[1280px] mx-auto px-5 sm:px-10 py-8 sm:py-12">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 sm:gap-8">
+            <div className="max-w-xl">
+              <h2 className="font-display text-2xl sm:text-4xl tracking-[-0.02em] leading-[0.95] text-[color:var(--ink)]">
+                Oil Board
+              </h2>
+            </div>
+            <Link
+              href="/oil-board"
+              className="inline-flex items-center justify-center gap-2 bg-[color:var(--ink)] text-[color:var(--bg)] font-mono text-[13px] uppercase tracking-[0.22em] px-5 py-3 w-full sm:w-auto shrink-0 hover:bg-[color:var(--accent-deep)] transition-colors"
+            >
+              Get the free PDF <span aria-hidden>→</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* CATEGORIES — editorial index */}
       <section className="border-t rule">
         <div className="max-w-[1280px] mx-auto px-5 sm:px-10 pt-8 sm:pt-10 pb-16 sm:pb-24">
