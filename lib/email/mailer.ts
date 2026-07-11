@@ -62,7 +62,7 @@ export async function sendOilBoardsEmail(to: string): Promise<{ ok: true } | { o
       "Food Pharmer",
     ].join("\n"),
     html: `
-      <div style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#1a1a1a;max-width:520px;margin:0 auto">
+      <div style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#1a1a1a;max-width:520px;text-align:left">
         <p>Hi,</p>
         <p>Thanks for requesting the <strong>Oil Board</strong>. The PDF is attached to this email.</p>
         <p style="margin-top:28px">
