@@ -30,9 +30,11 @@ export default function OilBoardsForm() {
 
   return (
     <div className="border-2 border-[color:var(--ink)] bg-[color:var(--bg-elev)] p-6 sm:p-7">
-      <h2 className="font-display text-2xl sm:text-3xl tracking-tight leading-tight text-[color:var(--ink)]">
-        {done ? "Check your inbox." : "Get the Oil Board."}
-      </h2>
+      {done && (
+        <h2 className="font-display text-2xl sm:text-3xl tracking-tight leading-tight text-[color:var(--ink)]">
+          Check your inbox.
+        </h2>
+      )}
 
       {done ? (
         <p className="mt-3 text-[color:var(--ink-soft)] leading-relaxed">
