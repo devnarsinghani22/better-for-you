@@ -66,8 +66,9 @@ export default async function CriteriaBlock({
             <p className="font-hand text-xl sm:text-2xl leading-snug text-[color:var(--ink)]">
               {note}
             </p>
+            {/* en dash, not em dash — site rule bans em dashes in visible copy */}
             <p className="font-hand text-xl sm:text-2xl mt-1 text-right text-[color:var(--ink-soft)]">
-              &mdash; Food Pharmer
+              &ndash; Food Pharmer
             </p>
           </div>
         )}
