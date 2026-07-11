@@ -148,7 +148,7 @@ export default async function HomePage() {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 sm:gap-8">
             <div className="max-w-xl">
               <h2 className="font-display text-2xl sm:text-4xl tracking-[-0.02em] leading-[0.95] text-[color:var(--ink)]">
-                The Oil Board
+                Oil Board
               </h2>
             </div>
             <Link

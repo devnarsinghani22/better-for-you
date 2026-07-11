@@ -35,7 +35,7 @@ export default function OilBoardPage() {
         <div className="mt-14 grid gap-12 md:grid-cols-2 md:gap-16 md:items-start">
           <section>
             <h1 className="font-display text-4xl sm:text-5xl tracking-tight leading-[1.05]">
-              The Oil Board
+              Oil Board
             </h1>
             <p className="mt-5 text-[color:var(--ink-soft)] leading-relaxed max-w-md">
               Drop your email and we&rsquo;ll send you the PDF. No download
