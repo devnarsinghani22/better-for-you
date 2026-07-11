@@ -20,7 +20,6 @@ function SoonTag() {
 
 export function VerticalNavDesktop() {
   const pathname = usePathname() || "/";
-  const oilActive = pathname.startsWith("/oil-board");
   return (
     <nav
       aria-label="Sections"
@@ -44,27 +43,12 @@ export function VerticalNavDesktop() {
           </Link>
         );
       })}
-      {/* Oil Board is a free resource, not a product vertical — kept out of
-          VERTICALS (which drives /v/[vertical] routing) but shown as a peer
-          nav link. */}
-      <Link
-        href="/oil-board"
-        aria-current={oilActive ? "page" : undefined}
-        className={`inline-flex flex-col items-start leading-none transition-colors ${
-          oilActive
-            ? "text-[color:var(--ink)]"
-            : "hover:text-[color:var(--accent-deep)]"
-        }`}
-      >
-        <span>Oil Board</span>
-      </Link>
     </nav>
   );
 }
 
 export function VerticalNavMobile() {
   const pathname = usePathname() || "/";
-  const oilActive = pathname.startsWith("/oil-board");
   return (
     <>
       {VERTICALS.map((v) => {
@@ -86,20 +70,6 @@ export function VerticalNavMobile() {
           </li>
         );
       })}
-      {/* Oil Board resource link — peer of the vertical cells. */}
-      <li className="flex-1">
-        <Link
-          href="/oil-board"
-          aria-current={oilActive ? "page" : undefined}
-          className={`flex flex-col items-center justify-center gap-1 min-h-[48px] px-1.5 text-center active:bg-[color:var(--accent)]/30 transition-colors ${
-            oilActive
-              ? "text-[color:var(--accent-deep)]"
-              : "hover:text-[color:var(--accent-deep)]"
-          }`}
-        >
-          <span>Oil Board</span>
-        </Link>
-      </li>
     </>
   );
 }

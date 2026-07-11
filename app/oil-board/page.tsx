@@ -37,10 +37,6 @@ export default function OilBoardPage() {
             <h1 className="font-display text-4xl sm:text-5xl tracking-tight leading-[1.05]">
               Oil Board
             </h1>
-            <p className="mt-5 text-[color:var(--ink-soft)] leading-relaxed max-w-md">
-              Drop your email and we&rsquo;ll send you the PDF. No download
-              link, no fuss. It lands straight in your inbox.
-            </p>
           </section>
 
           <section className="md:pt-2">

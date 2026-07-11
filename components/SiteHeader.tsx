@@ -20,9 +20,7 @@ export default function SiteHeader() {
         aria-label="Mobile navigation"
         className="md:hidden border-t rule bg-[color:var(--bg-elev)]"
       >
-        {/* tracking tightened 0.2em -> 0.12em when the strip went from 2 to 3
-            cells so "Packaged Food" still fits one line on ~360px phones. */}
-        <ul className="max-w-[1280px] mx-auto px-2 flex items-stretch justify-between text-[11px] font-mono font-semibold uppercase tracking-[0.12em] text-[color:var(--ink)] divide-x divide-[color:var(--ink-mute)]/30">
+        <ul className="max-w-[1280px] mx-auto px-2 flex items-stretch justify-between text-[11px] font-mono font-semibold uppercase tracking-[0.2em] text-[color:var(--ink)] divide-x divide-[color:var(--ink-mute)]/30">
           <VerticalNavMobile />
         </ul>
       </nav>
