@@ -28,6 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/criteria",
     "/v/restaurants",
     "/b",
+    "/oil-board",
   ].map((path) => ({
     url: `${BASE_URL}${path}`,
     changeFrequency: "weekly",

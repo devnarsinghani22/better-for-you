@@ -2,9 +2,9 @@
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
-import { requestOilBoards } from "@/app/oil-boards/actions";
+import { requestOilBoards } from "@/app/oil-board/actions";
 
-// Email-only capture for the Oil Boards. On success the card swaps in place to
+// Email-only capture for the Oil Board. On success the card swaps in place to
 // a "check your inbox" confirmation — no download link is ever shown; the PDF
 // arrives by email. Mirrors NotifyForm's frame + in-place confirmation.
 export default function OilBoardsForm() {
@@ -31,7 +31,7 @@ export default function OilBoardsForm() {
   return (
     <div className="border-2 border-[color:var(--ink)] bg-[color:var(--bg-elev)] p-6 sm:p-7">
       <h2 className="font-display text-2xl sm:text-3xl tracking-tight leading-tight text-[color:var(--ink)]">
-        {done ? "Check your inbox." : "Get the Oil Boards."}
+        {done ? "Check your inbox." : "Get the Oil Board."}
       </h2>
 
       {done ? (
@@ -43,7 +43,7 @@ export default function OilBoardsForm() {
       ) : (
         <form onSubmit={onSubmit} className="mt-5">
           <p className="text-[color:var(--ink-soft)] leading-relaxed mb-4">
-            Enter your email and we&rsquo;ll send the Oil Boards PDF straight to
+            Enter your email and we&rsquo;ll send the Oil Board PDF straight to
             your inbox.
           </p>
           {/* Honeypot: visually hidden + untabbable; bots that autofill every
@@ -87,7 +87,7 @@ export default function OilBoardsForm() {
                 className="mt-0.5 h-4 w-4 shrink-0 accent-[color:var(--ink)]"
               />
               <span>
-                I agree to receive the Oil Boards by email. We won&rsquo;t share
+                I agree to receive the Oil Board by email. We won&rsquo;t share
                 your details or spam you. See our{" "}
                 <Link
                   href="/privacy"

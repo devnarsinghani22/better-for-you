@@ -3,7 +3,7 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendOilBoardsEmail } from "@/lib/email/mailer";
 
-// Oil Boards lead magnet: capture an email, save it to contact_submissions
+// Oil Board lead magnet: capture an email, save it to contact_submissions
 // (reason "oil_boards", read/export from /admin/contact), then EMAIL the PDF as
 // an attachment. No download link is ever shown on the site — delivery is by
 // email only. Anon inserts are blocked by RLS, so we use the service-role
@@ -18,7 +18,7 @@ import { sendOilBoardsEmail } from "@/lib/email/mailer";
 const PER_EMAIL_CAP_24H = 2;
 const GLOBAL_DAILY_SEND_CAP = 200;
 const FRIENDLY_RETRY = "Something went wrong. Please try again.";
-const ON_LIST = "You're on the list. We'll email your Oil Boards shortly.";
+const ON_LIST = "You're on the list. We'll email your Oil Board shortly.";
 
 export async function requestOilBoards(input: {
   email: string;
@@ -61,7 +61,7 @@ export async function requestOilBoards(input: {
     const { error } = await admin.from("contact_submissions").insert({
       email,
       reason: "oil_boards",
-      message: "Requested the Oil Boards PDF",
+      message: "Requested the Oil Board PDF",
     });
     if (error) {
       console.error("[oil-boards] lead insert failed:", error.message);

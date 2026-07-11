@@ -10,13 +10,13 @@ const SITE_URL = "https://foodpharmer.health";
 export const metadata = {
   // Bare page name only — the layout template appends
   // "| Better for You by Food Pharmer" (don't repeat it here).
-  title: "Oil Boards: Free PDF",
+  title: "Oil Board: Free PDF",
   description:
     "See how much oil is really in everyday foods like samosa and biscuits. A free PDF from Food Pharmer, emailed to your inbox.",
-  alternates: { canonical: `${SITE_URL}/oil-boards` },
+  alternates: { canonical: `${SITE_URL}/oil-board` },
 };
 
-export default function OilBoardsPage() {
+export default function OilBoardPage() {
   return (
     <>
       <SiteHeader />
@@ -35,11 +35,11 @@ export default function OilBoardsPage() {
         <div className="mt-14 grid gap-12 md:grid-cols-2 md:gap-16 md:items-start">
           <section>
             <h1 className="font-display text-4xl sm:text-5xl tracking-tight leading-[1.05]">
-              The Oil Boards
+              The Oil Board
             </h1>
             <p className="mt-5 text-lg text-[color:var(--ink-soft)] leading-relaxed max-w-md">
               How much oil is really in a samosa, a packet of biscuits, your
-              everyday snacks? The Oil Boards show you, at a glance.
+              everyday snacks? The Oil Board shows you, at a glance.
             </p>
             <p className="mt-4 text-[color:var(--ink-soft)] leading-relaxed max-w-md">
               Drop your email and we&rsquo;ll send you the PDF. No download
