@@ -109,6 +109,7 @@ export type Database = {
       }
       brands: {
         Row: {
+          contact_email: string | null
           created_at: string
           exclusion_reason: string | null
           id: number
@@ -119,6 +120,7 @@ export type Database = {
           website_url: string | null
         }
         Insert: {
+          contact_email?: string | null
           created_at?: string
           exclusion_reason?: string | null
           id?: number
@@ -129,6 +131,7 @@ export type Database = {
           website_url?: string | null
         }
         Update: {
+          contact_email?: string | null
           created_at?: string
           exclusion_reason?: string | null
           id?: number

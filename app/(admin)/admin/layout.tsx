@@ -45,10 +45,12 @@ export default async function AdminLayout({
       ? [
           { href: '/admin/approvals', label: 'Approvals' },
           { href: '/admin/products', label: 'All products' },
+          { href: '/admin/brands', label: 'Brands' },
         ]
       : [
           { href: '/admin/products', label: 'Products' },
           { href: '/admin/approvals', label: 'Approvals' },
+          { href: '/admin/brands', label: 'Brands' },
         ];
 
   return (
