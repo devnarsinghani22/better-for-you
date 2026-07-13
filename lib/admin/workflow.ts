@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { requireRole } from '@/lib/admin/roles';
+import { sendProductLiveEmail } from '@/lib/email/mailer';
 
 type Status =
   | 'Draft'
@@ -174,6 +175,37 @@ export async function askClarification(productId: number, note: string) {
   revalidatePath('/admin/approvals');
 }
 
+// Lets the brand's founder know their product just went Live so they can
+// share it. Best-effort only: any failure is logged and never blocks pushLive.
+// Skipped on re-listings (a prior push_live audit row already congratulated).
+async function notifyFounderProductLive(productId: number, isFirstPushLive: boolean) {
+  try {
+    if (!isFirstPushLive) return;
+    const admin = createAdminClient();
+    const { data, error } = await admin
+      .from('products')
+      .select('name, slug, brand:brands(name, contact_email), category:categories(slug)')
+      .eq('id', productId)
+      .single();
+    if (error || !data) {
+      console.error('[founder-notify] product fetch failed:', error?.message);
+      return;
+    }
+    const brand = Array.isArray(data.brand) ? data.brand[0] : data.brand;
+    const category = Array.isArray(data.category) ? data.category[0] : data.category;
+    if (!brand?.contact_email || !category?.slug) return;
+
+    await sendProductLiveEmail({
+      to: brand.contact_email,
+      brandName: brand.name,
+      productName: data.name,
+      productUrl: `https://foodpharmer.health/c/${category.slug}/${data.slug}`,
+    });
+  } catch (e) {
+    console.error('[founder-notify] send failed:', e instanceof Error ? e.message : e);
+  }
+}
+
 export async function pushLive(productId: number) {
   const { email, userId } = await userInfo();
   const from = await getProductStatus(productId);
@@ -184,6 +216,15 @@ export async function pushLive(productId: number) {
   sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
 
   const admin = createAdminClient();
+
+  // First listing vs re-listing after retraction: only the first gets the
+  // founder congrats email. Checked before we write this push's audit row.
+  const { count: priorPushes } = await admin
+    .from('audit_log')
+    .select('id', { count: 'exact', head: true })
+    .eq('product_id', productId)
+    .eq('action', 'push_live');
+
   const { error } = await admin
     .from('products')
     .update({
@@ -202,6 +243,9 @@ export async function pushLive(productId: number) {
     fromStatus: from,
     toStatus: 'Live',
   });
+
+  await notifyFounderProductLive(productId, (priorPushes ?? 0) === 0);
+
   revalidatePath('/admin/products');
   revalidatePath('/');
   revalidatePath(`/admin/products/${productId}`);

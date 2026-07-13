@@ -42,6 +42,29 @@ async function loadOilBoardsPdf(): Promise<Buffer | null> {
   return Buffer.from(await data.arrayBuffer());
 }
 
+// Generic transactional send from hello@foodpharmer.net. Throws on a genuine
+// send failure so callers decide whether that's fatal.
+export async function sendMail(opts: {
+  to: string;
+  subject: string;
+  text: string;
+  html: string;
+  attachments?: { filename: string; content: Buffer; contentType: string }[];
+}) {
+  await transport().sendMail({
+    from: `"${FROM_NAME}" <${FROM_ADDRESS}>`,
+    ...opts,
+  });
+}
+
+// Shared body wrapper so every email renders the same left-aligned style.
+function htmlBody(inner: string) {
+  return `
+      <div style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#1a1a1a;max-width:520px;text-align:left">
+        ${inner}
+      </div>`;
+}
+
 // Emails the Oil Board PDF as an attachment. Throws on a genuine send failure
 // so the server action can report it; returns { skipped } if the PDF isn't
 // uploaded yet.
@@ -76,4 +99,41 @@ export async function sendOilBoardsEmail(to: string): Promise<{ ok: true } | { o
   });
 
   return { ok: true };
+}
+
+// "Your product is live" note to the brand's founder, sent when an admin
+// pushes a product Live. Copy rules: no em dashes, no "healthier"/"cleaner",
+// brand line is "Better for You by Food Pharmer".
+export async function sendProductLiveEmail(opts: {
+  to: string;
+  brandName: string;
+  productName: string;
+  productUrl: string;
+}) {
+  const { to, brandName, productName, productUrl } = opts;
+  await sendMail({
+    to,
+    subject: `${productName} is now live on Better for You by Food Pharmer`,
+    text: [
+      "Hi,",
+      "",
+      `Congratulations. ${brandName} ${productName} is now listed on Better for You by Food Pharmer.`,
+      "",
+      `Your live page: ${productUrl}`,
+      "",
+      "Feel free to share this link with your audience. The link preview carries the Better for You card, so it looks great on Instagram, LinkedIn and WhatsApp as is.",
+      "",
+      "Love,",
+      "Food Pharmer",
+    ].join("\n"),
+    html: htmlBody(`
+        <p>Hi,</p>
+        <p>Congratulations. <strong>${brandName} ${productName}</strong> is now listed on Better for You by Food Pharmer.</p>
+        <p>Your live page: <a href="${productUrl}">${productUrl}</a></p>
+        <p>Feel free to share this link with your audience. The link preview carries the Better for You card, so it looks great on Instagram, LinkedIn and WhatsApp as is.</p>
+        <p style="margin-top:28px">
+          Love,<br>
+          Food Pharmer
+        </p>`),
+  });
 }
