@@ -116,33 +116,33 @@ export async function sendProductLiveEmail(opts: {
   const { to, brandName, productName, productUrl } = opts;
   await sendMail({
     to,
-    fromName: "Revant from Food Pharmer",
+    fromName: "Revant (Food Pharmer)",
     subject: `${brandName} ${productName} just went live on Better for You`,
     text: [
       "Hi,",
       "",
-      "Revant here, from Food Pharmer.",
+      "This is Revant.",
       "",
-      `Good news: ${brandName} ${productName} cleared our review and is now on Better for You, our list of packaged foods we would actually buy. Very few products make it, and yours did.`,
+      `Good news: ${brandName} ${productName} cleared our review and is now on Better for You, my list of packaged foods I would actually buy. Very few products make it, and yours did.`,
       "",
       `This is your page: ${productUrl}`,
       "",
-      "Share it with your audience if you would like. The link opens into a Better for You card on Instagram, LinkedIn and WhatsApp, and you can tag Food Pharmer so we can celebrate it with you.",
+      "Share it with your audience if you would like. The link opens into a Better for You card on Instagram, LinkedIn and WhatsApp, and you can tag Food Pharmer so I can celebrate it with you.",
       "",
       "Keep making honest food.",
       "",
-      "Revant",
+      "Revant Himatsingka",
       "Food Pharmer",
     ].join("\n"),
     html: htmlBody(`
         <p>Hi,</p>
-        <p>Revant here, from Food Pharmer.</p>
-        <p>Good news: <strong>${brandName} ${productName}</strong> cleared our review and is now on Better for You, our list of packaged foods we would actually buy. Very few products make it, and yours did.</p>
+        <p>This is Revant.</p>
+        <p>Good news: <strong>${brandName} ${productName}</strong> cleared our review and is now on Better for You, my list of packaged foods I would actually buy. Very few products make it, and yours did.</p>
         <p>This is your page: <a href="${productUrl}">${productUrl}</a></p>
-        <p>Share it with your audience if you would like. The link opens into a Better for You card on Instagram, LinkedIn and WhatsApp, and you can tag Food Pharmer so we can celebrate it with you.</p>
+        <p>Share it with your audience if you would like. The link opens into a Better for You card on Instagram, LinkedIn and WhatsApp, and you can tag Food Pharmer so I can celebrate it with you.</p>
         <p>Keep making honest food.</p>
         <p style="margin-top:28px">
-          Revant<br>
+          Revant Himatsingka<br>
           Food Pharmer
         </p>`),
   });
