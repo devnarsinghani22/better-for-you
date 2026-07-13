@@ -11,6 +11,15 @@ export const contentType = "image/png";
 // cached REST fetch instead, and the rendered PNG is revalidated daily.
 export const revalidate = 86400;
 
+// The metadata route ships Cache-Control: max-age=0 by default (and
+// next.config headers() cannot override a handler-set Cache-Control), so the
+// edge cache directive goes on the ImageResponse itself. satori+sharp per
+// render is the expensive part; a day of edge caching makes it ~1 render per
+// product per region per day.
+const CACHE_HEADERS = {
+  "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800",
+};
+
 // Older UA forces Google Fonts to return a satori-compatible format (see
 // app/opengraph-image.tsx for the full story).
 const FONT_UA =
@@ -150,7 +159,7 @@ export default async function OGImage({
           </div>
         </div>
       ),
-      { ...size, fonts }
+      { ...size, fonts, headers: CACHE_HEADERS }
     );
   }
 
@@ -264,6 +273,6 @@ export default async function OGImage({
         </div>
       </div>
     ),
-    { ...size, fonts }
+    { ...size, fonts, headers: CACHE_HEADERS }
   );
 }
