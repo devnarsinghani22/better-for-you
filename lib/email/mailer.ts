@@ -49,11 +49,13 @@ export async function sendMail(opts: {
   subject: string;
   text: string;
   html: string;
+  fromName?: string;
   attachments?: { filename: string; content: Buffer; contentType: string }[];
 }) {
+  const { fromName, ...mail } = opts;
   await transport().sendMail({
-    from: `"${FROM_NAME}" <${FROM_ADDRESS}>`,
-    ...opts,
+    from: `"${fromName ?? FROM_NAME}" <${FROM_ADDRESS}>`,
+    ...mail,
   });
 }
 
@@ -102,8 +104,9 @@ export async function sendOilBoardsEmail(to: string): Promise<{ ok: true } | { o
 }
 
 // "Your product is live" note to the brand's founder, sent when an admin
-// pushes a product Live. Copy rules: no em dashes, no "healthier"/"cleaner",
-// brand line is "Better for You by Food Pharmer".
+// pushes a product Live. Written in Revant's voice, founder to founder.
+// Copy rules: no em dashes, no "healthier"/"cleaner", brand line is
+// "Better for You by Food Pharmer".
 export async function sendProductLiveEmail(opts: {
   to: string;
   brandName: string;
@@ -113,26 +116,33 @@ export async function sendProductLiveEmail(opts: {
   const { to, brandName, productName, productUrl } = opts;
   await sendMail({
     to,
-    subject: `${productName} is now live on Better for You by Food Pharmer`,
+    fromName: "Revant from Food Pharmer",
+    subject: `${brandName} ${productName} just went live on Better for You`,
     text: [
       "Hi,",
       "",
-      `Congratulations. ${brandName} ${productName} is now listed on Better for You by Food Pharmer.`,
+      "Revant here, from Food Pharmer.",
       "",
-      `Your live page: ${productUrl}`,
+      `Good news: ${brandName} ${productName} cleared our review and is now on Better for You, our list of packaged foods we would actually buy. Very few products make it, and yours did.`,
       "",
-      "Feel free to share this link with your audience. The link preview carries the Better for You card, so it looks great on Instagram, LinkedIn and WhatsApp as is.",
+      `This is your page: ${productUrl}`,
       "",
-      "Love,",
+      "Share it with your audience if you would like. The link opens into a Better for You card on Instagram, LinkedIn and WhatsApp, and you can tag Food Pharmer so we can celebrate it with you.",
+      "",
+      "Keep making honest food.",
+      "",
+      "Revant",
       "Food Pharmer",
     ].join("\n"),
     html: htmlBody(`
         <p>Hi,</p>
-        <p>Congratulations. <strong>${brandName} ${productName}</strong> is now listed on Better for You by Food Pharmer.</p>
-        <p>Your live page: <a href="${productUrl}">${productUrl}</a></p>
-        <p>Feel free to share this link with your audience. The link preview carries the Better for You card, so it looks great on Instagram, LinkedIn and WhatsApp as is.</p>
+        <p>Revant here, from Food Pharmer.</p>
+        <p>Good news: <strong>${brandName} ${productName}</strong> cleared our review and is now on Better for You, our list of packaged foods we would actually buy. Very few products make it, and yours did.</p>
+        <p>This is your page: <a href="${productUrl}">${productUrl}</a></p>
+        <p>Share it with your audience if you would like. The link opens into a Better for You card on Instagram, LinkedIn and WhatsApp, and you can tag Food Pharmer so we can celebrate it with you.</p>
+        <p>Keep making honest food.</p>
         <p style="margin-top:28px">
-          Love,<br>
+          Revant<br>
           Food Pharmer
         </p>`),
   });
