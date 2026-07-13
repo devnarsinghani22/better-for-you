@@ -38,11 +38,9 @@ export async function generateMetadata({
   const description = ingredientHint
     ? `${brandName ?? ""} ${product.name}, approved by Food Pharmer's nutrition team. Ingredients: ${ingredientHint}`.trim()
     : `${brandName ?? ""} ${product.name} is on our Better for You list.`.trim();
-  const photoUrl = product.product_photo_url
-    ? (product.product_photo_url.startsWith("http")
-        ? product.product_photo_url
-        : `${SITE_URL}${product.product_photo_url}`)
-    : undefined;
+  // No explicit openGraph/twitter images here: the file-convention
+  // opengraph-image.tsx in this segment renders a branded per-product card,
+  // and explicit images would override it.
   return {
     title,
     description,
@@ -52,13 +50,11 @@ export async function generateMetadata({
       description,
       type: "website",
       url: `${SITE_URL}/c/${category}/${slug}`,
-      ...(photoUrl ? { images: [{ url: photoUrl, alt: product.name }] } : {}),
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      ...(photoUrl ? { images: [photoUrl] } : {}),
     },
     other: cat?.name ? { "article:section": cat.name } : undefined,
   };

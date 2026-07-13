@@ -21,6 +21,10 @@ const nextConfig: NextConfig = {
   experimental: {
     viewTransition: true,
   },
+  // sharp (used by the per-product opengraph-image to convert webp photos)
+  // must load its native libvips binding at runtime — bundling it corrupts
+  // the enum constants ("colourspace: parameter space not set").
+  serverExternalPackages: ["sharp"],
   async headers() {
     return [
       { source: "/", headers: [{ key: "Cache-Control", value: PAGE_CC }] },
