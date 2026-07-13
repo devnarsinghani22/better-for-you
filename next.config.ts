@@ -30,6 +30,14 @@ const nextConfig: NextConfig = {
       { source: "/", headers: [{ key: "Cache-Control", value: PAGE_CC }] },
       { source: "/c/:category", headers: [{ key: "Cache-Control", value: PAGE_CC }] },
       { source: "/c/:category/:slug", headers: [{ key: "Cache-Control", value: PAGE_CC }] },
+      // Per-product OG card: satori+sharp render is compute-heavy, so let the
+      // edge serve it for a day (product photos and names rarely change).
+      {
+        source: "/c/:category/:slug/opengraph-image",
+        headers: [
+          { key: "Cache-Control", value: "public, s-maxage=86400, stale-while-revalidate=604800" },
+        ],
+      },
       { source: "/criteria", headers: [{ key: "Cache-Control", value: CRITERIA_CC }] },
       { source: "/api/search", headers: [{ key: "Cache-Control", value: SEARCH_CC }] },
       // Storage proxy responses carry the Supabase-supplied Cache-Control
