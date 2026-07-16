@@ -26,6 +26,111 @@ foodpharmer.health. Products are curated through an admin workflow
 | 8 | Microsoft Clarity | foodpharmer.health behavioural analytics | Add Shivam to the Clarity project team. API token is in env. |
 | 9 | Site admin | /admin login (Supabase auth, roles preparer/reviewer) | DONE 2026-07-16: shivamagwl02@gmail.com added to admin_users as `reviewer`. Login is a magic link at /login (the auth user auto-creates on first sign-in). He is the only reviewer; Dev's row is `preparer`. |
 
+## Step-by-step runbook
+
+Do these in order. Steps 1 and 2 belong together (the Vercel Git connection breaks the
+moment the repo transfers).
+
+### 0. Prerequisites
+- Shivam accepts the GitHub collaborator invite (github.com/devnarsinghani22/better-for-you/invitations)
+  and enables 2FA on `shivam-jpegs` (github.com/settings/security).
+- Agree on one secure channel for secrets (password manager share or self-destructing
+  note). Never plain email or chat.
+
+### 1. GitHub repo transfer
+1. github.com/devnarsinghani22/better-for-you -> Settings -> Danger Zone -> Transfer ownership.
+2. New owner: `shivam-jpegs`, type the repo name to confirm.
+3. Shivam accepts the transfer email within 24h. Repo becomes
+   `shivam-jpegs/better-for-you`; old URLs redirect; Actions secrets, webhooks and
+   settings move with it.
+4. Update local remotes: `git remote set-url origin https://github.com/shivam-jpegs/better-for-you.git`
+
+### 2. Reconnect Vercel to the moved repo (immediately after step 1)
+1. Vercel -> team devnarsinghani22s-projects -> project better-for-you -> Settings -> Git.
+2. Disconnect the stale repo, then Connect Git Repository -> GitHub -> shivam-jpegs/better-for-you.
+3. If the repo is not listed, Shivam installs the Vercel GitHub App on his account:
+   github.com/apps/vercel -> Configure -> grant access to better-for-you.
+4. Verify Production Branch is still `master`, then push a trivial commit to `staging`
+   and confirm a preview deploy fires.
+
+### 3. Vercel team ownership + billing
+1. Team Settings -> Members -> Invite shivamagwl02@gmail.com.
+2. After he accepts, change his role to Owner.
+3. He replaces the payment method: Team Settings -> Billing -> Payment Method
+   (add his card, remove Dev's).
+4. Pro bills per seat (~$20/mo each), so keep the two-member overlap short.
+5. Dev leaves: Members -> Leave Team (or Shivam removes Dev).
+
+### 4. Supabase org ownership + billing
+1. supabase.com/dashboard -> the org owning project eprwzftfxtkgunnkewyk -> Team ->
+   Invite shivamagwl02@gmail.com as Owner.
+2. He accepts (creates a Supabase account on that email).
+3. He swaps billing: Org Settings -> Billing -> Payment methods.
+4. Dev leaves the org. Keys, URL and data are untouched; zero downtime.
+
+### 5. Cloudflare (recommended: add member, do not move the zone)
+1. dash.cloudflare.com -> Manage Account -> Members -> Invite shivamagwl02@gmail.com,
+   scope All domains, role Super Administrator.
+2. He accepts; he can then manage DNS, the /storage/* cache rule, WAF rules and R2.
+3. Billing (R2 usage) is account-level: update payment info under Manage Account -> Billing.
+4. True ownership = the account email itself. If this Cloudflare account contains
+   nothing else of Dev's, change the account email to Shivam's under My Profile.
+   Only move the zone to a brand-new account as a last resort; that requires
+   re-creating DNS (export BIND file first), the /storage/* cache rule, WAF rules,
+   copying the R2 bucket, and re-pointing nameservers at GoDaddy.
+
+### 6. Domain (registrar: GoDaddy, expires 2027-05-15)
+1. Easiest: GoDaddy account change (free, instant, keeps nameservers).
+   dcc.godaddy.com -> foodpharmer.health -> Transfer to another GoDaddy account ->
+   enter Shivam's email; he accepts under Domains -> Transfers -> Incoming in his
+   GoDaddy account.
+2. Nameservers stay huxley/pola.ns.cloudflare.com. Do not change them.
+3. Alternative (slower, ~5 days): unlock + EPP code, transfer out to his preferred
+   registrar.
+
+### 7. Hostinger mailbox (hello@foodpharmer.net)
+1. Share the mailbox password over the secure channel. SMTP is smtp.hostinger.com:465,
+   user hello@foodpharmer.net (already in Vercel env).
+2. He changes the password (hpanel.hostinger.com -> Emails -> foodpharmer.net).
+3. IMMEDIATELY update SMTP_PASS in all three secret stores, or oil-board and
+   founder-notify emails break.
+4. Check whether the same Hostinger account controls the foodpharmer.net domain/DNS
+   (MX records); if so, include the account itself in the handover.
+
+### 8. Google Search Console + GCP indexer
+1. search.google.com/search-console -> foodpharmer.health -> Settings -> Users and
+   permissions -> Add shivamagwl02@gmail.com as Owner.
+2. He should also add his own verification (DNS TXT via Cloudflare) so ownership
+   survives Dev's removal.
+3. GCP project with the `gsc-indexer` service account: IAM -> Grant access ->
+   shivamagwl02@gmail.com -> Owner. He mints a fresh SA key (Service Accounts ->
+   gsc-indexer -> Keys -> Add key) and Dev deletes the old one.
+
+### 9. Microsoft Clarity
+1. clarity.microsoft.com -> project -> Settings -> Team -> add shivamagwl02@gmail.com
+   as Admin.
+2. He generates his own API token (Settings -> Data Export) and replaces the
+   CLARITY_API_TOKEN Actions secret; delete Dev's token.
+
+### 10. Secrets handover + rotation (last)
+Hand over `.env.local` once, then rotate everything on the list below. Every rotated
+value must be updated in all three stores: his `.env.local`, Vercel project env vars
+(production + preview), and GitHub Actions secrets.
+- Supabase API keys (Project Settings -> API): legacy JWT rotation changes anon +
+  service-role together, so redeploy immediately after.
+- Supabase DB password (Project Settings -> Database -> reset) -> SUPABASE_DB_PASSWORD secret.
+- Vercel token: he creates his own at vercel.com/account/tokens -> VERCEL_TOKEN secret;
+  Dev deletes the old token.
+- Cloudflare API token + R2 keys: he creates new, Dev revokes old.
+- SMTP password (step 7). CONTACT_EXPORT_TOKEN: any new random string.
+
+### 11. Verify the handover
+- Shivam: push to staging fires a preview deploy; /admin login works with reviewer
+  actions visible; can run a workflow manually in Actions; receives the weekly
+  clarity digest (follows repo owner).
+- Site email works after SMTP rotation: submit /oil-board with a test address.
+- One deliberate prod deploy under his ownership (staging -> master) + Cloudflare purge.
+
 ## Secrets inventory
 
 All runtime secrets live in three places, never in git:
