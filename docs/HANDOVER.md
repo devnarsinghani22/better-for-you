@@ -16,7 +16,7 @@ foodpharmer.health. Products are curated through an admin workflow
 
 | # | Service | What | How |
 |---|---------|------|-----|
-| 1 | GitHub | repo `devnarsinghani22/better-for-you` | Settings -> transfer ownership to Shivam's GitHub account. Actions secrets move with the repo. |
+| 1 | GitHub | repo `devnarsinghani22/better-for-you` | Shivam's account is `shivam-jpegs` (invited as admin collaborator 2026-07-16). Settings -> transfer ownership to `shivam-jpegs`. Actions secrets move with the repo. |
 | 2 | Vercel (paid team) | project `better-for-you` (id prj_RZB9OACBBjkLyiOGHBMcThanArXk) on team devnarsinghani22s-projects | Do NOT move the project. Invite Shivam to the team, promote to Owner, he replaces the payment method, Dev leaves. Env vars, domains and deploys stay untouched. Only the Git connection needs reconnecting after the GitHub repo transfer (step 1). |
 | 3 | Supabase (paid org) | project `eprwzftfxtkgunnkewyk` (all data, storage, auth) | Do NOT migrate the project. Invite shivamagwl02@gmail.com to the org as Owner, he takes over billing, then Dev leaves the org. Zero downtime, keys unchanged. |
 | 4 | Cloudflare | zone foodpharmer.health (DNS, cache rules, WAF scraper rules) + R2 bucket | Add Shivam as account member with admin, or move the zone to his account (if moved, recreate the cache rule on /storage/* and the WAF rules, and update nameservers at the registrar). |
