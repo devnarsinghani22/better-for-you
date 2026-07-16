@@ -24,7 +24,7 @@ foodpharmer.health. Products are curated through an admin workflow
 | 6 | Hostinger mail | hello@foodpharmer.net mailbox (SMTP sender for all site email) | Share mailbox credentials through a secure channel; rotate the password after handover. |
 | 7 | Google Search Console | property foodpharmer.health + GCP service account `gsc-indexer` (Indexing API) | Add Shivam as GSC Owner. Share or re-create the service-account key (local file, not in git). |
 | 8 | Microsoft Clarity | foodpharmer.health behavioural analytics | Add Shivam to the Clarity project team. API token is in env. |
-| 9 | Site admin | /admin login (Supabase auth, roles preparer/reviewer) | Create a Supabase auth user for Shivam and grant the reviewer role. |
+| 9 | Site admin | /admin login (Supabase auth, roles preparer/reviewer) | DONE 2026-07-16: shivamagwl02@gmail.com added to admin_users as `reviewer`. Login is a magic link at /login (the auth user auto-creates on first sign-in). He is the only reviewer; Dev's row is `preparer`. |
 
 ## Secrets inventory
 
